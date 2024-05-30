@@ -1,23 +1,59 @@
-const db = require('./db');
+const { sequelize, Sequelize } = require('./db');
 
-const User = db.sequelize.define('tb_user', {
-    user_id: { type: db.Sequelize.INTEGER, 
-    autoIncrement: true, 
-    allowNull: false, 
-    primaryKey: true },    
-    user_email: {
-        type: db.Sequelize.STRING
+const User = sequelize.define('User', {
+    user_id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
     },
-    user_password: {
-        type: db.Sequelize.STRING
-    },
-}, { freezeTableName: true });
+    user_name: Sequelize.STRING,
+    user_email: Sequelize.STRING,
+    user_password: Sequelize.STRING,
+    // Outros campos
+}, {
+    tableName: 'tb_user',
+    timestamps: false
+});
 
-const getAll = () => {
-    const users = db.execute('SELECT * FROM tb_user');
+const getAll = async () => {
+    try {
+        const users = await User.findAll();
+        return users;
+    } catch (error) {
+        console.error('Error fetching users:', error);
+        throw error;
+    }
+};
+
+const createUser = async ({ user_name, user_email, user_password }) => {
+
+    try {
+        const verifyUserExists = await User.findOne({
+            where: {
+                user_email: user_email
+            }
+        }).then(function (result) {
+            if (result) {
+                console.log('User already exists:', result);
+            } else {
+                const newUser = User.create({ user_name, user_email, user_password })
+            }
+        })
+    } catch (error) {
+        console.error('Error creating user:', error);
+        throw error;
+    }
 }
 
+// const loginUser = async ({ user_email, user_password }) =>{
+//     try {
 
-// Post.sync({force: true});
+//     } catch (error) {
+//         console.error('Error when trying to Login', error);
+//     }
+// }
 
-module.exports = User;
+module.exports = {
+    getAll,
+    createUser
+};

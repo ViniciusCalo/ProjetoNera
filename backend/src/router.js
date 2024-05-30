@@ -1,11 +1,8 @@
 const express = require('express');
+const userController = require('../src/controllers/UserController');
 
 const router = express.Router();
-const user = require('./controllers/UserController');
 
-router.get('/', (req, res) => res.status(200).send(" o router esta funcionando"));
-
-router.use('/usuario', user);
-
-
+router.get('/usuario', userController.getAll);
+router.post('/usuario/cadastrar', userController.createUser)
 module.exports = router;
