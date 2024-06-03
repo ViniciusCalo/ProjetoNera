@@ -4,17 +4,25 @@ const jwt = require('jsonwebtoken');
 const jwtConfig = require('../config/jwtConfig');
 
 const User = sequelize.define('User', {
-    user_id: {
+    userid: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    user_name: Sequelize.STRING,
-    user_email: Sequelize.STRING,
-    user_password: Sequelize.STRING,
+    username: Sequelize.STRING,
+    useremail: {
+        type: Sequelize.STRING,
+        unique: true,
+        allowNull: false
+    },
+    userpassword: Sequelize.STRING,
+    role: {
+        type: Sequelize.ENUM('student', 'teacher'),
+        allowNull: false
+    }
     // Outros campos
 }, {
-    tableName: 'tb_user',
+    tableName: 'tbuser',
     timestamps: false
 });
 
@@ -38,22 +46,22 @@ const getUserById = async (id) => {
     }
 };
 
-const createUser = async ({ user_name, user_email, user_password }) => {
+const createUser = async ({ username, useremail, userpassword }) => {
 
     try {
-        const hashedPassword = await bcrypt.hash(user_password, 10);
+        const hashedPassword = await bcrypt.hash(userpassword, 10);
         const verifyUserExists = await User.findOne({
             where: {
-                user_email: user_email
+                useremail: useremail
             }
         }).then(function (result) {
             if (result) {
                 console.log('User already exists:', result);
             } else {
-                const newUser = User.create({ 
-                    user_name,
-                    user_email,
-                    user_password:hashedPassword
+                const newUser = User.create({
+                    username,
+                    useremail,
+                    userpassword: hashedPassword
                 });
             }
         })
@@ -63,21 +71,21 @@ const createUser = async ({ user_name, user_email, user_password }) => {
     }
 }
 
-const loginUser = async ({ user_email, user_password }) => {
+const loginUser = async ({ useremail, userpassword }) => {
     try {
-        const user = await User.findOne({ where: { user_email } });
+        const user = await User.findOne({ where: { useremail } });
 
         if (!user) {
-            throw new Error('Invalid email or password');
+            throw new Error('Invalid email');
         }
 
-        const isPasswordValid = await bcrypt.compare(user_password, user.user_password);
+        const isPasswordValid = await bcrypt.compare(userpassword, user.userpassword);
 
         if (!isPasswordValid) {
             throw new Error('Invalid email or password');
         }
 
-        const token = jwt.sign({ userId: user.user_id}, jwtConfig.secret, {
+        const token = jwt.sign({ userid: user.userid }, jwtConfig.secret, {
             expiresIn: jwtConfig.expiresIn,
         });
 
