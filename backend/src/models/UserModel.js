@@ -20,7 +20,6 @@ const User = sequelize.define('User', {
         type: Sequelize.ENUM('student', 'teacher'),
         allowNull: false
     }
-    // Outros campos
 }, {
     tableName: 'tbuser',
     timestamps: false
@@ -46,30 +45,28 @@ const getUserById = async (id) => {
     }
 };
 
-const createUser = async ({ username, useremail, userpassword }) => {
-
+const createUser = async ({ username, useremail, userpassword, role }) => {
     try {
         const hashedPassword = await bcrypt.hash(userpassword, 10);
-        const verifyUserExists = await User.findOne({
-            where: {
-                useremail: useremail
-            }
-        }).then(function (result) {
-            if (result) {
-                console.log('User already exists:', result);
-            } else {
-                const newUser = User.create({
-                    username,
-                    useremail,
-                    userpassword: hashedPassword
-                });
-            }
-        })
+        const userExists = await User.findOne({ where: { useremail } });
+
+        if (userExists) {
+            throw new Error('User already exists');
+        }
+
+        const newUser = await User.create({
+            username,
+            useremail,
+            userpassword: hashedPassword,
+            role
+        });
+
+        return newUser;
     } catch (error) {
         console.error('Error creating user:', error);
         throw error;
     }
-}
+};
 
 const loginUser = async ({ useremail, userpassword }) => {
     try {
@@ -85,11 +82,11 @@ const loginUser = async ({ useremail, userpassword }) => {
             throw new Error('Invalid email or password');
         }
 
-        const token = jwt.sign({ userid: user.userid }, jwtConfig.secret, {
+        const token = jwt.sign({ userid: user.userid, role: user.role }, jwtConfig.secret, {
             expiresIn: jwtConfig.expiresIn,
         });
 
-        return { user };
+        return { user, token };
     } catch (error) {
         console.error('Error logging in user:', error);
         throw error;
