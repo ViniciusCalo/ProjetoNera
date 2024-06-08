@@ -8,7 +8,7 @@ import RadioButton from '../components/redioButton';
 const LoginScreen = ({ navigation }) => {
 
 
-    const [cor, setCor] = useState(colors.amarelo);
+    const [cor, setCor] = useState(colors.azulEscuro);
     const [flexDirection, setflexDirection] = useState("column");
 
     const Login = () => {
@@ -30,30 +30,20 @@ const LoginScreen = ({ navigation }) => {
 
             {/*view form*/}
             <View style={[stylesButtons.div_form, { backgroundColor: cor }]}>
-                {/*view form buttons*/}
-
-                <View style={stylesButtons.div_txt_Perf}>
-                    <Text style={[{ fontWeight: 'bold' }, { color: 'white' }, { fontSize: 25 }]}>Crie seu Perfil</Text>
-                </View>
 
                 {/*view form formulario*/}
                 <View style={stylesForm.formulario}>
-
+                    <Text style={[{ fontWeight: 'bold' }, { color: 'white' }, { fontSize: 25 }]}>Crie seu Perfil</Text>
                     <TextInput style={stylesForm.input_email} placeholder='Email'></TextInput>
                     <TextInput style={stylesForm.input_cpf} placeholder='CPF'></TextInput>
                     <TextInput style={stylesForm.input_nome} placeholder='Nome'></TextInput>
 
-                    <View style={[{ display: 'flex' }, { flexDirection: 'row' }, { height: '15%' }, { width: '90%' }, { gap: 5 }, { margin: 8 }]}>
+                    <View style={[{ display: 'flex' }, { flexDirection: 'row' }, { height: '15%' }, { width: '90%' }, { gap: 5 }]}>
                         <TextInput style={stylesForm.input_senha} placeholder='Senha'></TextInput>
                         <TextInput style={stylesForm.input_senha} placeholder='Confimar senha'></TextInput>
                     </View>
 
-                    <View style={[{ display: 'flex' }, { alignItems: 'center' }, { flexDirection: 'row' }, { height: '15%' }, { width: '90%' }, { gap: 50 }, { margin: 5, paddingLeft: 20 }]}>
-                        <RadioButton txt={"Professor"}></RadioButton>
-                        <RadioButton txt={"Aluno"}></RadioButton>
-                    </View>
-
-
+                    <TextInput style={stylesForm.input_nome} placeholder='Nome'></TextInput>
                 </View>
 
                 <View style={stylesForm.opcoesEntrar}>
@@ -61,7 +51,7 @@ const LoginScreen = ({ navigation }) => {
 
                         <Text style={[{ fontSize: 15 }, { color: 'white' }]}>Criar conta</Text>
                     </Pressable>
-                    
+
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
                         <View>
@@ -94,42 +84,48 @@ const stylesForm = StyleSheet.create({
     formulario: {
         display: 'flex',
         flexDirection: 'column',
-        width: '100%',
-        height: '55%',
+        flex: 1.3,
         alignItems: 'center',
+        gap: 6,
+        backgroundColor: colors.amarelo
+
     },
 
     opcoesEntrar: {
-        width: '100%',
-        height: '36%',
-        gap: 5,
+        display: 'flex',
+        flexDirection: 'column',
+        flex: 1,
         alignItems: 'center',
+        backgroundColor: colors.rosa
 
     },
 
     input_email: {
-        margin: 8,
         paddingLeft: 15,
         width: '90%',
         height: '15%',
+        borderWidth: 3,
+        borderColor: "#BBBBBB",
         borderRadius: 18,
         backgroundColor: colors.branco
     },
 
     input_cpf: {
-        margin: 8,
         paddingLeft: 15,
         width: '90%',
         height: '15%',
+        borderWidth: 3,
+        borderColor: "#BBBBBB",
         borderRadius: 18,
         backgroundColor: colors.branco
     },
 
     input_nome: {
-        margin: 8,
         paddingLeft: 15,
         width: '90%',
         height: '15%',
+        borderWidth: 3,
+        borderColor: "#BBBBBB",
         borderRadius: 18,
         backgroundColor: colors.branco
     },
@@ -138,6 +134,8 @@ const stylesForm = StyleSheet.create({
         paddingLeft: 15,
         width: '49%',
         height: '100%',
+        borderWidth: 3,
+        borderColor: "#BBBBBB",
         borderRadius: 18,
         backgroundColor: colors.branco
     },
@@ -145,7 +143,7 @@ const stylesForm = StyleSheet.create({
     button_entrar: {
         paddingTop: 8,
         alignItems: 'center',
-        width: '90%',
+        width: '100%',
         height: '25%',
         borderRadius: 18,
         backgroundColor: colors.azulEscuro
@@ -181,17 +179,20 @@ const stylesButtons = StyleSheet.create({
         flexDirection: "column",
         alignItems: "center",
         height: '100%',
-        width: '100%',
+        flex: 1,
         padding: '5%',
         paddingTop: '0%',
-        gap: 10
+        gap: 10,
+        backgroundColor: 'black'
+
     },
 
     div_form: {
-        width: '100%',
-        height: "80%",
+        display: "flex",
+        flexDirection: "column",
+        flex: 1,
         borderRadius: 50,
-        alignItems: "center"
+        backgroundColor: colors.branco
     },
 
     top: {
