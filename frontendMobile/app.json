@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "nera-mobile",
+    "slug": "nera-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "src/assets/Icone.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "src/assets/Icone.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "src/assets/Icone.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "src/assets/Icone.png"
+    }
+  }
+}
