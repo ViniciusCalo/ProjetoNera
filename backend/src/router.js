@@ -6,6 +6,9 @@ const tokenController = require('../src/controllers/ClassroomTokenController');
 
 const router = express.Router();
 
+/*router.use() should use the router instead of call all the rout as 
+get or post on this file*/
+
 router.get('/user', userController.getAll);
 router.get('/user/:id', userController.getUserById);
 router.post('/user/register', userController.createUser)
