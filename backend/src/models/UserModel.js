@@ -46,7 +46,7 @@ const getUserById = async (id) => {
     }
 };
 
-const createUser = async ({ username, useremail, userpassword }) => {
+const createUser = async ({ username, useremail, userpassword, role}) => {
 
     try {
         const hashedPassword = await bcrypt.hash(userpassword, 10);
@@ -61,7 +61,8 @@ const createUser = async ({ username, useremail, userpassword }) => {
                 const newUser = User.create({
                     username,
                     useremail,
-                    userpassword: hashedPassword
+                    userpassword: hashedPassword,
+                    role
                 });
             }
         })
