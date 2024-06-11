@@ -6,6 +6,7 @@ const app = express();
 
 //Middleware-Routes
 app.use(bodyParser.json());
+
 //CORS Function to API Authorization
 app.use(cors());
 

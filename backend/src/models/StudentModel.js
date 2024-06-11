@@ -20,4 +20,6 @@ const Student = sequelize.define('User', {
     timestamps: false
 });
 
+
+
 module.exports = Student;
