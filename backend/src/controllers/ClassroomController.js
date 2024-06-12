@@ -27,8 +27,8 @@ const getAllClassroomByTeacherId = async (req, res) => {
 
 const createClassroom = async (req, res) => {
     try {
-        const { classroomname, classroomdescription, classroomcreation, teacherid, trackid, moduleid, tokenclass } = req.body;
-        const newClassroom = await classroomModel.createClassroom({ classroomname, classroomdescription, classroomcreation, teacherid, trackid, moduleid, tokenclass});
+        const { classroomid, classroomname, classroomdescription, teacherid, trackid, moduleid, tokenclass } = req.body;
+        const newClassroom = await classroomModel.createClassroom({classroomid, classroomname, classroomdescription, teacherid, trackid, moduleid, tokenclass});
         return res.status(201).json({ message: "Classroom created successfully", newClassroom });
     } catch (error) {
         console.error('Error creating classroom:', error);

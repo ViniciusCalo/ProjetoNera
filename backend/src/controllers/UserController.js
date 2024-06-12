@@ -1,7 +1,6 @@
 const userModel = require('../models/UserModel');
 
 
-
 const getAll =  async (request, response) => {
     try {
         const users = await userModel.getAll();

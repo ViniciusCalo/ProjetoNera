@@ -1,7 +1,6 @@
 const { sequelize, Sequelize } = require('./db');
 const express = require('express');
 const {generateHash} = require('../util/hash');
-const e = require('express');
 
 const Classroom = sequelize.define('Classroom', {
     classroomid: {
@@ -65,9 +64,9 @@ const getAllClassrooms = async () => {
     }
 };
 
-const getAllClassroomByTeacherId = async () => {
+const getAllClassroomByTeacherId = async (teacherid) => {
     try {
-        const classrooms = await Classroom.findAll({where: {teacherid}});
+        const classrooms = await Classroom.findOne({teacherid});
         return classrooms;
     } catch (error) {
         console.error(`Erro ao tentar trazer as salas do professor ${teacherid}: `, error);
@@ -75,13 +74,9 @@ const getAllClassroomByTeacherId = async () => {
     }
 };
 
-const createClassroom = async ({ classroomname, classroomdescription, classroomcreation, teacherid, trackid, moduleid, tokenclass }) => {
+const createClassroom = async ({classroomid, classroomname, classroomdescription, classroomcreation, teacherid, trackid, moduleid, tokenclass }) => {
     try{
-        const classroomExists = await Classroom.findOne({ where: { classroomid, tokenclass } });
-        if (classroomExists) {
-            throw new Error('Sala de aula ja existe');
-        } else {
-            const newClassroom = await Classroom.create({
+         const newClassroom = await Classroom.create({
                 classroomname,
                 classroomdescription,
                 classroomcreation,
@@ -91,7 +86,6 @@ const createClassroom = async ({ classroomname, classroomdescription, classroomc
                 tokenclass: generateHash
             });
             return newClassroom;
-        }
     } catch (error) {
         console.error('Erro ao criar Sala! ', error);
     }
