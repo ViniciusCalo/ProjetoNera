@@ -64,12 +64,12 @@ const getAllClassrooms = async () => {
     }
 };
 
-const getAllClassroomByTeacherId = async (teacherid) => {
+const getAllClassroomByTeacherId = async (id) => {
     try {
-        const classrooms = await Classroom.findOne({teacherid});
+        const classrooms = await Classroom.findOne({id});
         return classrooms;
     } catch (error) {
-        console.error(`Erro ao tentar trazer as salas do professor ${teacherid}: `, error);
+        console.error(`Erro ao tentar trazer as salas do professor ${id}: `, error);
         throw error;
     }
 };
@@ -92,7 +92,6 @@ const createClassroom = async ({classroomid, classroomname, classroomdescription
 };
 
 module.exports = {
-    Classroom,
     getAllClassrooms,
     getAllClassroomByTeacherId,
     createClassroom

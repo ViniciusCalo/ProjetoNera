@@ -1,7 +1,8 @@
 const userModel = require('../models/UserModel');
+const express = require('express');
+const router = express.Router();
 
-
-const getAll =  async (request, response) => {
+const getAll = router.get('/user', async (request, response) => {
     try {
         const users = await userModel.getAll();
         return response.status(200).json(users);
@@ -9,9 +10,9 @@ const getAll =  async (request, response) => {
         console.error(error);
         return response.status(500).json({ message: error.message || "Internal server error" });
     }
-};
+});
 
-const getUserById = async (request, response) => {
+const getUserById = router.get('/user/:id', async (request, response) => {
     try {
         const user = await userModel.getUserById(request.params.id);
         if (!user) {
@@ -22,9 +23,9 @@ const getUserById = async (request, response) => {
         console.error(error);
         return response.status(500).json({ message: error.message || "Internal server error" });
     }
-};
+});
 
-const createUser = async (request, response) => {
+const createUser = router.post('/user/register', async (request, response) => {
     try {
         const { username, useremail, userpassword, role } = request.body;
         const newUser = await userModel.createUser({ username, useremail, userpassword, role });
@@ -33,9 +34,9 @@ const createUser = async (request, response) => {
         console.error(error);
         return response.status(500).json({ message: error.message || "Internal server error" });
     }
-};
+});
 
-const login = async (request, response) => {
+const login = router.post('/user/login', async (request, response) => {
     try {
         const { useremail, userpassword } = request.body;
         const { user, token } = await userModel.loginUser({ useremail, userpassword });
@@ -44,7 +45,7 @@ const login = async (request, response) => {
         console.error(error);
         return response.status(401).json({ message: error.message || "Internal server error" });
     }
-};
+});
 
 module.exports = { 
     getAll,
