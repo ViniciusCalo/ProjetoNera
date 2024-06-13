@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Picker, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import BottomMenuTeacher from './MenuTeacher';
-import ButtonBlue from './ButtonBlue';
-import IconNera from './IconNera';
+import BottomMenuTeacher from '../MenuTeacher';
+import ButtonBlue from '../ButtonBlue';
+import IconNera from '../IconNera';
 
 const CreateClass = ({ navigation }) => {
     const [className, setClassName] = useState('');

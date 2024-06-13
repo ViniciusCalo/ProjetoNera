@@ -2,15 +2,16 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import SplashScreen from './src/screens/SplashScreen';
-import HomeTeacher from './src/screens/HomeTeacher';
+import HomeTeacher from './src/screens/teacher/HomeTeacher';
 import TeacherClassroom from './src/screens/TeacherClassroom';
 import TeacherProfile from './src/screens/TeacherProfile';
 import LoginScreen from './src/screens/LoginScreen';
-import StudentProfile from './src/screens/StudentProfile';
-import CreateClass from './src/components/CreateClass';
+import StudentProfile from './src/screens/student/StudentProfile';
+import CreateClass from './src/components/teacher/CreateClass';
 import RegisterTeacher from './src/screens/RegisterTeacher';
-import StudentTrails from './src/screens/StudentTrails';
-import FractionTrails from './src/screens/FractionTrails';
+import StudentTrails from './src/screens/student/StudentTrails';
+import FractionTrails from './src/screens/student/FractionTrails';
+import FractionScreen from './src/screens/student/FractionScreen';
 
 const Stack = createStackNavigator();
 
@@ -28,6 +29,7 @@ export default function App() {
                 <Stack.Screen name="RegisterTeacher" component={RegisterTeacher} />
                 <Stack.Screen name="StudentTrails" component={StudentTrails} />
                 <Stack.Screen name="FractionTrails" component={FractionTrails} />
+                <Stack.Screen name="FractionScreen" component={FractionScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     );
