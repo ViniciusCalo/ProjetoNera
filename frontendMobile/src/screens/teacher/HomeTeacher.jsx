@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, FlatList } from 'react-native';
-import IconNera from '../components/IconNera';
-import BottomMenuTeacher from '../components/MenuTeacher';
-import ButtonBlue from '../components/ButtonBlue';
+import IconNera from '../../components/IconNera';
+import BottomMenuTeacher from '../../components/MenuTeacher';
+import ButtonBlue from '../../components/ButtonBlue';
 
 const Home = ({ navigation }) => {
     const handleCreateClassPress = () => {
@@ -10,12 +10,12 @@ const Home = ({ navigation }) => {
     };
 
     const imageUrls = [
-        { id: 1, url: require('../assets/classBlue.png'), label: '6 ano C' },
-        { id: 2, url: require('../assets/classPink.png'), label: '7 ano B' },
-        { id: 3, url: require('../assets/classYellow.png'), label: '6 ano B' },
-        { id: 4, url: require('../assets/classAqua.png'), label: '7 ano A' },
-        { id: 5, url: require('../assets/classBlue.png'), label: '6 ano A' },
-        { id: 6, url: require('../assets/classYellow.png'), label: '7 ano C' },
+        { id: 1, url: require('../../assets/classBlue.png'), label: '6 ano C' },
+        { id: 2, url: require('../../assets/classPink.png'), label: '7 ano B' },
+        { id: 3, url: require('../../assets/classYellow.png'), label: '6 ano B' },
+        { id: 4, url: require('../../assets/classAqua.png'), label: '7 ano A' },
+        { id: 5, url: require('../../assets/classBlue.png'), label: '6 ano A' },
+        { id: 6, url: require('../../assets/classYellow.png'), label: '7 ano C' },
     ];
 
     return (

@@ -45,23 +45,26 @@ const getUserById = async (id) => {
     }
 };
 
-const createUser = async ({ username, useremail, userpassword, role }) => {
+const createUser = async ({ username, useremail, userpassword, role}) => {
+
     try {
         const hashedPassword = await bcrypt.hash(userpassword, 10);
-        const userExists = await User.findOne({ where: { useremail } });
-
-        if (userExists) {
-            throw new Error('User already exists');
-        }
-
-        const newUser = await User.create({
-            username,
-            useremail,
-            userpassword: hashedPassword,
-            role
-        });
-
-        return newUser;
+        const verifyUserExists = await User.findOne({
+            where: {
+                useremail: useremail
+            }
+        }).then(function (result) {
+            if (result) {
+                console.log('User already exists:', result);
+            } else {
+                const newUser = User.create({
+                    username,
+                    useremail,
+                    userpassword: hashedPassword,
+                    role
+                });
+            }
+        })
     } catch (error) {
         console.error('Error creating user:', error);
         throw error;
