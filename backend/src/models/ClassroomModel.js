@@ -1,4 +1,6 @@
 const { sequelize, Sequelize } = require('./db');
+const express = require('express');
+const {generateHash} = require('../util/hash');
 
 const Classroom = sequelize.define('Classroom', {
     classroomid: {
@@ -6,14 +8,25 @@ const Classroom = sequelize.define('Classroom', {
         primaryKey: true,
         autoIncrement: true
     },
-    classroomname: Sequelize.STRING,
-    classroomdescription: Sequelize.STRING,
+    classroomname: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    classroomdescription: {
+        type: Sequelize.TEXT,
+        allowNull: true
+    },
+    classroomcreation:{
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        allowNull: false
+    },
     teacherid: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-            model: 'Users', // Ajuste para corresponder ao nome da tabela de usuários
-            key: 'userid'
+            model: 'Teacher', // Ajuste para corresponder ao nome da tabela de usuários
+            key: 'teacherid'
         }
     },
     trackid: {
@@ -31,40 +44,55 @@ const Classroom = sequelize.define('Classroom', {
             model: 'Modules', // Ajuste para corresponder ao nome da tabela de módulos
             key: 'moduleid'
         }
+    },
+    tokenclass:{
+        type: Sequelize.INTEGER,
+        allowNull: false
     }
 }, {
     tableName: 'tbclassroom',
     timestamps: false
 });
 
-const getAllClassroom = async () => {
+const getAllClassrooms = async () => {
     try {
         const classrooms = await Classroom.findAll();
         return classrooms;
     } catch (error) {
-        console.error('Error getting all classrooms:', error);
+        console.error('rro ao tentar trazer as salas: ', error);
         throw error;
     }
 };
 
-const createClassroom = async ({ classroomname, classroomdescription, teacherid, trackid, moduleid }) => {
+const getAllClassroomByTeacherId = async (id) => {
     try {
-        const newClassroom = await Classroom.create({
-            classroomname,
-            classroomdescription,
-            teacherid,
-            trackid,
-            moduleid
-        });
-        return newClassroom;
+        const classrooms = await Classroom.findOne({id});
+        return classrooms;
     } catch (error) {
-        console.error('Error creating classroom:', error);
+        console.error(`Erro ao tentar trazer as salas do professor ${id}: `, error);
         throw error;
+    }
+};
+
+const createClassroom = async ({classroomid, classroomname, classroomdescription, classroomcreation, teacherid, trackid, moduleid, tokenclass }) => {
+    try{
+         const newClassroom = await Classroom.create({
+                classroomname,
+                classroomdescription,
+                classroomcreation,
+                teacherid,
+                trackid,
+                moduleid,
+                tokenclass: generateHash
+            });
+            return newClassroom;
+    } catch (error) {
+        console.error('Erro ao criar Sala! ', error);
     }
 };
 
 module.exports = {
-    Classroom,
-    getAllClassroom,
+    getAllClassrooms,
+    getAllClassroomByTeacherId,
     createClassroom
 };
