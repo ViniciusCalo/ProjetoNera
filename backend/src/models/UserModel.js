@@ -90,7 +90,7 @@ const loginUser = async ({ useremail, userpassword }) => {
             expiresIn: jwtConfig.expiresIn,
         });
 
-        return { user };
+        return { token };
     } catch (error) {
         console.error('Error logging in user:', error);
         throw error;

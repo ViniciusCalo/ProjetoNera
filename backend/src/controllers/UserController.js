@@ -35,7 +35,7 @@ const createUser = async (request, response) => {
 const loginUser = async (request, response) => {
     try{
         const loginUser = await userModel.loginUser(request.body);
-        return response.status(200).json({message: "Login successfully"});
+        return response.status(200).json({message: "Login successfully", token: loginUser});
     }catch(error){
         console.error(error); // Adicione isso para ajudar na depuração
         return response.status(500).json({ message: "Internal server error" });
