@@ -1,14 +1,10 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
-const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASS, {
-    host: process.env.DB_HOST,
-    dialect: process.env.DB_DIALECT,
-  }
-);
+const sequelize = new Sequelize('rykahwui', 'rykahwui', 'j_IehwTRhEw4ehQOJ_BAvbabJT8vVa23', {
+  dialect: 'postgres',
+  host: 'kesavan.db.elephantsql.com'
+});
 
 module.exports = {
   sequelize,
