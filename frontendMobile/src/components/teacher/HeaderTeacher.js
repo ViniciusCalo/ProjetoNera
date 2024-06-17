@@ -45,16 +45,25 @@ const HeaderTeacher = () => {
 
 const styles = StyleSheet.create({
     container: {
+        height: 80,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         backgroundColor: 'white',
         paddingVertical: 30,
         paddingHorizontal: 30,
-        position: 'absolute',
+        position: 'fixed',
         top: 0,
         left: 0,
         right: 0,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 3,
+        elevation: 5,
     },
     container2: {
         flexDirection: 'row',
