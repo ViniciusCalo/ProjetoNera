@@ -1,18 +1,37 @@
-import { useState } from 'react';
-import { StatusBar, StyleSheet, Text, View, Image, Pressable, TextInput } from "react-native";
+import { useState, useEffect } from 'react';
+import { StatusBar, StyleSheet, Text, View, Image, Pressable, TextInput, Keyboard } from "react-native";
 import colors from '../components/styles';
 import Switch from '../components/SwitchProfile';
 import axios from 'axios';
 
 
-
-
-
 const LoginScreen = ({ navigation }) => {
-    const [cor, setCor] = useState(colors.azulEscuro);
+
+    const [isViewVisible, setIsViewVisible] = useState(true);
+
+    useEffect(() => {
+        const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+            setIsViewVisible(false);
+        });
+        const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+            setIsViewVisible(true);
+        });
+
+        return () => {
+            keyboardDidShowListener.remove();
+            keyboardDidHideListener.remove();
+        };
+    }, []);
+
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
+    const [role, setRole] = useState('teacher');
+
+    const toggleRole = () => {
+      setRole(prevRole => (prevRole === 'teacher' ? 'student' : 'teacher'));
+    };
+
     const Login = () => {
         navigation.replace('LoginScreen')
     }
@@ -28,7 +47,7 @@ const LoginScreen = ({ navigation }) => {
                 username: nome,
                 useremail: email,
                 userpassword: senha,
-                role: 'student'
+                role: role
             });
             window.location.reload()
         } catch (err) {
@@ -47,13 +66,17 @@ const LoginScreen = ({ navigation }) => {
 
             {/*view form*/}
             <View
-                style={[stylesButtons.div_form, { backgroundColor: cor }]}
+                style={stylesButtons.div_form}
             >
 
                 {/*view form formulario*/}
                 <View
                     style={stylesForm.formulario}>
-                    <Text style={[{ fontWeight: 'bold' }, { color: 'white' }, { fontSize: 25 }]}>Crie seu Perfil</Text>
+                    <Text
+                        style={{ fontWeight: 'bold', color: 'white', fontSize: 25 }}>
+                        Crie seu Perfil
+                    </Text>
+
                     <TextInput
                         style={stylesForm.input_email}
                         placeholder='Email'
@@ -85,27 +108,39 @@ const LoginScreen = ({ navigation }) => {
                             onChangeText={(texto) => setSenha(texto)}
                         />
 
-                        <TextInput style={stylesForm.input_senha} placeholder='Confimar senha' placeholderTextColor="#888888"></TextInput>
+                        <TextInput
+                            style={stylesForm.input_senha}
+                            placeholder='Confimar senha'
+                            placeholderTextColor="#888888"
+                        />
                     </View>
 
-                    <Switch width={'90%'} height={'15%'}></Switch>
+                    <Switch
+                        width={'90%'}
+                        height={'15%'}
+                        onpress={toggleRole}
+                        value={role}
+
+                    />
+
                 </View>
 
-                <View style={stylesForm.opcoesEntrar}>
-                    <Pressable style={stylesForm.button_entrar} onPress={handleClick}>
-                        <Text style={stylesForm.textButton}>Criar conta</Text>
-                    </Pressable>
+                {isViewVisible && (
+                    <View style={stylesForm.opcoesEntrar}>
+                        <Pressable style={stylesForm.button_entrar} onPress={handleClick}>
+                            <Text style={stylesForm.textButton}>Criar conta</Text>
+                        </Pressable>
 
-                    <Pressable style={stylesForm.button_google} onPress={handleEntrar}>
+                        <Pressable style={stylesForm.button_google} onPress={handleEntrar}>
 
-                        <Text style={[stylesForm.textButton, { color: '#3F3F3F' }]}>Google</Text>
-                    </Pressable>
+                            <Text style={[stylesForm.textButton, { color: '#3F3F3F' }]}>Google</Text>
+                        </Pressable>
 
-                    <Pressable style={stylesForm.button_criarCon} onPress={Login}>
-                        <Text style={stylesForm.textButton}>Entrar</Text>
-                    </Pressable>
-                </View>
-
+                        <Pressable style={stylesForm.button_criarCon} onPress={Login}>
+                            <Text style={stylesForm.textButton}>Entrar</Text>
+                        </Pressable>
+                    </View>
+                )}
             </View>
         </View>
     );
@@ -121,10 +156,9 @@ const stylesForm = StyleSheet.create({
         flexDirection: 'column',
         flex: 2,
         alignItems: 'center',
-        gap: 2,
+        gap: 6,
         backgroundColor: colors.amarelo,
-        borderTopLeftRadius: 15,
-        borderTopRightRadius: 15
+        borderRadius: 14
 
     },
 
@@ -233,10 +267,8 @@ const stylesButtons = StyleSheet.create({
         alignItems: "center",
         height: '100%',
         flex: 1,
-        padding: '5%',
-        paddingTop: '0%',
-        gap: 10,
-        backgroundColor: 'wh'
+        paddingBottom: '2%',
+        backgroundColor: 'white'
 
     },
 
@@ -245,7 +277,7 @@ const stylesButtons = StyleSheet.create({
         flexDirection: "column",
         flex: 1,
         borderRadius: 50,
-        backgroundColor: colors.branco
+        backgroundColor: colors.amarelo
     },
 
     top: {

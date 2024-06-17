@@ -2,33 +2,27 @@ import React from 'react';
 import { useState } from 'react';
 import { TouchableOpacity, Text, StyleSheet, Pressable, View } from 'react-native';
 
-const SwitchProfile = ({ width, height }) => {
+const SwitchProfile = ({ width, height, onpress, value}) => {
 
     const [flexDirection, setflexDirection] = useState("row");
-    const [typeUser, setTypeUser] = useState("Aluno");
-    const [value, setValue] = useState(0);
 
-    const toggleValue = () => {
-        setValue(prevValue => (prevValue === 0 ? 1 : 0));
-        changeDirection()
-    };
 
     const changeDirection = () => {
-        if (value == 1) {
+        if (value === 'teacher') {
             setflexDirection("row-reverse")
-            setTypeUser("Professor")
+            return <Text style={styles.switchText}>Professor</Text>
         } else {
             setflexDirection("row")
-            setTypeUser("Aluno")
+            return <Text style={styles.switchText}>Aluno</Text>
         }
     };
     return (
         <View style={[styles.viewSwitch, { width: width, height: height, flexDirection: flexDirection }]}>
             <Pressable
                 style={styles.Switch}
-                onPress={toggleValue}
+                onPress={onpress}
             >
-                <Text style={styles.switchText}>{typeUser}</Text>
+               {changeDirection}
             </Pressable>
         </View>
     );
