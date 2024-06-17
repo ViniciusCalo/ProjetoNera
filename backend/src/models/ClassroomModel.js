@@ -1,6 +1,7 @@
 const { sequelize, Sequelize } = require('./db');
+const Teacher = require('../models/TeacherModel'); 
 const express = require('express');
-const {generateHash} = require('../util/hash');
+const generateHash = require('../util/hash');
 
 const Classroom = sequelize.define('Classroom', {
     classroomid: {
@@ -16,7 +17,7 @@ const Classroom = sequelize.define('Classroom', {
         type: Sequelize.TEXT,
         allowNull: true
     },
-    classroomcreation:{
+    classroomcreation: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         allowNull: false
@@ -45,7 +46,7 @@ const Classroom = sequelize.define('Classroom', {
             key: 'moduleid'
         }
     },
-    tokenclass:{
+    tokenclass: {
         type: Sequelize.INTEGER,
         allowNull: false
     }
@@ -66,7 +67,7 @@ const getAllClassrooms = async () => {
 
 const getAllClassroomByTeacherId = async (id) => {
     try {
-        const classrooms = await Classroom.findOne({id});
+        const classrooms = await Classroom.findOne({ id });
         return classrooms;
     } catch (error) {
         console.error(`Erro ao tentar trazer as salas do professor ${id}: `, error);
@@ -74,18 +75,27 @@ const getAllClassroomByTeacherId = async (id) => {
     }
 };
 
-const createClassroom = async ({classroomid, classroomname, classroomdescription, classroomcreation, teacherid, trackid, moduleid, tokenclass }) => {
-    try{
-         const newClassroom = await Classroom.create({
-                classroomname,
-                classroomdescription,
-                classroomcreation,
-                teacherid,
-                trackid,
-                moduleid,
-                tokenclass: generateHash
-            });
-            return newClassroom;
+const createClassroom = async ({ classroomid, classroomname, classroomdescription, teacherid, trackid, moduleid, tokenclass }) => {
+    try {
+        const teacherExists = await Teacher.getTeacherById(teacherid);
+        if (!teacherExists) {
+            throw new Error('Teacher does not exist');
+        }
+        const classroomExists = await Classroom.findOne({ where: { classroomid } });
+
+        if (classroomExists) {
+            throw new Error('Classroom already exists');
+        }
+
+        const newClassroom = await Classroom.create({
+            classroomname,
+            classroomdescription,
+            teacherid,
+            trackid,
+            moduleid,
+            tokenclass
+        });
+        return newClassroom;
     } catch (error) {
         console.error('Erro ao criar Sala! ', error);
     }
