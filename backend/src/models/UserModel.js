@@ -76,7 +76,7 @@ const loginUser = async ({ useremail, userpassword }) => {
         const user = await User.findOne({ where: { useremail } });
 
         if (!user) {
-            throw new Error('Invalid email');
+            throw new Error('Invalid email or password');
         }
 
         const isPasswordValid = await bcrypt.compare(userpassword, user.userpassword);
