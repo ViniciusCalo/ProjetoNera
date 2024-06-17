@@ -60,17 +60,17 @@ const getAllClassrooms = async () => {
         const classrooms = await Classroom.findAll();
         return classrooms;
     } catch (error) {
-        console.error('rro ao tentar trazer as salas: ', error);
+        console.error('Erro ao tentar trazer as salas: ', error);
         throw error;
     }
 };
 
-const getAllClassroomByTeacherId = async (id) => {
+const getAllClassroomByTeacherId = async (teacherid) => {
     try {
-        const classrooms = await Classroom.findOne({ id });
+        const classrooms = await Classroom.findAll({ where: { teacherid } });
         return classrooms;
     } catch (error) {
-        console.error(`Erro ao tentar trazer as salas do professor ${id}: `, error);
+        console.error(`Erro ao tentar trazer as salas do professor ${teacherid}: `, error);
         throw error;
     }
 };
@@ -81,7 +81,7 @@ const createClassroom = async ({ classroomid, classroomname, classroomdescriptio
         if (!teacherExists) {
             throw new Error('Teacher does not exist');
         }
-        const classroomExists = await Classroom.findOne({ where: { classroomid } });
+        const classroomExists = await Classroom.findOne({ where: { classroomname } });
 
         if (classroomExists) {
             throw new Error('Classroom already exists');

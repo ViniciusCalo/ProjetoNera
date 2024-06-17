@@ -29,8 +29,8 @@ const getAll = async () => {
 
 const getTeacherById = async (id) => {
     try {
-        const user = await Teacher.findByPk(id);
-        return user;
+        const teacher = await Teacher.findByPk(id);
+        return teacher;
     } catch (error) {
         console.error('Error fetching user:', error);
         throw error;

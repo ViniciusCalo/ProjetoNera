@@ -1,4 +1,5 @@
 const { sequelize, Sequelize} = require('./db');
+const user = require('./UserModel');
 
 const Student = sequelize.define('User', {
     studentid: {
@@ -7,19 +8,27 @@ const Student = sequelize.define('User', {
         autoIncrement: true
     },
 
-    userid: {
-        type: Sequelize.INTEGER,
-        references: {
-            model: 'Users', // Ajuste para corresponder ao nome da tabela de usuários
-            key: 'userid'
-        }
-    }
-
 }, {
     tableName: 'tbstudent',
     timestamps: false
 });
 
+const getAllStudents = async () => {
+    try {
+        const students = await Student.findAll();
+        return students;
+    } catch (error) {
+        console.error('Error fetching users:', error);
+    }
+}
 
+const getStudentById = async (id) => {
+    try {
+        const student = await Student.findByPk(id);
+        return student;
+    } catch (error) {
+        console.error('Error fetching user:', error);
+    }
+}
 
 module.exports = Student;
