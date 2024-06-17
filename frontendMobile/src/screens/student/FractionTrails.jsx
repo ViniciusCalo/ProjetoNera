@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, ScrollView, Image } from 'react-native'
 import React from 'react'
-import BottomMenuStudent from '../components/MenuStudent';
-import colors from '../components/styles';
-import ButtonModules from '../components/ButtonModules';
+import BottomMenuStudent from '../../components/MenuStudent';
+import colors from '../../components/styles';
+import ButtonModules from '../../components/ButtonModules';
 
 const FractionTrails = ({navigation}) => {
     const handleAccessModulePress = () => {
@@ -12,7 +12,7 @@ const FractionTrails = ({navigation}) => {
         <View style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollView}>
                 <View style={styles.header} >
-                    <Image source={require('../assets/fracao.png')} style={styles.img} />
+                    <Image source={require('../../assets/fracao.png')} style={styles.img} />
                     <Text style={styles.text}>Frações</Text>
                 </View>
                 <View style={styles.grid}>
