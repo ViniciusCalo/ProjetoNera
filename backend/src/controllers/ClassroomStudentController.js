@@ -1,5 +1,5 @@
-const ClassroomStudent = require('../models/ClassroomStudentModel');
-const Classroom = require('../models/ClassroomModel');
+const ClassroomStudent = require('../models/CanonicalDataModel/ClassroomStudentModel');
+const Classroom = require('../models/CanonicalDataModel/ClassroomModel');
 
 const enrollStudent = async (req, res) => {
     try {

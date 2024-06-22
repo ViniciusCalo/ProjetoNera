@@ -1,4 +1,4 @@
-const teacherModel = require('../models/TeacherModel');
+const teacherRepo = require('../repositories/TeacherRepository');
 const express = require('express');
 const router = express.Router();
 

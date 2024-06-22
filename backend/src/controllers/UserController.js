@@ -1,10 +1,10 @@
-const userModel = require('../models/UserModel');
+const userRepo = require('../repositories/UserRepository');
 const express = require('express');
 const router = express.Router();
 
 const getAll = router.get('/user', async (request, response) => {
     try {
-        const users = await userModel.getAll();
+        const users = await userRepo.getAll();
         return response.status(200).json(users);
     } catch (error) {
         console.error(error);
@@ -14,7 +14,7 @@ const getAll = router.get('/user', async (request, response) => {
 
 const getUserById = router.get('/user/:id', async (request, response) => {
     try {
-        const user = await userModel.getUserById(request.params.id);
+        const user = await userRepo.getUserById(request.params.id);
         if (!user) {
             return response.status(404).json({ message: error.message || "User not found" });
         }
@@ -28,7 +28,7 @@ const getUserById = router.get('/user/:id', async (request, response) => {
 const createUser = router.post('/user/register', async (request, response) => {
     try {
         const { username, useremail, userpassword, role } = request.body;
-        const newUser = await userModel.createUser({ username, useremail, userpassword, role });
+        const newUser = await userRepo.createUser({ username, useremail, userpassword, role });
         return response.status(201).json({ message: "User created successfully", newUser });
     } catch (error) {
         console.error(error);
@@ -39,7 +39,7 @@ const createUser = router.post('/user/register', async (request, response) => {
 const login = router.post('/user/login', async (request, response) => {
     try {
         const { useremail, userpassword } = request.body;
-        const { user, token } = await userModel.loginUser({ useremail, userpassword });
+        const { user, token } = await userRepo.loginUser({ useremail, userpassword });
         return response.status(200).json({ message: "Login successful", token });
     } catch (error) {
         console.error(error);
