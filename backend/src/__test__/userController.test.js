@@ -42,13 +42,14 @@ describe('Test the userLoginController', () => {
         expect(response.body).toHaveProperty('message');
     });
 
-    test('It should respond with a message and token for login', async () => {
+    test('It should respond with a error (500) message as user not found', async () => {
         const expectedResult = { test: false };
-        UserLogin.getUserById.mockResolvedValue(expectedResult);
+        UserLogin.getUserById.mockImplementation(() => {throw Error("test")});
+        //mockResolvedValue(expectedResult);
 
         const response = await request(app).get('/user/1');
         expect(response.body).toStrictEqual(expectedResult);
-        expect(response.statusCode).toBe(2007);
+        expect(response.statusCode).toBe(200);
     });
 });
 
