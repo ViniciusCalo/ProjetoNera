@@ -50,7 +50,7 @@ const LoginScreen = ({ navigation }) => {
             });
             console.log(res.data.token)
             if (res.data.token){
-                navigation.navigate('StudentProfile');
+                navigation.navigate('HomeTeacher2');
             }
         } catch (err) {
             console.log(err);
@@ -262,9 +262,7 @@ const stylesButton = (widths) =>StyleSheet.create({
         flex: 1,
         width: widths <= 800 ? '90%' : '30%',
         borderRadius: 50,
-        backgroundColor: colors.amarelo
-        
-        
+        backgroundColor: colors.amarelo  
     },
 
     top: {

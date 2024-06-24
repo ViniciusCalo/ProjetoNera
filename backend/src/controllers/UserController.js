@@ -4,7 +4,7 @@ const router = express.Router();
 
 const getAll = router.get('/user', async (request, response) => {
     try {
-        const users = await userModel.getAll();
+        //const users = await userModel.getAll();
         return response.status(200).json(users);
     } catch (error) {
         console.error(error);

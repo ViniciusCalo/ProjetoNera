@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import SplashScreen from './src/screens/SplashScreen';
 import HomeTeacher from './src/screens/teacher/HomeTeacher';
+import HomeTeacher2 from './src/screens/teacher/HomeTeacher2';
 import TeacherClassroom from './src/screens/teacher/TeacherClassroom';
 import TeacherProfile from './src/screens/TeacherProfile';
 import LoginScreen from './src/screens/LoginScreen';
@@ -30,6 +31,7 @@ export default function App() {
                 <Stack.Screen name="StudentTrails" component={StudentTrails} />
                 <Stack.Screen name="FractionTrails" component={FractionTrails} />
                 <Stack.Screen name="FractionScreen" component={FractionScreen} />
+                <Stack.Screen name="HomeTeacher2" component={HomeTeacher2} />
             </Stack.Navigator>
         </NavigationContainer>
     );
