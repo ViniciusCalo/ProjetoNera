@@ -1,24 +1,36 @@
 import React from 'react';
 import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; // Importe o hook useNavigation
-import profileIcon from '../assets/profileIcon.png';
+import trailIcon from '../assets/trail.png'; 
 import classroomIcon from '../assets/classroomIcon.png'; 
 import homeIcon from '../assets/home.png'; 
+import createIcon from '../assets/createClass.png';
+import reportIcon from '../assets/report.png';
 
 const BottomMenuTeacher = () => {
     const navigation = useNavigation();
 
-    const goToTeacherProfile = () => {
-        navigation.navigate('TeacherProfile');
+    const goToHomeTeacher = () => {
+        navigation.navigate('HomeTeacher');
     };
+
+    const goToTeacherTrial = () => {
+        navigation.navigate('TeacherTrial');
+    }
+    const goToCreateClass = () => {
+        navigation.navigate('CreateClass');
+    }
 
     const goToTeacherClassroom = () => {
         navigation.navigate('TeacherClassroom');
     };
 
-    const goToHomeTeacher = () => {
-        navigation.navigate('HomeTeacher');
-    };
+    const goToTeacherReport = () => {
+        navigation.navigate('TeacherReport');
+    }
+
+
+
 
     const getIconStyle = (routeName) => {
         return {
@@ -32,11 +44,17 @@ const BottomMenuTeacher = () => {
             <TouchableOpacity style={styles.button} onPress={goToHomeTeacher}>
                 <Image source={homeIcon} style={getIconStyle('HomeTeacher')} />
             </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={goToTeacherTrial}>
+                <Image source={trailIcon} style={getIconStyle('TeacherTrial')} />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.buttonCreate} onPress={goToCreateClass}>
+                <Image source={createIcon} style={[getIconStyle('CreateClass'),styles.iconCreate]}  />
+            </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={goToTeacherClassroom}>
                 <Image source={classroomIcon} style={getIconStyle('TeacherClassroom')} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={goToTeacherProfile}>
-                <Image source={profileIcon} style={getIconStyle('TeacherProfile')} />
+            <TouchableOpacity style={styles.button} onPress={goToTeacherReport}>
+                <Image source={reportIcon} style={getIconStyle('TeacherReport')} />
             </TouchableOpacity>
 
         </View>
@@ -45,14 +63,15 @@ const BottomMenuTeacher = () => {
 
 const styles = StyleSheet.create({
     container: {
+        height: 100,
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
         backgroundColor: 'white',
         paddingVertical: 30,
         paddingHorizontal: 30,
-        position: 'absolute',
-        bottom: 0,
+        position: 'fixed',
+        bottom: -20,
         left: 0,
         right: 0,
         borderRadius: 20,
@@ -74,6 +93,19 @@ const styles = StyleSheet.create({
         width: 32,
         height: 34,
         tintColor: '#135794', 
+    },
+    iconCreate: {
+        width: 70,
+        height: 70,
+    },
+    buttonCreate: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 70,
+        height: 70,
+        shadowColor: '#000',
+        elevation: 5,
+        position: 'relative',
     },
 });
 

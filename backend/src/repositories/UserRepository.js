@@ -33,7 +33,8 @@ const getUserById = async (id) => {
     }
 };
 
-const createUser = async ({ username, useremail, userpassword, role }) => {
+const createUser = async ({ username, useremail, userpassword, role}) => {
+
     try {
 
         const hashedPassword = await bcrypt.hash(userpassword, 10);
@@ -75,8 +76,7 @@ const loginUser = async ({ useremail, userpassword }) => {
         const token = jwt.sign({ userid: user.userid, role: user.role }, jwtConfig.secret, {
             expiresIn: jwtConfig.expiresIn,
         });
-
-        return { user, token };
+        return { token };
     } catch (error) {
         console.error('Error logging in user:', error);
         throw error;

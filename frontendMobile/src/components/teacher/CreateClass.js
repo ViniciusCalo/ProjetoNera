@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Picker, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import BottomMenuTeacher from './MenuTeacher';
-import ButtonBlue from './ButtonBlue';
-import IconNera from './IconNera';
+import BottomMenuTeacher from '../MenuTeacher';
+import ButtonBlue from '../ButtonBlue';
+import HeaderTeacher from './HeaderTeacher';
 
 const CreateClass = ({ navigation }) => {
     const [className, setClassName] = useState('');
@@ -18,10 +18,8 @@ const CreateClass = ({ navigation }) => {
 
     return (
         <View style={styles.page}>
-            {/* TopIcon do nera */}
-            <View style={styles.topIcon}>
-                <IconNera />
-            </View>
+            {/* Header do Teacher */}
+            <HeaderTeacher />
             {/* Texto 'criar sala da aula' */}
             <View style={styles.containerClassName}>
                 <Text style={styles.titleContainerCreateClassroom}>Criar Sala de Aula</Text>
