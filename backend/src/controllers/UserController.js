@@ -1,5 +1,6 @@
 const userRepo = require('../repositories/UserRepository');
 const express = require('express');
+const { get } = require('../router');
 const router = express.Router();
 
 const getAll = router.get('/user', async (request, response) => {
@@ -47,9 +48,17 @@ const login = router.post('/user/login', async (request, response) => {
     }
 });
 
+const all = router.get( async (request, response) => {
+    getAll();
+    getUserById();
+    createUser();
+    login();
+});
+
 module.exports = { 
     getAll,
     getUserById,
     createUser,
-    login
+    login,
+    all
 };

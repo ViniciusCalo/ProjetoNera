@@ -54,9 +54,17 @@ const updateClassroom = router.put('/teacher/classroom/update', async (request, 
     }
 });
 
+const all = router.get( async (request, response) => {
+    getAllClassrooms();
+    getAllClassroomByTeacherId();
+    createClassroom();
+    updateClassroom();
+});
+
 module.exports = {
     getAllClassrooms,
     getAllClassroomByTeacherId,
     createClassroom,
-    updateClassroom
+    updateClassroom,
+    all
 };
