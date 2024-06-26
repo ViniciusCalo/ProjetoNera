@@ -1,5 +1,5 @@
-const { sequelize, Sequelize} = require('./db');
-const user = require('./UserModel');
+const { sequelize, Sequelize} = require('../../database/db');
+const user = require('../CanonicalDataModel/UserModel');
 
 const Student = sequelize.define('User', {
     studentid: {

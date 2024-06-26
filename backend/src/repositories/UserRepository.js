@@ -1,33 +1,21 @@
-const { sequelize, Sequelize } = require('./db');
+const userModel = require('../models/CanonicalDataModel/UserModel');
+const Teacher = require('../models/CanonicalDataModel/TeacherModel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const jwtConfig = require('../config/jwtConfig');
 
-const User = sequelize.define('User', {
-    userid: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
-    username: Sequelize.STRING,
-    useremail: {
-        type: Sequelize.STRING,
-        unique: true,
-        allowNull: false
-    },
-    userpassword: Sequelize.STRING,
-    role: {
-        type: Sequelize.ENUM('student', 'teacher'),
-        allowNull: false
+
+const findTeacherCpf = async ({teacherCpf, role}) => {
+    try { 
+        const teacherCpf = await Teacher.findOne({ where: { teachercpf }})
+    } catch (error) {
+
     }
-}, {
-    tableName: 'tbuser',
-    timestamps: false
-});
+}
 
 const getAll = async () => {
     try {
-        const users = await User.findAll();
+        const users = await userModel.User.findAll();
         return users;
     } catch (error) {
         console.error('Error fetching users:', error);
@@ -37,7 +25,7 @@ const getAll = async () => {
 
 const getUserById = async (id) => {
     try {
-        const user = await User.findByPk(id);
+        const user = await userModel.User.findByPk(id);
         return user;
     } catch (error) {
         console.error('Error fetching user:', error);
@@ -45,10 +33,12 @@ const getUserById = async (id) => {
     }
 };
 
-const createUser = async ({ username, useremail, userpassword, role }) => {
+const createUser = async ({ username, useremail, userpassword, role}) => {
+
     try {
+
         const hashedPassword = await bcrypt.hash(userpassword, 10);
-        const userExists = await User.findOne({ where: { useremail } });
+        const userExists = await userModel.User.findOne({ where: { useremail } });
 
         if (userExists) {
             throw new Error('User already exists');
@@ -58,7 +48,8 @@ const createUser = async ({ username, useremail, userpassword, role }) => {
             username,
             useremail,
             userpassword: hashedPassword,
-            role
+            role,
+            teacherCpf: hashedTeacherCpf
         });
 
         return newUser;
@@ -70,7 +61,7 @@ const createUser = async ({ username, useremail, userpassword, role }) => {
 
 const loginUser = async ({ useremail, userpassword }) => {
     try {
-        const user = await User.findOne({ where: { useremail } });
+        const user = await userModel.User.findOne({ where: { useremail } });
 
         if (!user) {
             throw new Error('Invalid email or password');
@@ -85,8 +76,7 @@ const loginUser = async ({ useremail, userpassword }) => {
         const token = jwt.sign({ userid: user.userid, role: user.role }, jwtConfig.secret, {
             expiresIn: jwtConfig.expiresIn,
         });
-
-        return { user, token };
+        return { token };
     } catch (error) {
         console.error('Error logging in user:', error);
         throw error;
