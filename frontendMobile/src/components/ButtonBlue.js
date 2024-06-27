@@ -14,9 +14,11 @@ const ButtonBlue = ({ onPress, title }) => {
 
 const styles = StyleSheet.create({
     button: {
+        width: 140,
+        height: 40,
         backgroundColor: '#135794',
         padding: 12,
-        borderRadius: 30,
+        borderRadius: 10,
         shadowColor: '#000',
         shadowOffset: {
             width: 1,
