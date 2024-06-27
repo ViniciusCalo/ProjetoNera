@@ -50,7 +50,7 @@ const LoginScreen = ({ navigation }) => {
             });
             console.log(res.data.token)
             if (res.data.token){
-                navigation.navigate('HomeTeacher2');
+                navigation.navigate('HomeTeacher');
             }
         } catch (err) {
             console.log(err);
