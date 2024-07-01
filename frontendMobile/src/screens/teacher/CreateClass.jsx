@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, CheckBox, Image } from 'react-native';
-import { Picker } from '@react-native-picker/picker'; 
+import { Picker } from '@react-native-picker/picker';
 import HeaderTeacher from '../../components/teacher/HeaderTeacher';
 import BottomMenuTeacher from '../../components/MenuTeacher';
 import ButtonBlue from '../../components/ButtonBlue';
 import icon from '../../assets/icon_fracao.png';
+import { FlatList } from 'react-native-web';
 
 
 const CreateClass = () => {
@@ -13,7 +14,25 @@ const CreateClass = () => {
     const [trail, settrail] = useState(false);
     const [selectedModule, setSelectedModule] = useState('');
 
-    const modules = ['Module 1', 'Module 2', 'Module 3'];
+    const modules = [{ id: 1, modulo: 'Módulo 1' }, { id: 2, modulo: 'Módulo 2' }, { id: 3, modulo: 'Módulo 3' }, { id: 4, modulo: 'Módulo 4' }, { id: 5, modulo: 'Módulo 5' }];
+    const trails = [{ id: 1, trilha: 'Fração' }, { id: 2, trilha: 'Porcentagem' }, { id: 3, trilha: 'Geometria' }, { id: 4, trilha: 'Matrizes' }, { id: 5, trilha: 'Espressão' }];
+
+    const handleClick = async (e) => {
+        e.preventDefault();
+        try {
+            await axios.post("http://localhost:3333/teacher/classroom/create", {
+                classroomname: title,
+                classroomdescription: description,
+                teacherid: teacherId,
+                trackid: selectedTrackId,
+                moduleid: selectedModuleId
+
+            });
+            window.location.reload()
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
 
     return (
@@ -39,46 +58,21 @@ const CreateClass = () => {
 
                 <Text style={styles.label}>Trilhas</Text>
                 <View style={styles.list}>
-                    <View style={styles.checkboxContent}>
-                        <Image style={styles.icon} source={icon} />
-                        <Text style={styles.checkboxLabel}>Fração</Text>
-                        <CheckBox
-                            value={trail}
-                            onValueChange={settrail}
-                        />
-                    </View>
-                    <View style={styles.checkboxContent2}>
-                        <Image style={styles.icon} source={icon} />
-                        <Text style={styles.checkboxLabel}>Porcentagem</Text>
-                        <CheckBox
-                            value={trail}
-                            onValueChange={settrail}
-                        />
-                    </View>
-                    <View style={styles.checkboxContent}>
-                        <Image style={styles.icon} source={icon} />
-                        <Text style={styles.checkboxLabel}>Equação</Text>
-                        <CheckBox
-                            value={trail}
-                            onValueChange={settrail}
-                        />
-                    </View>
-                    <View style={styles.checkboxContent2}>
-                        <Image style={styles.icon} source={icon} />
-                        <Text style={styles.checkboxLabel}>Matrizes</Text>
-                        <CheckBox
-                            value={trail}
-                            onValueChange={settrail}
-                        />
-                    </View>
-                    <View style={styles.checkboxContent2}>
-                        <Image style={styles.icon} source={icon} />
-                        <Text style={styles.checkboxLabel}>Espressão</Text>
-                        <CheckBox
-                            value={trail}
-                            onValueChange={settrail}
-                        />
-                    </View>
+                    <FlatList
+                        data={trails}
+                        numColumns={3}
+                        renderItem={({ item }) => (
+                            <View style={item.trilha === 'Fração' ? styles.checkboxContent : styles.checkboxContent2}>
+                                <Image source={icon} style={styles.icon} />
+                                <Text style={styles.checkboxLabel}>{item.trilha}</Text>
+                                <CheckBox
+                                    value={trail === item.trilha}
+                                    onValueChange={() => settrail(item.trilha)}
+                                />  
+                            </View>
+                        )}
+                        keyExtractor={(item) => item.id.toString()}
+                    />
                 </View>
 
                 <Text style={styles.label}>Módulos</Text>
@@ -86,10 +80,11 @@ const CreateClass = () => {
                     <Picker
                         style={styles.input}
                         selectedValue={selectedModule}
-                        onValueChange={itemValue => setSelectedModule(itemValue)}
+                        onValueChange={(itemValue, itemIndex) => setSelectedModule(itemIndex)}
                     >
+                        <Picker.Item label="Selecione um Módulo" value="" />
                         {modules.map(module => (
-                            <Picker.Item key={module} label={module} value={module} />
+                            <Picker.Item key={module.id} label={module.modulo} value={module.modulo} />
                         ))}
                     </Picker>
                 </View>
@@ -97,8 +92,6 @@ const CreateClass = () => {
                     <ButtonBlue title="Cancelar" />
                     <ButtonBlue title="Criar Sala" />
                 </View>
-
-
             </View>
             <BottomMenuTeacher />
         </View>
@@ -114,7 +107,7 @@ const styles = StyleSheet.create({
     },
     form: {
         width: '100%',
-        height: '70%',
+        height: '60%',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -124,7 +117,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         color: '#000',
-        marginTop: 105,
+        marginTop: 230,
     },
     label: {
         width: '90%',
@@ -147,8 +140,8 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     list: {
-        justifyContent: 'center',
-        alignItems: 'center',
+        width: '90%',
+        height: 150,
         flexDirection: 'row',
         flexWrap: 'wrap',
     },
