@@ -12,10 +12,11 @@ const CreateClass = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [trail, settrail] = useState(false);
-    const [selectedModule, setSelectedModule] = useState('');
+    const [selectedModule, selectedModuleId] = useState('');
+    const [selectedTrack, selectedTrackId] = useState('');
 
     const modules = [{ id: 1, modulo: 'Módulo 1' }, { id: 2, modulo: 'Módulo 2' }, { id: 3, modulo: 'Módulo 3' }, { id: 4, modulo: 'Módulo 4' }, { id: 5, modulo: 'Módulo 5' }];
-    const trails = [{ id: 1, trilha: 'Fração' }, { id: 2, trilha: 'Porcentagem' }, { id: 3, trilha: 'Geometria' }, { id: 4, trilha: 'Matrizes' }, { id: 5, trilha: 'Espressão' }];
+    const trails = [{ id: 1, trilha: 'Fração' }, { id: 2, trilha: 'Porcentagem' }, { id: 3, trilha: 'Matrizes' }, { id: 4, trilha: 'Geometria' }, { id: 5, trilha: 'Espressão' }];
 
     const handleClick = async (e) => {
         e.preventDefault();
@@ -62,8 +63,7 @@ const CreateClass = () => {
                         data={trails}
                         numColumns={3}
                         renderItem={({ item }) => (
-                            <View style={item.trilha === 'Fração' ? styles.checkboxContent : styles.checkboxContent2}>
-                                <Image source={icon} style={styles.icon} />
+                            <View style={item.trilha === 'Fração' || 'Matrizes' ? styles.checkboxContent : styles.checkboxContent2}>
                                 <Text style={styles.checkboxLabel}>{item.trilha}</Text>
                                 <CheckBox
                                     value={trail === item.trilha}
@@ -80,7 +80,7 @@ const CreateClass = () => {
                     <Picker
                         style={styles.input}
                         selectedValue={selectedModule}
-                        onValueChange={(itemValue, itemIndex) => setSelectedModule(itemIndex)}
+                        onValueChange={(itemValue, itemIndex) => selectedTrackId(itemIndex)}
                     >
                         <Picker.Item label="Selecione um Módulo" value="" />
                         {modules.map(module => (
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         color: '#000',
-        marginTop: 230,
+        marginTop: 250,
     },
     label: {
         width: '90%',
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        width: 110,
+        width: 120,
         margin: 5,
         height: 40,
         backgroundColor: '#fff',
