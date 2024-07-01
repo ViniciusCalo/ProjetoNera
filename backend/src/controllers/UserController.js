@@ -1,4 +1,5 @@
 const userRepo = require('../repositories/UserRepository');
+const userModel = require('../models/CanonicalDataModel/UserModel');
 const express = require('express');
 const { get } = require('../router');
 const router = express.Router();
@@ -7,6 +8,20 @@ const getAll = router.get('/user', async (request, response) => {
     try {
         const users = await userRepo.getAll();
         return response.status(200).json(users);
+    } catch (error) {
+        console.error(error);
+        return response.status(500).json({ message: error.message || "Internal server error" });
+    }
+});
+
+const getStudentById = router.get('/user/student/:id', async (request, response) => {
+    try {
+        const role = userModel.User.role();
+        role == 'student' ? student = await userRepo.getStudentById(request.params.id) : console.log('This user is not a Student, unable to get data');
+        if (!student) {
+            return response.status(404).json({ message: error.message || "Student not found" });
+        }
+        return response.status(200).json(student);
     } catch (error) {
         console.error(error);
         return response.status(500).json({ message: error.message || "Internal server error" });
@@ -53,12 +68,7 @@ const all = router.get( async (request, response) => {
     getUserById();
     createUser();
     login();
+    getStudentById();
 });
 
-module.exports = { 
-    getAll,
-    getUserById,
-    createUser,
-    login,
-    all
-};
+module.exports = { all };
