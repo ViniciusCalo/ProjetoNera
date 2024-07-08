@@ -1,13 +1,17 @@
-const express = require ('express');
+const express = require('express');
 const router = require('./router');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const passport = require('./config/auth'); // Ajuste o caminho conforme necessário
+
 const app = express();
 
-//Middleware-Routes
+// Middleware
 app.use(bodyParser.json());
+app.use(express.json()); 
+app.use(passport.initialize()); // Inicializa o Passport
 
-//CORS Function to API Authorization
+// CORS Function to API Authorization
 app.use(cors());
 
 app.use(router);

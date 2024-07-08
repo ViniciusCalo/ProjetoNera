@@ -1,5 +1,6 @@
 const classroomRepo = require('../repositories/ClassroomRepository');
 const express = require('express');
+const passport = require('passport');
 const router = express.Router();
 const { generateHash } = require('../util/hash');
 
@@ -13,7 +14,7 @@ const getAllClassrooms = router.get('/teacher/classroom', async (request, respon
     }
 });
 
-const getAllClassroomByTeacherId = router.get('/teacher/classroom/:id', async (request, response) => {
+const getAllClassroomByTeacherId = router.get('/teacher/classroom/:id',  passport.authenticate('jwt', { session: false }), async (request, response) => {
     try {
         const teacherid = request.params.id;
         
@@ -30,7 +31,7 @@ const getAllClassroomByTeacherId = router.get('/teacher/classroom/:id', async (r
         return response.status(500).json({ message: error.message || "Internal server error" });
     }
 });
-const createClassroom = router.post('/teacher/classroom/create', async (request, response) => {
+const createClassroom = router.post('/teacher/classroom/create', passport.authenticate('jwt', { session: false }), async (request, response) => {
     try {
         const { classroomname, classroomdescription, teacherid, trackid, moduleid } = request.body;
         tokenclass = generateHash(Date.now());
@@ -42,12 +43,13 @@ const createClassroom = router.post('/teacher/classroom/create', async (request,
     }
 });
 
-const updateClassroom = router.put('/teacher/classroom/update', async (request, response) => {
+const updateClassroom = router.put('/teacher/classroom/update/:id', passport.authenticate('jwt', { session: false }), async (request, response) => {
     try{
         const classroomid = request.params.id;
-        const { classroomname, classroomdescription, teacherid, trackid, moduleid } = request.body;
-        const tokenclass = generateHash();
-        const updatedClassroom = await classroomRepo.updateClassroom({classroomid, classroomname, classroomdescription, teacherid, trackid, moduleid, tokenclass});
+        const { classroomdescription, trackid, moduleid } = request.body;
+
+        const tokenclass = generateHash(Date.now());
+        const updatedClassroom = await classroomRepo.editClassroom({classroomid, classroomdescription, trackid, moduleid, tokenclass});
         return response.status(200).json({ message: "Classroom updated successfully", updatedClassroom });
     } catch(error){
         return response.status(500).json({ message: error.message ||  "Internal server error" });
@@ -61,10 +63,4 @@ const all = router.get( async (request, response) => {
     updateClassroom();
 });
 
-module.exports = {
-    getAllClassrooms,
-    getAllClassroomByTeacherId,
-    createClassroom,
-    updateClassroom,
-    all
-};
+module.exports = { all };

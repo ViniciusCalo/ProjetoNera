@@ -13,6 +13,16 @@ const findTeacherCpf = async ({teacherCpf, role}) => {
     }
 }
 
+const getStudentById = async ({id}) => {
+    try {
+        const studentId = await Student.findByPk(id);
+        return studentId;
+    } catch (error) {
+        console.error('Error trying to get student: ', error);
+        throw error;
+    }
+};
+
 const getAll = async () => {
     try {
         const users = await userModel.User.findAll();
@@ -87,5 +97,6 @@ module.exports = {
     getAll,
     getUserById,
     createUser,
-    loginUser
+    loginUser,
+    getStudentById
 };
