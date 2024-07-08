@@ -13,7 +13,7 @@ const StudentProfile = () => {
                     <Text style={{ fontWeight: 'bold' }}>@Nickname</Text>
                     <Text style={{ fontWeight: 'bold' }}>Nome Sobrenome</Text>
                 </View>
-                <Image source={require('../../assets/Icone.png')} style={styles.img_icone} resizeMode="contain"></Image>
+                <Image source={require('../../assets/icone.png')} style={styles.img_icone} resizeMode="contain"></Image>
             </View>
 
             <View style={styles.div_conquistas}>

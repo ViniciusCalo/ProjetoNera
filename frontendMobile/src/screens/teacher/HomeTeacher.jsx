@@ -15,15 +15,13 @@ const Home = () => {
             <View style={styles.panner}>
             </View>
             <Text style={styles.title}>Minhas salas</Text>
-            <ScrollView horizontal={true} style={{ width: "100%"}}>
+            <ScrollView horizontal={true} style={{ width: "100%", height: "20%"}}>
                 <FlatList
                     data={[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }]}
                     keyExtractor={(item) => item.id.toString()}
                     style={{ paddingLeft: 20 }}
                     renderItem={({ item }) => (
-                        <View style={{ height: 100, marginRight: 20 }}>
                             <ClassroomCard/>
-                        </View>
                     )}
                     horizontal
                     showsHorizontalScrollIndicator={false}
@@ -52,14 +50,13 @@ const Home = () => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 3,
         alignItems: 'center',
         backgroundColor: '#F6F7FF',
-
     },
     panner: {
-        marginTop: 105,
-        height: 150,
+
+        height: '20%',
         width: '90%',
         backgroundColor: '#fff',
         borderRadius: 10,

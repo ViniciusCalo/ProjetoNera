@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, CheckBox, Image } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Image, FlatList, CheckBox } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import HeaderTeacher from '../../components/teacher/HeaderTeacher';
 import BottomMenuTeacher from '../../components/MenuTeacher';
 import ButtonBlue from '../../components/ButtonBlue';
-import icon from '../../assets/icon_fracao.png';
-import { FlatList } from 'react-native-web';
+
 
 
 const CreateClass = () => {

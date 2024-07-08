@@ -34,7 +34,7 @@ const LoginScreen = ({ navigation }) => {
     const stylesButtons = stylesButton(width);
 
     const Login = () => {
-        navigation.replace('RegisterTeacher')
+        navigation.replace('HomeTeacher')
     }
 
     const handleEntrar = () => {
@@ -115,7 +115,7 @@ const LoginScreen = ({ navigation }) => {
 
                 {isViewVisible && (
                     <View style={stylesForm.opcoesEntrar}>
-                        <Pressable style={stylesForm.button_entrar} onPress={handleClick}>
+                        <Pressable style={stylesForm.button_entrar} onPress={Login}>
                             <Text style={stylesForm.textButton}>Entrar</Text>
                         </Pressable>
 

@@ -61,9 +61,11 @@ const BottomMenuTeacher = () => {
     );
 };
 
+
 const styles = StyleSheet.create({
     container: {
-        height: 100,
+        width: '100%',
+        height: '12%',
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
