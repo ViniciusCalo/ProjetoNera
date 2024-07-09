@@ -4,8 +4,9 @@ const passport = require('passport');
 const router = express.Router();
 const { generateHash } = require('../util/hash');
 
-const getAllClassrooms = router.get('/teacher/classroom', async (request, response) => {
+router.get('/', passport.authenticate('jwt', { session: false }), async (request, response) => {
     try {
+        console.log("Usuario ", request.user);
         const classrooms = await classroomRepo.getAllClassrooms();
         return response.status(200).json(classrooms);
     } catch (error) {
@@ -14,24 +15,23 @@ const getAllClassrooms = router.get('/teacher/classroom', async (request, respon
     }
 });
 
-const getAllClassroomByTeacherId = router.get('/teacher/classroom/:id',  passport.authenticate('jwt', { session: false }), async (request, response) => {
+router.get('/:id',  passport.authenticate('jwt', { session: false }), async (request, response) => {
     try {
         const teacherid = request.params.id;
-        
         const classrooms = await classroomRepo.getAllClassroomByTeacherId(teacherid);
         
         if (!classrooms.length) {
-            return response.status(404).json({ message: "Teacher not found or no classrooms assigned" });
+            return response.status(404).json({ message: "Professor não encontrado ou nenhuma sala relacionada" });
         }
 
         return response.status(200).json(classrooms);
 
     } catch (error) {
-        console.error('Error getting all classrooms:', error);
+        console.error('Erro ao tentar encontrar salas:', error);
         return response.status(500).json({ message: error.message || "Internal server error" });
     }
 });
-const createClassroom = router.post('/teacher/classroom/create', passport.authenticate('jwt', { session: false }), async (request, response) => {
+router.post('/create', passport.authenticate('jwt', { session: false }), async (request, response) => {
     try {
         const { classroomname, classroomdescription, teacherid, trackid, moduleid } = request.body;
         tokenclass = generateHash(Date.now());
@@ -43,7 +43,7 @@ const createClassroom = router.post('/teacher/classroom/create', passport.authen
     }
 });
 
-const updateClassroom = router.put('/teacher/classroom/update/:id', passport.authenticate('jwt', { session: false }), async (request, response) => {
+router.put('/update/:id', passport.authenticate('jwt', { session: false }), async (request, response) => {
     try{
         const classroomid = request.params.id;
         const { classroomdescription, trackid, moduleid } = request.body;
@@ -56,11 +56,5 @@ const updateClassroom = router.put('/teacher/classroom/update/:id', passport.aut
     }
 });
 
-const all = router.get( async (request, response) => {
-    getAllClassrooms();
-    getAllClassroomByTeacherId();
-    createClassroom();
-    updateClassroom();
-});
 
-module.exports = { all };
+module.exports = router;

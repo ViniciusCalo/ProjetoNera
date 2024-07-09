@@ -4,24 +4,15 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const jwtConfig = require('../config/jwtConfig');
 
-
-const findTeacherCpf = async ({teacherCpf, role}) => {
-    try { 
-        const teacherCpf = await Teacher.findOne({ where: { teachercpf }})
-    } catch (error) {
-
-    }
-}
-
-const getStudentById = async ({id}) => {
-    try {
-        const studentId = await Student.findByPk(id);
-        return studentId;
-    } catch (error) {
-        console.error('Error trying to get student: ', error);
-        throw error;
-    }
-};
+// const getStudentById = async ({id}) => {
+//     try {
+//         const studentId = await Student.findByPk(id);
+//         return studentId;
+//     } catch (error) {
+//         console.error('Error trying to get student: ', error);
+//         throw error;
+//     }
+// };
 
 const getAll = async () => {
     try {
@@ -44,7 +35,6 @@ const getUserById = async (id) => {
 };
 
 const createUser = async ({ username, useremail, userpassword, role}) => {
-
     try {
 
         const hashedPassword = await bcrypt.hash(userpassword, 10);
@@ -54,7 +44,7 @@ const createUser = async ({ username, useremail, userpassword, role}) => {
             throw new Error('User already exists');
         }
 
-        const newUser = await User.create({
+        const newUser = await userModel.User.create({
             username,
             useremail,
             userpassword: hashedPassword,
@@ -69,12 +59,12 @@ const createUser = async ({ username, useremail, userpassword, role}) => {
     }
 };
 
-const loginUser = async ({ useremail, userpassword }) => {
+const loginUser = async ({ useremail, userpassword, role }) => {
     try {
-        const user = await userModel.User.findOne({ where: { useremail } });
+        const user = await userModel.User.findOne({ where: { useremail, role } });
 
         if (!user) {
-            throw new Error('Invalid email or password');
+            throw new Error('Invalid email, password or role provided');
         }
 
         const isPasswordValid = await bcrypt.compare(userpassword, user.userpassword);
@@ -98,5 +88,5 @@ module.exports = {
     getUserById,
     createUser,
     loginUser,
-    getStudentById
+    //getStudentById
 };

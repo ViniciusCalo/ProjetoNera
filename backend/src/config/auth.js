@@ -8,15 +8,14 @@ const userModel = require('../models/CanonicalDataModel/UserModel');
 const applyPassportStrategy = passport => {
   const options = {};
   options.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-  //options.jwtFromRequestSecret = ExtractJwt.fromBodyField(); extrair token do request.body que virá do createClass
   options.secretOrKey = jwtConfig.secret;
   passport.use(
     new Strategy(options, (payload, done) => {
-      // console.log('JWT Payload:', payload);
-      userModel.User.findOne({ where: { userid: payload.userid, role: payload.role} })
+      console.log('JWT Payload:', payload);
+      userModel.User.findOne({ where: { userid: payload.userid, role: payload.role } })
         .then(user => {
           if (user) {
-            console.log('User found: ',user);
+            console.log('User found: ', user);
             return done(null, {
               userid: user.userid,
               role: user.role
@@ -34,5 +33,6 @@ const applyPassportStrategy = passport => {
 };
 
 applyPassportStrategy(passport);
+// passportStraregyToExtractTokenFromBody(passport);
 
 module.exports = passport;
