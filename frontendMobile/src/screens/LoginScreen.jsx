@@ -34,26 +34,29 @@ const LoginScreen = ({ navigation }) => {
     };
     const stylesButtons = stylesButton(width);
 
-    const Login = () => {
-        navigation.replace('HomeTeacher')
+    const criar = () => {
+        navigation.replace('RegisterTeacher')
     }
 
     const handleEntrar = () => {
         navigation.navigate('StudentProfile');
     };
 
-    const handleClick = async (e) => {
-        clearLocalStorage();
+    const login = async (e) => {
         e.preventDefault();
         try {
-           const res = await axios.post("http://localhost:3333/user/login", {
+           const res = await axios.post("http://localhost:3333/users/login", {
                 useremail: email,
                 userpassword: senha,
+                role: role
             });
             console.log(res.data.token)
-            if (res.data.token){
+            if (res.data.token || role === 'teacher') {
                 localStorage.setItem('token', res.data.token);
                 navigation.navigate('HomeTeacher');
+            } else if (res.data.token || role === 'student') {
+                localStorage.setItem('token', res.data.token);
+                navigation.navigate('HomeStudent');
             }
         } catch (err) {
             console.log(err);
@@ -118,7 +121,7 @@ const LoginScreen = ({ navigation }) => {
 
                 {isViewVisible && (
                     <View style={stylesForm.opcoesEntrar}>
-                        <Pressable style={stylesForm.button_entrar} onPress={handleClick}>
+                        <Pressable style={stylesForm.button_entrar} onPress={login}>
                             <Text style={stylesForm.textButton}>Entrar</Text>
                         </Pressable>
 
@@ -127,7 +130,7 @@ const LoginScreen = ({ navigation }) => {
                             <Text style={[stylesForm.textButton, { color: '#3F3F3F' }]}>Google</Text>
                         </Pressable>
 
-                        <Pressable style={stylesForm.button_criarCon} onPress={handleClick}>
+                        <Pressable style={stylesForm.button_criarCon} onPress={criar}>
                             <Text style={stylesForm.textButton}>Criar Conta</Text>
                         </Pressable>
                     </View>
