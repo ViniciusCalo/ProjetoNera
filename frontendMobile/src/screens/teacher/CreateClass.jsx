@@ -5,10 +5,12 @@ import HeaderTeacher from '../../components/teacher/HeaderTeacher';
 import BottomMenuTeacher from '../../components/MenuTeacher';
 import ButtonBlue from '../../components/ButtonBlue';
 import CheckBox from '../../components/CheckBox';
+import ClassroomModal from '../../components/teacher/ClassroomModal';
 
 
 
 const CreateClass = () => {
+    const [modalVisible, setModalVisible] = useState(false);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [trail, settrail] = useState(false);
@@ -17,6 +19,8 @@ const CreateClass = () => {
 
     const modules = [{ id: 1, modulo: 'Módulo 1' }, { id: 2, modulo: 'Módulo 2' }, { id: 3, modulo: 'Módulo 3' }];
     const trails = [{ id: 1, trilha: 'Fração' }, { id: 2, trilha: 'Porcentagem' }, { id: 3, trilha: 'Matrizes' }, { id: 4, trilha: 'Geometria' }, { id: 5, trilha: 'Espressão' }];
+
+
 
     return (
         <View style={styles.container}>
@@ -72,10 +76,14 @@ const CreateClass = () => {
                 </View>
                 <View style={styles.buttons}>
                     <ButtonBlue title="Cancelar" />
-                    <ButtonBlue title="Criar Sala" />
+                    <ButtonBlue onPress={() => setModalVisible(!modalVisible)} title="Criar Sala" />
                 </View>
             </View>
             <BottomMenuTeacher />
+            <ClassroomModal
+                modalVisible={modalVisible}
+                setModalVisible={setModalVisible}
+            />
         </View>
     );
 };
