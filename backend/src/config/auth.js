@@ -4,6 +4,7 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 require('dotenv').config();
 const jwtConfig = require('./jwtConfig');
 const userModel = require('../models/CanonicalDataModel/UserModel');
+const teacherModel = require('../models/CanonicalDataModel/TeacherModel');
 
 const applyPassportStrategy = passport => {
   const options = {};
@@ -22,6 +23,20 @@ const applyPassportStrategy = passport => {
             });
           }
           console.log('User not found');
+          if(user.role === 'teacher'){
+            teacherModel.Teacher.findOne( {where: { userid: payload.userid}})
+            .then(teacher => {
+              if(teacher) {
+                console.log('Teacher Found: ', teacher);
+                return done(null, {
+                  teacherid: teacher.teacherid,
+                  userid: teacher.userid,
+                  role: user.role
+                });
+              }
+            })
+          }
+          console.log('User is not a teacher');
           return done(null, false);
         })
         .catch(err => {

@@ -1,4 +1,6 @@
 const classroomRepo = require('../repositories/ClassroomRepository');
+const teacherRepo = require('../repositories/TeacherRepository');
+const teacherController = require('../controllers/TeacherController');
 const express = require('express');
 const passport = require('passport');
 const router = express.Router();
@@ -15,9 +17,8 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (request
     }
 });
 
-router.get('/:id',  passport.authenticate('jwt', { session: false }), async (request, response) => {
+router.get('/:id', passport.authenticate('jwt', { session: false }), async (request, response) => {
     try {
-        const teacherid = request.params.id;
         const classrooms = await classroomRepo.getAllClassroomByTeacherId(teacherid);
         
         if (!classrooms.length) {
@@ -33,7 +34,8 @@ router.get('/:id',  passport.authenticate('jwt', { session: false }), async (req
 });
 router.post('/create', passport.authenticate('jwt', { session: false }), async (request, response) => {
     try {
-        const { classroomname, classroomdescription, teacherid, trackid, moduleid } = request.body;
+        const teacherid = teacherRepo.getTeacherById();
+        const { classroomname, classroomdescription, trackid, moduleid } = request.body;
         tokenclass = generateHash(Date.now());
         const newClassroom = await classroomRepo.createClassroom({classroomname, classroomdescription, teacherid, trackid, moduleid, tokenclass});
         return response.status(201).json({ message: "Classroom created successfully", newClassroom });
