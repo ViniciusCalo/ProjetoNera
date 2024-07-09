@@ -35,7 +35,7 @@ const LoginScreen = ({ navigation }) => {
     const stylesButtons = stylesButton(width);
 
     const criar = () => {
-        navigation.replace('RegisterTeacher')
+        navigation.replace('HomeTeacher')
     }
 
     const handleEntrar = () => {

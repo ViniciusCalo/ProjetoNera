@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         position: 'relative',
         backgroundColor: '#fff',
         borderRadius: 8,
-        marginTop: 50,
+        marginTop: 20,
         marginBottom: 16,
         marginLeft: 10,
         marginRight: 10,

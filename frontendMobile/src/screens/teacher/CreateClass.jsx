@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Image, FlatList, CheckBox } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Image, FlatList } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import HeaderTeacher from '../../components/teacher/HeaderTeacher';
 import BottomMenuTeacher from '../../components/MenuTeacher';
 import ButtonBlue from '../../components/ButtonBlue';
+import CheckBox from '../../components/CheckBox';
 
 
 
@@ -14,62 +15,58 @@ const CreateClass = () => {
     const [selectedModule, selectedModuleId] = useState('');
     const [selectedTrack, selectedTrackId] = useState('');
 
-    const modules = [{ id: 1, modulo: 'Módulo 1' }, { id: 2, modulo: 'Módulo 2' }, { id: 3, modulo: 'Módulo 3' }, { id: 4, modulo: 'Módulo 4' }, { id: 5, modulo: 'Módulo 5' }];
+    const modules = [{ id: 1, modulo: 'Módulo 1' }, { id: 2, modulo: 'Módulo 2' }, { id: 3, modulo: 'Módulo 3' }];
     const trails = [{ id: 1, trilha: 'Fração' }, { id: 2, trilha: 'Porcentagem' }, { id: 3, trilha: 'Matrizes' }, { id: 4, trilha: 'Geometria' }, { id: 5, trilha: 'Espressão' }];
-
-    
-
-
 
     return (
         <View style={styles.container}>
-            <HeaderTeacher />
+            <View style={styles.header}>
+                <HeaderTeacher />
+            </View>
             <View style={styles.form}>
                 <Text style={styles.title}>Criar sala</Text>
-                <Text style={styles.label}>Titulo</Text>
+                <Text style={styles.label}>Título</Text>
                 <TextInput
                     style={styles.input}
                     value={title}
                     onChangeText={text => setTitle(text)}
-                    placeholder="Digite o titulo da Sala"
+                    placeholder="Digite o título da Sala"
+                    placeholderTextColor={"#6296C4"}
                 />
-
                 <Text style={styles.label} >Descrição</Text>
                 <TextInput
                     style={styles.input}
                     value={description}
                     onChangeText={text => setDescription(text)}
                     placeholder="Digite a descrição da Sala"
+                    placeholderTextColor={"#6296C4"}
                 />
-
                 <Text style={styles.label}>Trilhas</Text>
                 <View style={styles.list}>
                     <FlatList
                         data={trails}
                         numColumns={3}
+                        keyExtractor={item => item.id.toString()}
                         renderItem={({ item }) => (
-                            <View style={item.trilha === 'Fração' || 'Matrizes' ? styles.checkboxContent : styles.checkboxContent2}>
+                            <View style={styles.checkboxContent}>
                                 <Text style={styles.checkboxLabel}>{item.trilha}</Text>
                                 <CheckBox
-                                    value={trail === item.trilha}
-                                    onValueChange={() => settrail(item.trilha)}
-                                />  
+                                    isChecked={trail}
+                                    handleToggle={() => settrail(!trail)}
+                                />
                             </View>
                         )}
-                        keyExtractor={(item) => item.id.toString()}
                     />
                 </View>
-
                 <Text style={styles.label}>Módulos</Text>
                 <View style={styles.selctModule}>
                     <Picker
-                        style={styles.input}
                         selectedValue={selectedModule}
-                        onValueChange={(itemValue, itemIndex) => selectedTrackId(itemIndex)}
+                        onValueChange={(itemValue) => selectedModuleId(itemValue)}
                     >
                         <Picker.Item label="Selecione um Módulo" value="" />
-                        {modules.map(module => (
-                            <Picker.Item key={module.id} label={module.modulo} value={module.modulo} />
+                        {modules.map((item) => (
+                            <Picker.Item key={item.id} label={item.modulo} value={item.id} />
                         ))}
                     </Picker>
                 </View>
@@ -86,15 +83,22 @@ const CreateClass = () => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        display: 'flex',
+        width: '100%',
+        height: '100%',
         alignItems: 'center',
         backgroundColor: '#F6F7FF',
     },
-    form: {
+    header: {
+        display: 'flex',
         width: '100%',
-        height: '60%',
-        alignItems: 'center',
-        justifyContent: 'center',
+        height: '15%',
+        marginBottom: '2%',
+    },
+    form: {
+        display: 'flex',
+        width: '90%',
+        height: '100%',
     },
     title: {
         width: '100%',
@@ -102,7 +106,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         color: '#000',
-        marginTop: 250,
     },
     label: {
         width: '90%',
@@ -110,23 +113,21 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         color: '#000',
-        marginTop: 20,
-        marginBottom: 20
-
+        marginTop: '5%',
+        marginBottom: '2%',
     },
     input: {
-        width: '90%',
+        width: '100%',
         height: 40,
-        borderColor: '#000',
+        borderColor: '#6296C4',
         backgroundColor: '#fff',
         borderWidth: 1,
         borderRadius: 10,
-        marginTop: 5,
         padding: 10,
     },
     list: {
-        width: '90%',
-        height: 150,
+        width: '100%',
+        height: 'auto',
         flexDirection: 'row',
         flexWrap: 'wrap',
     },
@@ -134,23 +135,16 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        width: 120,
+        width: '31%',
         margin: 5,
         height: 40,
         backgroundColor: '#fff',
         borderRadius: 10,
         marginTop: 5,
-    },
-    checkboxContent2: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: 150,
-        margin: 5,
-        height: 40,
-        backgroundColor: '#fff',
-        borderRadius: 10,
-        marginTop: 5,
+        borderColor: '#6296C4',
+        borderWidth: 1,
+        paddingLeft: 5,
+
     },
     icon: {
         width: 15,
@@ -161,20 +155,23 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     checkboxLabel: {
-        fontSize: 16,
+        fontSize: 12,
         marginLeft: 2,
         marginRight: 5,
     },
     buttons: {
+        display: 'flex',
         width: '90%',
         flexDirection: 'row',
         justifyContent: 'space-around',
-        marginTop: 60,
     },
     selctModule: {
+        display: 'flex',
         width: '90%',
-        height: 40,
-    }
+        height: '20%',
+         marginBottom: '5%',
+         padding: 10,
+    },
 });
 
 

@@ -65,18 +65,15 @@ const BottomMenuTeacher = () => {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        height: '12%',
+        height: '10%',
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
         backgroundColor: 'white',
-        paddingVertical: 30,
-        paddingHorizontal: 30,
-        position: 'fixed',
-        bottom: -20,
+        position: 'absolute',
+        bottom: 0,
         left: 0,
         right: 0,
-        borderRadius: 20,
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
