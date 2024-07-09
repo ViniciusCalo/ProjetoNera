@@ -1,4 +1,4 @@
-const teacherModel = require('../models/CanonicalDataModel/TeacherModel'); 
+const teacherRepo = require('../repositories/TeacherRepository');
 const classroomModel = require('../models/CanonicalDataModel/ClassroomModel');
 const express = require('express');
 
@@ -25,7 +25,7 @@ const getAllClassroomByTeacherId = async (teacherid) => {
 
 const createClassroom = async ({ classroomid, classroomname, classroomdescription, teacherid, trackid, moduleid, tokenclass }) => {
     try {
-        const teacherExists = await teacherModel.Teacher.getTeacherById(teacherid);
+        const teacherExists = await teacherRepo.getTeacherById(teacherid);
         if (!teacherExists) {
             throw new Error('Teacher does not exist');
         }
@@ -49,8 +49,31 @@ const createClassroom = async ({ classroomid, classroomname, classroomdescriptio
     }
 };
 
+const editClassroom = async ({ classroomid, classroomname, classroomdescription, teacherid, trackid, moduleid, tokenclass }) => {
+    try {
+        const teacherExists = await teacherRepo.getTeacherById(teacherid);
+        if (!teacherExists) {
+            throw new Error('Teacher does not exist');
+        }
+        const classroomExists = await classroomModel.Classroom.findOne({ where: { classroomid } });
+        if (!classroomExists) {
+            throw new Error('Classroom do not exists, unable to edit');
+        }
+        const updatedClassroom = await classroomModel.Classroom.update({
+            classroomdescription,
+            trackid,
+            moduleid,
+            tokenclass
+        });
+        return updatedClassroom;
+    } catch (error) {
+        console.error('Erro ao editar Sala! ', error);
+    }
+};
+
 module.exports = {
     getAllClassrooms,
     getAllClassroomByTeacherId,
-    createClassroom
+    createClassroom,
+    editClassroom
 };
