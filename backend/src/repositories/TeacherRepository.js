@@ -73,9 +73,9 @@ const getAll = async () => {
     }
 };
 
-const getTeacherById = async (id) => {
+const getTeacherById = async (request) => {
     try {
-        const teacher = await teacherModel.Teacher.findByPk(id);
+        const teacher = await teacherModel.Teacher.findOne({where:{userid : request.user}});
         return teacher;
     } catch (error) {
         console.error('Error fetching teacher:', error);
@@ -84,7 +84,6 @@ const getTeacherById = async (id) => {
 };
 
 module.exports = {
-    getAll,
     getTeacherById,
     registerUserAsATeacher,
     loginTeacher

@@ -17,27 +17,35 @@ const applyPassportStrategy = passport => {
         .then(user => {
           if (user) {
             console.log('User found: ', user);
-            return done(null, {
-              userid: user.userid,
-              role: user.role
-            });
-          }
-          console.log('User not found');
-          if(user.role === 'teacher'){
-            teacherModel.Teacher.findOne( {where: { userid: payload.userid}})
-            .then(teacher => {
-              if(teacher) {
-                console.log('Teacher Found: ', teacher);
-                return done(null, {
-                  teacherid: teacher.teacherid,
-                  userid: teacher.userid,
-                  role: user.role
+            if (user.role === 'teacher') {
+              teacherModel.Teacher.findOne({ where: { userid: user.userid } })
+                .then(teacher => {
+                  if (teacher) {
+                    console.log('Teacher Found: ', teacher);
+                    return done(null, {
+                      teacherid: teacher.teacherid,
+                      userid: teacher.userid,
+                      role: user.role
+                    });
+                  } else {
+                    console.log('User is not a teacher');
+                    return done(null, false);
+                  }
+                })
+                .catch(err => {
+                  console.log('Error finding teacher:', err);
+                  return done(err, false);
                 });
-              }
-            })
+            } else {
+              return done(null, {
+                userid: user.userid,
+                role: user.role
+              });
+            }
+          } else {
+            console.log('User not found');
+            return done(null, false);
           }
-          console.log('User is not a teacher');
-          return done(null, false);
         })
         .catch(err => {
           console.log('Error finding user:', err);
@@ -48,6 +56,5 @@ const applyPassportStrategy = passport => {
 };
 
 applyPassportStrategy(passport);
-// passportStraregyToExtractTokenFromBody(passport);
 
 module.exports = passport;

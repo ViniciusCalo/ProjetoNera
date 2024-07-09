@@ -38,8 +38,8 @@ const teacherLogin = async ({useremail, teachercpf}) => {
 
 const getTeacherById = async (request, response) => {
     try {
-        console.log("Teacher: ", request.teacher);
-        const teacher = await teacherRepo.getTeacherById(request.teacher);
+        console.log("Teacher: ", request.user);
+        const teacher = await teacherRepo.getTeacherById();
         if (!teacher) {
             return response.status(404).json({ message: error.message || "Teacher not found" });
         }

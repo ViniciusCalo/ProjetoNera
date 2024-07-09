@@ -1,6 +1,8 @@
 const teacherRepo = require('../repositories/TeacherRepository');
 const classroomModel = require('../models/CanonicalDataModel/ClassroomModel');
+const authentication = require('../config/auth');
 const express = require('express');
+const passport = require('passport');
 
 
 const getAllClassrooms = async () => {
@@ -23,14 +25,9 @@ const getAllClassroomByTeacherId = async (teacherid) => {
     }
 };
 
-const createClassroom = async ({ classroomid, classroomname, classroomdescription, teacherid, trackid, moduleid, tokenclass }) => {
+const createClassroom = async ({ classroomname, classroomdescription, trackid, moduleid, tokenclass, teacherid }) => {
     try {
-        const teacherExists = await teacherRepo.getTeacherById(teacherid);
-        if (!teacherExists) {
-            throw new Error('Teacher does not exist');
-        }
         const classroomExists = await classroomModel.Classroom.findOne({ where: { classroomname } });
-
         if (classroomExists) {
             throw new Error('Classroom already exists');
         }
@@ -38,16 +35,18 @@ const createClassroom = async ({ classroomid, classroomname, classroomdescriptio
         const newClassroom = await classroomModel.Classroom.create({
             classroomname,
             classroomdescription,
-            teacherid,
             trackid,
+            teacherid,
             moduleid,
             tokenclass
         });
         return newClassroom;
     } catch (error) {
         console.error('Erro ao criar Sala! ', error);
+        throw error;
     }
 };
+
 
 const editClassroom = async ({ classroomid, classroomname, classroomdescription, teacherid, trackid, moduleid, tokenclass }) => {
     try {
