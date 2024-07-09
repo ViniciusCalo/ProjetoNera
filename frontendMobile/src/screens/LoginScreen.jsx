@@ -7,6 +7,7 @@ import axios from 'axios';
 
 const LoginScreen = ({ navigation }) => {
 
+
     const { width, height } = Dimensions.get('window');
     const [isViewVisible, setIsViewVisible] = useState(true);
 
@@ -42,6 +43,7 @@ const LoginScreen = ({ navigation }) => {
     };
 
     const handleClick = async (e) => {
+        clearLocalStorage();
         e.preventDefault();
         try {
            const res = await axios.post("http://localhost:3333/user/login", {
@@ -50,6 +52,7 @@ const LoginScreen = ({ navigation }) => {
             });
             console.log(res.data.token)
             if (res.data.token){
+                localStorage.setItem('token', res.data.token);
                 navigation.navigate('HomeTeacher');
             }
         } catch (err) {
@@ -115,7 +118,7 @@ const LoginScreen = ({ navigation }) => {
 
                 {isViewVisible && (
                     <View style={stylesForm.opcoesEntrar}>
-                        <Pressable style={stylesForm.button_entrar} onPress={Login}>
+                        <Pressable style={stylesForm.button_entrar} onPress={handleClick}>
                             <Text style={stylesForm.textButton}>Entrar</Text>
                         </Pressable>
 
@@ -124,7 +127,7 @@ const LoginScreen = ({ navigation }) => {
                             <Text style={[stylesForm.textButton, { color: '#3F3F3F' }]}>Google</Text>
                         </Pressable>
 
-                        <Pressable style={stylesForm.button_criarCon} onPress={Login}>
+                        <Pressable style={stylesForm.button_criarCon} onPress={handleClick}>
                             <Text style={stylesForm.textButton}>Criar Conta</Text>
                         </Pressable>
                     </View>

@@ -17,22 +17,8 @@ const CreateClass = () => {
     const modules = [{ id: 1, modulo: 'Módulo 1' }, { id: 2, modulo: 'Módulo 2' }, { id: 3, modulo: 'Módulo 3' }, { id: 4, modulo: 'Módulo 4' }, { id: 5, modulo: 'Módulo 5' }];
     const trails = [{ id: 1, trilha: 'Fração' }, { id: 2, trilha: 'Porcentagem' }, { id: 3, trilha: 'Matrizes' }, { id: 4, trilha: 'Geometria' }, { id: 5, trilha: 'Espressão' }];
 
-    const handleClick = async (e) => {
-        e.preventDefault();
-        try {
-            await axios.post("http://localhost:3333/teacher/classroom/create", {
-                classroomname: title,
-                classroomdescription: description,
-                teacherid: teacherId,
-                trackid: selectedTrackId,
-                moduleid: selectedModuleId
+    
 
-            });
-            window.location.reload()
-        } catch (err) {
-            console.log(err);
-        }
-    };
 
 
     return (
