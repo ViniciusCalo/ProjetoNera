@@ -24,7 +24,7 @@ export default function App() {
     clearLocalStorage();
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="LoginScreen" screenOptions={{headerShown: false}}>
+            <Stack.Navigator initialRouteName="StudentProfile" screenOptions={{headerShown: false}}>
                 <Stack.Screen name="Splash" component={SplashScreen} />
                 <Stack.Screen name="LoginScreen" component={LoginScreen} />
                 <Stack.Screen name="HomeTeacher" component={HomeTeacher} />

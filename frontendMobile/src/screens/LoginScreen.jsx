@@ -82,7 +82,7 @@ const LoginScreen = ({ navigation }) => {
                     style={stylesForm.formulario}>
                     <Text
                         style={{ fontWeight: 'bold', color: 'white', fontSize: 25 }}>
-                        Crie seu Perfil
+                        Login
                     </Text>
 
                     <TextInput
