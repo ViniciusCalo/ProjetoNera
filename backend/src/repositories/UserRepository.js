@@ -4,15 +4,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const jwtConfig = require('../config/jwtConfig');
 
-// const getStudentById = async ({id}) => {
-//     try {
-//         const studentId = await Student.findByPk(id);
-//         return studentId;
-//     } catch (error) {
-//         console.error('Error trying to get student: ', error);
-//         throw error;
-//     }
-// };
 
 const getAll = async () => {
     try {
