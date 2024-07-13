@@ -15,12 +15,10 @@ import FractionScreen from './src/screens/student/FractionScreen';
 
 const Stack = createStackNavigator();
 
-/*const clearLocalStorage = () => {
-    localStorage.clear();
-};*/
+
+
 
 export default function App() {
-    //clearLocalStorage();
     return (
         <NavigationContainer>
             <Stack.Navigator initialRouteName="LoginScreen" screenOptions={{headerShown: false}}>

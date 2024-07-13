@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { StatusBar, StyleSheet, Text, View, Image, Pressable, TextInput, Keyboard, Dimensions} from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../components/styles';
 import Switch from '../components/SwitchProfile';
 import axios from 'axios';
@@ -7,6 +8,14 @@ import axios from 'axios';
 
 const LoginScreen = ({ navigation }) => {
 
+
+    const storeData = async (value) => {
+        try {
+          await AsyncStorage.setItem('token', value);
+        } catch (e) {
+          // saving error
+        }
+      };
 
     const { width, height } = Dimensions.get('window');
     const [isViewVisible, setIsViewVisible] = useState(true);
@@ -25,6 +34,7 @@ const LoginScreen = ({ navigation }) => {
         };
     }, []);
 
+
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [role, setRole] = useState('teacher');
@@ -41,7 +51,6 @@ const LoginScreen = ({ navigation }) => {
     const handleEntrar = () => {
         navigation.navigate('StudentProfile');
     };
-
     const login = async (e) => {
         e.preventDefault();
         try {
@@ -52,10 +61,10 @@ const LoginScreen = ({ navigation }) => {
             });
             console.log(res.data.token)
             if (res.data.token || role === 'teacher') {
-                localStorage.setItem('token', res.data.token);
+                storeData(res.data.token);
                 navigation.navigate('HomeTeacher');
             } else if (res.data.token || role === 'student') {
-                localStorage.setItem('token', res.data.token);
+                storeData(res.data.token);
                 navigation.navigate('HomeStudent');
             }
         } catch (err) {
