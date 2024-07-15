@@ -1,10 +1,11 @@
 const passport = require('passport');
 const Strategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
-require('dotenv').config();
 const jwtConfig = require('./jwtConfig');
 const userModel = require('../models/CanonicalDataModel/UserModel');
 const teacherModel = require('../models/CanonicalDataModel/TeacherModel');
+const studentModel = require('../models/CanonicalDataModel/StudentModel');
+require('dotenv').config();
 
 const applyPassportStrategy = passport => {
   const options = {};
@@ -36,11 +37,31 @@ const applyPassportStrategy = passport => {
                   console.log('Error finding teacher:', err);
                   return done(err, false);
                 });
+            } else if(user.role === 'student'){
+              studentModel.Student.findOne({ where: { userid: user.userid } })
+              .then(student => {
+                if (student) {
+                  console.log('Student Found: ', student);
+                  return done(null, {
+                    studentid: student.teacherid,
+                    userid: student.userid,
+                    role: user.role
+                  });
+                } else {
+                  console.log('User is not a Student');
+                  return done(null, false);
+                }
+              })
+              .catch(err => {
+                console.log('Error finding teacher:', err);
+                return done(err, false);
+              });
             } else {
               return done(null, {
                 userid: user.userid,
                 role: user.role
               });
+              
             }
           } else {
             console.log('User not found');

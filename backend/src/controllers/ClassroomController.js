@@ -6,9 +6,8 @@ const passport = require('passport');
 const router = express.Router();
 const { generateHash } = require('../util/hash');
 
-router.get('/', passport.authenticate('jwt', { session: false }), async (request, response) => {
+router.get('/', async (request, response) => {
     try {
-        console.log("Usuario ", request.user);
         const classrooms = await classroomRepo.getAllClassrooms();
         return response.status(200).json(classrooms);
     } catch (error) {
@@ -58,9 +57,6 @@ router.post('/create', passport.authenticate('jwt', { session: false }), async (
         return response.status(500).json({ message: error.message || "Internal server error" });
     }
 });
-
-module.exports = router;
-
 
 router.put('/update/:id', passport.authenticate('jwt', { session: false }), async (request, response) => {
     try{
