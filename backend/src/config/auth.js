@@ -17,12 +17,12 @@ const applyPassportStrategy = passport => {
       userModel.User.findOne({ where: { userid: payload.userid, role: payload.role } })
         .then(user => {
           if (user) {
-            console.log('User found: ', user);
+            console.log('User found');
             if (user.role === 'teacher') {
               teacherModel.Teacher.findOne({ where: { userid: user.userid } })
                 .then(teacher => {
                   if (teacher) {
-                    console.log('Teacher Found: ', teacher);
+                    console.log('Teacher Found');
                     return done(null, {
                       teacherid: teacher.teacherid,
                       userid: teacher.userid,
@@ -41,7 +41,7 @@ const applyPassportStrategy = passport => {
               studentModel.Student.findOne({ where: { userid: user.userid } })
               .then(student => {
                 if (student) {
-                  console.log('Student Found: ', student);
+                  console.log('Student Found');
                   return done(null, {
                     studentid: student.teacherid,
                     userid: student.userid,
