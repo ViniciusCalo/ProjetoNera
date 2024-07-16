@@ -1,9 +1,10 @@
-const userRepo = require('../repositories/UserRepository');
 const express = require('express');
-const { get } = require('../router');
+const userRepo = require('../repositories/UserRepository');
+const userModel = require('../models/CanonicalDataModel/UserModel');
+const teacherController = require('../controllers/TeacherController');
 const router = express.Router();
 
-const getAll = router.get('/user', async (request, response) => {
+router.get('/', async (request, response) => {
     try {
         const users = await userRepo.getAll();
         return response.status(200).json(users);
@@ -13,34 +14,41 @@ const getAll = router.get('/user', async (request, response) => {
     }
 });
 
-const getUserById = router.get('/user/:id', async (request, response) => {
+router.post('/register', async (request, response) => {
     try {
-        const user = await userRepo.getUserById(request.params.id);
-        if (!user) {
-            return response.status(404).json({ message: error.message || "User not found" });
-        }
-        return response.status(200).json(user);
-    } catch (error) {
-        console.error(error);
-        return response.status(500).json({ message: error.message || "Internal server error" });
-    }
-});
-
-const createUser = router.post('/user/register', async (request, response) => {
-    try {
-        const { username, useremail, userpassword, role } = request.body;
+        const { username, useremail, userpassword, role, teachercpf } = request.body;
+        //cria usuario
         const newUser = await userRepo.createUser({ username, useremail, userpassword, role });
+
+        //se a role do user for igual a teacher, então registra como teacher na tbteacher
+        if (role === 'teacher') {
+            const newTeacher = await teacherController.registerUserAsATeacher({
+                userid: newUser.userid,
+                teachercpf: teachercpf
+            });
+            return response.status(201).json({ message: "Teacher created successfully", newUser, newTeacher });
+        }
         return response.status(201).json({ message: "User created successfully", newUser });
+
     } catch (error) {
         console.error(error);
         return response.status(500).json({ message: error.message || "Internal server error" });
     }
 });
 
-const login = router.post('/user/login', async (request, response) => {
+router.post('/login', async (request, response) => {
     try {
-        const { useremail, userpassword } = request.body;
-        const { user, token } = await userRepo.loginUser({ useremail, userpassword });
+        const { useremail, userpassword, role, teachercpf } = request.body;
+        const { token } = await userRepo.loginUser({ useremail, userpassword, role });
+
+        if (role === 'teacher') {
+            if (!teachercpf) {
+                return response.status(400).json({ message: "CPF is required for teachers" });
+            }
+            const teacherToken = await teacherController.teacherLogin({ useremail, teachercpf });
+            return response.status(200).json({ message: "Teacher logged successfully", token: teacherToken });
+        }
+
         return response.status(200).json({ message: "Login successful", token });
     } catch (error) {
         console.error(error);
@@ -48,17 +56,4 @@ const login = router.post('/user/login', async (request, response) => {
     }
 });
 
-const all = router.get( async (request, response) => {
-    getAll();
-    getUserById();
-    createUser();
-    login();
-});
-
-module.exports = { 
-    getAll,
-    getUserById,
-    createUser,
-    login,
-    all
-};
+module.exports = router;

@@ -5,14 +5,6 @@ const jwt = require('jsonwebtoken');
 const jwtConfig = require('../config/jwtConfig');
 
 
-const findTeacherCpf = async ({teacherCpf, role}) => {
-    try { 
-        const teacherCpf = await Teacher.findOne({ where: { teachercpf }})
-    } catch (error) {
-
-    }
-}
-
 const getAll = async () => {
     try {
         const users = await userModel.User.findAll();
@@ -34,24 +26,20 @@ const getUserById = async (id) => {
 };
 
 const createUser = async ({ username, useremail, userpassword, role}) => {
-
     try {
 
         const hashedPassword = await bcrypt.hash(userpassword, 10);
         const userExists = await userModel.User.findOne({ where: { useremail } });
-
         if (userExists) {
             throw new Error('User already exists');
         }
 
-        const newUser = await User.create({
+        const newUser = await userModel.User.create({
             username,
             useremail,
             userpassword: hashedPassword,
-            role,
-            teacherCpf: hashedTeacherCpf
+            role
         });
-
         return newUser;
     } catch (error) {
         console.error('Error creating user:', error);
@@ -59,12 +47,12 @@ const createUser = async ({ username, useremail, userpassword, role}) => {
     }
 };
 
-const loginUser = async ({ useremail, userpassword }) => {
+const loginUser = async ({ useremail, userpassword, role }) => {
     try {
-        const user = await userModel.User.findOne({ where: { useremail } });
+        const user = await userModel.User.findOne({ where: { useremail, role } });
 
         if (!user) {
-            throw new Error('Invalid email or password');
+            throw new Error('Invalid email, password or role provided');
         }
 
         const isPasswordValid = await bcrypt.compare(userpassword, user.userpassword);
@@ -82,10 +70,10 @@ const loginUser = async ({ useremail, userpassword }) => {
         throw error;
     }
 };
-
 module.exports = {
     getAll,
     getUserById,
     createUser,
-    loginUser
+    loginUser,
+    //getStudentById
 };

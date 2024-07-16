@@ -1,10 +1,12 @@
 const teacherRepo = require('../repositories/TeacherRepository');
+const teacherModel = require('../models/CanonicalDataModel/TeacherModel');
+const passport = require('passport');
 const express = require('express');
 const router = express.Router();
 
-const getAll = router.get('/teacher', async (request, response) => {
+router.get('/', async (request, response) => {
     try {
-        const teacher = await teacherModel.getAll();
+        const teacher = await teacherRepo.getAll();
         return response.status(200).json(teacher);
     } catch (error) {
         console.error(error);
@@ -12,20 +14,44 @@ const getAll = router.get('/teacher', async (request, response) => {
     }
 });
 
-const getTeacherById = router.get('/teacher/:id', async (request, response) => {
+const registerUserAsATeacher = async ({userid, teachercpf}) => {
     try {
-        const teacher = await teacherModel.getTeacherById(request.params.id);
+        const newTeacher = await teacherRepo.registerUserAsATeacher({ 
+            userid : userid,
+            teachercpf : teachercpf,
+        });
+        return newTeacher;
+
+    } catch (error) {
+        throw new Error('Erro ao criar professor: ', error.message);
+    }
+};
+
+const teacherLogin = async ({useremail, teachercpf}) => {
+    try {
+        const token = await teacherRepo.loginTeacher({ useremail, teachercpf });
+        return token;
+    } catch (error) {
+        throw new Error('Erro no login do professor: ' + error.message);
+    }
+}
+
+const getTeacherById = async (request, response) => {
+    try {
+        console.log("Teacher: ", request.user);
+        const teacher = await teacherRepo.getTeacherById();
         if (!teacher) {
-            return response.status(404).json({ message: error.message || "User not found" });
+            return response.status(404).json({ message: error.message || "Teacher not found" });
         }
-        return response.status(200).json(user);
+        return response.status(200).json(teacher);
     } catch (error) {
         console.error(error);
         return response.status(500).json({ message: error.message || "Internal server error" });
     }
-});
+};
 
 module.exports = {
-    getAll,
+    registerUserAsATeacher,
+    teacherLogin,
     getTeacherById
-}
+};
