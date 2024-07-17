@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, FlatList } from 'react-native';
+import { View, Text, KeyboardAvoidingView, StyleSheet, TextInput, FlatList } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import HeaderTeacher from '../../components/teacher/HeaderTeacher';
 import BottomMenuTeacher from '../../components/MenuTeacher';
@@ -73,6 +73,7 @@ const CreateClass = () => {
                     placeholder="Digite a descrição da Sala"
                     placeholderTextColor={"#6296C4"}
                 />
+                
                 <Text style={styles.label}>Trilhas</Text>
                 <RadioButton.Group
                     onValueChange={newValue => selectedTrail(newValue)}
@@ -86,11 +87,11 @@ const CreateClass = () => {
                         keyExtractor={(item) => item.id.toString()}
                         renderItem={({ item }) => (
                             <View style={styles.radioItem}>
+                                <Text style={styles.radioButtonLabel}>{item.trilha}</Text>
                                 <RadioButton
                                     uncheckedColor="#6296C4"
                                     color="#6296C4"
                                     value={item.id} />
-                                <Text style={styles.radioButtonLabel}>{item.trilha}</Text>
                             </View>
                         )}
                     />
@@ -179,20 +180,20 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 10,
         padding: 10,
-        marginBottom: '20%',
+        marginBottom: '10%',
     },
     radioItem: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'start',
-        width: '31%',
-        margin: 5,
+        justifyContent: 'center',
+        width: '32%',
+        margin: 2,
         height: 40,
         backgroundColor: '#fff',
         borderRadius: 10,
         marginTop: 5,
         borderColor: '#6296C4',
-        borderWidth: 1,
+        borderWidth: 1
 
     },
     icon: {
@@ -200,11 +201,12 @@ const styles = StyleSheet.create({
         height: 15,
     },
     radioButtonLabel: {
-        fontSize: 11,
+        fontSize: 10,
+        color: "#6296C4",
     },
     buttons: {
         display: 'flex',
-        width: '90%',
+        width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-around',
     },
