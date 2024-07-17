@@ -8,10 +8,14 @@ import axios from 'axios';
 
 const LoginScreen = ({ navigation }) => {
 
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+    const [cpf, setCpf] = useState("");
+    const [role, setRole] = useState('teacher');
 
     const storeData = async (value) => {
         try {
-          await AsyncStorage.setItem('token', value);
+            await AsyncStorage.setItem('token', value);
         } catch (e) {
           // saving error
         }
@@ -35,10 +39,6 @@ const LoginScreen = ({ navigation }) => {
     }, []);
 
 
-    const [email, setEmail] = useState("");
-    const [senha, setSenha] = useState("");
-    const [role, setRole] = useState('teacher');
-
     const toggleRole = () => {
       setRole(prevRole => (prevRole === 'teacher' ? 'student' : 'teacher'));
     };
@@ -57,15 +57,16 @@ const LoginScreen = ({ navigation }) => {
            const res = await axios.post("http://localhost:3333/users/login", {
                 useremail: email,
                 userpassword: senha,
-                role: role
+                role: role,
+                teachercpf: cpf
             });
-            console.log(res.data.token)
-            if (res.data.token || role === 'teacher') {
-                storeData(res.data.token);
+            console.log(res.data.token);
+            if (res.data.token && role === 'teacher') {
+                storeData(res.data.token["token"]);
                 navigation.navigate('HomeTeacher');
-            } else if (res.data.token || role === 'student') {
+            } else if (res.data.token && role === 'student') {
                 storeData(res.data.token);
-                navigation.navigate('HomeStudent');
+                navigation.navigate('StudentProfile');
             }
         } catch (err) {
             console.log(err);
@@ -106,6 +107,8 @@ const LoginScreen = ({ navigation }) => {
                         style={stylesForm.input_cpf}
                         placeholder='CPF'
                         placeholderTextColor="#888888"
+                        value={cpf}
+                        onChangeText={(texto) => setCpf(texto)}
                     />
 
                     

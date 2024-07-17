@@ -12,6 +12,7 @@ import RegisterTeacher from './src/screens/RegisterTeacher';
 import StudentTrails from './src/screens/student/StudentTrails';
 import FractionTrails from './src/screens/student/FractionTrails';
 import FractionScreen from './src/screens/student/FractionScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //Redux
 import { Provider } from 'react-redux';
@@ -19,9 +20,17 @@ import store from './src/app/store';
 
 const Stack = createStackNavigator();
 
+const removeValue = async () => {
+    try {
+      await AsyncStorage.removeItem('token')
+    } catch(e) {
+      // remove error
+    }
+  
+    console.log('Done.')
+  }
 
-
-
+removeValue();
 export default function App() {
     return (
         <Provider store={store}>

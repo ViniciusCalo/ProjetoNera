@@ -1,29 +1,54 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Image, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TextInput, FlatList } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import HeaderTeacher from '../../components/teacher/HeaderTeacher';
 import BottomMenuTeacher from '../../components/MenuTeacher';
+import { RadioButton } from 'react-native-paper';
 import ButtonBlue from '../../components/ButtonBlue';
-import CheckBox from '../../components/CheckBox';
 import ClassroomModal from '../../components/teacher/ClassroomModal';
-
-import { useSelector, useDispatch } from 'react-redux'
-import { decrement, increment } from '../../features/counter/counterSlice'
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 const CreateClass = () => {
+    const [classroom, setClassroom] = useState([{}]);
     const [modalVisible, setModalVisible] = useState(false);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [trail, settrail] = useState(false);
-    const [selectedModule, selectedModuleId] = useState('');
-    const [selectedTrack, selectedTrackId] = useState('');
+    const [module, selectedModule] = useState('');
+    const [trail, selectedTrail] = useState('');
+    const [token, setToken] = useState('');
+
+    AsyncStorage.getItem('token').then((value) => {
+        setToken(value);
+    });
 
     const modules = [{ id: 1, modulo: 'Módulo 1' }, { id: 2, modulo: 'Módulo 2' }, { id: 3, modulo: 'Módulo 3' }];
     const trails = [{ id: 1, trilha: 'Fração' }, { id: 2, trilha: 'Porcentagem' }, { id: 3, trilha: 'Matrizes' }, { id: 4, trilha: 'Geometria' }, { id: 5, trilha: 'Expressão' }];
 
-    const count = useSelector(state => state.counter.value)
-    const dispatch = useDispatch()
+
+    // Create a classroom function 
+    const creatClassroom = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await axios.post('http://localhost:3333/classrooms/create/', {
+                classroomname: title,
+                classroomdescription: description,
+                trackid: trail,
+                moduleid: module,
+
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            setClassroom(res.data.newClassroom);
+            console.log(res.data.message);
+            console.log(classroom);
+            setModalVisible(true);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <View style={styles.container}>
@@ -31,7 +56,7 @@ const CreateClass = () => {
                 <HeaderTeacher />
             </View>
             <View style={styles.form}>
-                <Text style={styles.title}>Criar sala {count}</Text>
+                <Text style={styles.title}>Criar sala</Text>
                 <Text style={styles.label}>Título</Text>
                 <TextInput
                     style={styles.input}
@@ -49,36 +74,43 @@ const CreateClass = () => {
                     placeholderTextColor={"#6296C4"}
                 />
                 <Text style={styles.label}>Trilhas</Text>
-                <View style={styles.list}>
+                <RadioButton.Group
+                    onValueChange={newValue => selectedTrail(newValue)}
+                    value={trail}
+                >
                     <FlatList
+                        onValueChange={newValue => selectedTrail(newValue)}
+                        value={trail}
                         data={trails}
                         numColumns={3}
-                        keyExtractor={item => item.id.toString()}
+                        keyExtractor={(item) => item.id.toString()}
                         renderItem={({ item }) => (
-                            <View style={styles.checkboxContent}>
-                                <Text style={styles.checkboxLabel}>{item.trilha}</Text>
-                                <CheckBox
-                                    isChecked={trail}
-                                    handleToggle={() => settrail(!trail)}
-                                />
+                            <View style={styles.radioItem}>
+                                <RadioButton
+                                    uncheckedColor="#6296C4"
+                                    color="#6296C4"
+                                    value={item.id} />
+                                <Text style={styles.radioButtonLabel}>{item.trilha}</Text>
                             </View>
                         )}
                     />
-                </View>
+                </RadioButton.Group>
                 <Text style={styles.label}>Módulos</Text>
-                <View style={styles.selctModule}>
-                    <Picker
-                        selectedValue={selectedModule}
-                        onValueChange={(itemValue) => selectedModuleId(itemValue)}
-                    >
-                        <Picker.Item label="Selecione um Módulo" value="" />
-                        {modules.map((item) => (
-                            <Picker.Item key={item.id} label={item.modulo} value={item.id} />
-                        ))}
-                    </Picker>
-                </View>
+
+                <Picker
+                    style={styles.select}
+                    selectedValue={module}
+                    onValueChange={(itemValue) => selectedModule(itemValue)}
+                    itemStyle={{ color: '#6296C4', height: 40, position: 'absolute', top: 0, bottom: 0, left: 0, right: 0}}
+                >
+                    <Picker.Item
+                        label="Selecione um Módulo" value="" />
+                    {modules.map((item) => (
+                        <Picker.Item key={item.id} label={item.modulo} value={item.id} />
+                    ))}
+                </Picker>
                 <View style={styles.buttons}>
-                    <ButtonBlue onPress={() => dispatch(increment())} title="Cancelar" />
+                    <ButtonBlue title="Cancelar" />
                     <ButtonBlue onPress={() => setModalVisible(!modalVisible)} title="Criar Sala" />
                 </View>
             </View>
@@ -86,6 +118,7 @@ const CreateClass = () => {
             <ClassroomModal
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}
+                classroom={classroom}
             />
         </View>
     );
@@ -129,23 +162,29 @@ const styles = StyleSheet.create({
     },
     input: {
         width: '100%',
-        height: 40,
+        height: "5%",
         borderColor: '#6296C4',
         backgroundColor: '#fff',
         borderWidth: 1,
         borderRadius: 10,
         padding: 10,
     },
-    list: {
+    select: {
+        position: 'relative',
+        marginTop: '2%',
         width: '100%',
-        height: 'auto',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
+        height: "5%",
+        borderColor: '#6296C4',
+        backgroundColor: '#fff',
+        borderWidth: 1,
+        borderRadius: 10,
+        padding: 10,
+        marginBottom: '20%',
     },
-    checkboxContent: {
+    radioItem: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'start',
         width: '31%',
         margin: 5,
         height: 40,
@@ -154,34 +193,20 @@ const styles = StyleSheet.create({
         marginTop: 5,
         borderColor: '#6296C4',
         borderWidth: 1,
-        paddingLeft: 5,
 
     },
     icon: {
         width: 15,
         height: 15,
     },
-    checkbox: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    checkboxLabel: {
-        fontSize: 12,
-        marginLeft: 2,
-        marginRight: 5,
+    radioButtonLabel: {
+        fontSize: 11,
     },
     buttons: {
         display: 'flex',
         width: '90%',
         flexDirection: 'row',
         justifyContent: 'space-around',
-    },
-    selctModule: {
-        display: 'flex',
-        width: '90%',
-        height: '20%',
-         marginBottom: '5%',
-         padding: 10,
     },
 });
 

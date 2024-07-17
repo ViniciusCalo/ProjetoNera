@@ -4,8 +4,17 @@ import seta from '../../assets/seta.png';
 import classIcon from '../../assets/classPink.png';
 import studentIcon from '../../assets/studentIcon.png';
 import TrailCard from './TrailCard';
+import { useNavigation } from '@react-navigation/native'; // Importe o hook useNavigation
 
-const ClassroomModal = ({ modalVisible, setModalVisible }) => {
+
+const ClassroomModal = ({classroom, modalVisible, setModalVisible}) => {
+    const navigation = useNavigation();
+
+    const goToTeacherClassroom = () => {
+        navigation.navigate('TeacherClassroom');
+        setModalVisible(!modalVisible);
+    };
+
     return (
         <View style={styles.centeredView}>
             <Modal
@@ -20,7 +29,7 @@ const ClassroomModal = ({ modalVisible, setModalVisible }) => {
                     <View style={styles.modalView}>
                         <Pressable
                             style={styles.button}
-                            onPress={() => setModalVisible(!modalVisible)}
+                            onPress={goToTeacherClassroom}
                         >
                             <Image source={seta} style={styles.seta} />
                         </Pressable>
@@ -29,17 +38,18 @@ const ClassroomModal = ({ modalVisible, setModalVisible }) => {
                                 <Image source={classIcon} style={styles.image} />
                             </View>
                             <View style={styles.div2}>
-                                <Text style={styles.title}>Turma</Text>
+                                <Text style={styles.title}>{classroom.classroomname}</Text>
                                 <View style={styles.students}>
-                                    <Image source={studentIcon} style={styles.iconS} />
-                                    <Text style={styles.titleS}> X Alunos</Text>
+                                    <Text style={styles.titleS}>{classroom.tokenclass}</Text>
                                 </View>
                             </View>
                         </View>
                         <Text style={styles.subtitulo}>Descrição</Text>
-                        <Text>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</Text>
+                        <Text>{classroom.classroomdescription}</Text>
                         <Text style={styles.subtitulo}>Trilha da Sala</Text>
-                        <TrailCard />
+                        <TrailCard 
+                        value={classroom.moduleid}
+                        />
                         <Text style={styles.subtitulo}>Alunos</Text>
                         <View style={styles.div3}>
                             <View>

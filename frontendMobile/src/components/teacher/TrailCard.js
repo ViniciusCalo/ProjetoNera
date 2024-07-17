@@ -4,14 +4,14 @@ import fracaoIcon from '../../assets/fracao.png';
 
 
 
-const TrailCard = () => {
+const TrailCard = ({value}) => {
     return (
         <View style={styles.container}>
             <View style={styles.polygon}>
                 <Image source={fracaoIcon} style={styles.iconTrail} />
             </View>
             <Text style={styles.title}>Fração</Text>
-            <Text style={styles.text}>10 Modulos</Text>
+            <Text style={styles.text}>Modulo {value} </Text>
         </View>
     );
 };
