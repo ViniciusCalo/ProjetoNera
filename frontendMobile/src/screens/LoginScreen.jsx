@@ -45,6 +45,10 @@ const LoginScreen = ({ navigation }) => {
     const stylesButtons = stylesButton(width);
 
     const criar = () => {
+        navigation.replace('RegisterTeacher')
+    }
+
+    const entrar = () => {
         navigation.replace('HomeTeacher')
     }
 
@@ -91,7 +95,7 @@ const LoginScreen = ({ navigation }) => {
                 <View
                     style={stylesForm.formulario}>
                     <Text
-                        style={{ fontWeight: 'bold', color: 'white', fontSize: 25 }}>
+                        style={{ fontWeight: 'bold', color: 'white', fontSize: 25, marginTop: "5%" }}>
                         Crie seu Perfil
                     </Text>
 
@@ -137,7 +141,7 @@ const LoginScreen = ({ navigation }) => {
                             <Text style={stylesForm.textButton}>Entrar</Text>
                         </Pressable>
 
-                        <Pressable style={stylesForm.button_google} onPress={handleEntrar}>
+                        <Pressable style={stylesForm.button_google} onPress={entrar}>
 
                             <Text style={[stylesForm.textButton, { color: '#3F3F3F' }]}>Google</Text>
                         </Pressable>
@@ -163,7 +167,7 @@ const stylesForm = StyleSheet.create({
         flex: 2,
         alignItems: 'center',
         gap: 20,
-        backgroundColor: colors.amarelo,
+        backgroundColor: colors.laranja,
         borderRadius: 14
 
     },
@@ -173,7 +177,7 @@ const stylesForm = StyleSheet.create({
         flexDirection: 'column',
         flex: 1,
         alignItems: 'center',
-        backgroundColor: colors.amarelo,
+        backgroundColor: colors.laranja,
         borderBottomLeftRadius: 15,
         borderBottomRightRadius: 15,
         gap: 5,
@@ -186,7 +190,7 @@ const stylesForm = StyleSheet.create({
         height: '15%',
         borderWidth: 3,
         borderColor: '#BBBBBB',
-        borderRadius: 18,
+        borderRadius: 15,
         backgroundColor: colors.branco,
         fontSize: 16,
         fontWeight: 'bold',
@@ -198,19 +202,7 @@ const stylesForm = StyleSheet.create({
         height: '15%',
         borderWidth: 3,
         borderColor: "#BBBBBB",
-        borderRadius: 18,
-        backgroundColor: colors.branco,
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-
-    input_nome: {
-        paddingLeft: 10,
-        width: '90%',
-        height: '15%',
-        borderWidth: 3,
-        borderColor: "#BBBBBB",
-        borderRadius: 18,
+        borderRadius: 15,
         backgroundColor: colors.branco,
         fontSize: 16,
         fontWeight: 'bold',
@@ -222,7 +214,7 @@ const stylesForm = StyleSheet.create({
         height: '15%',
         borderWidth: 3,
         borderColor: '#BBBBBB',
-        borderRadius: 18,
+        borderRadius: 15,
         backgroundColor: colors.branco,
         fontSize: 16,
         fontWeight: 'bold',
@@ -284,7 +276,7 @@ const stylesButton = (widths) =>StyleSheet.create({
     },
 
     top: {
-        width: '100%',
+        width: '80%',
         height: '20%',
         alignItems: "center",
 
@@ -292,7 +284,7 @@ const stylesButton = (widths) =>StyleSheet.create({
 
     img: {
         width: '100%',
-        height: '100%',
+        height: '90%',
         resizeMode: "contain"
     },
 
