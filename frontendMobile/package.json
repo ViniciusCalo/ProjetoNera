@@ -15,6 +15,7 @@
     "@react-native-picker/picker": "2.6.1",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/stack": "^6.3.29",
+    "@reduxjs/toolkit": "^2.2.6",
     "axios": "^1.7.2",
     "expo": "^51.0.20",
     "expo-status-bar": "~1.11.1",
@@ -22,7 +23,8 @@
     "react-dom": "18.2.0",
     "react-native": "0.73.6",
     "react-native-media-query": "^2.0.1",
-    "react-native-web": "^0.18.10"
+    "react-native-web": "^0.18.10",
+    "react-redux": "^9.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

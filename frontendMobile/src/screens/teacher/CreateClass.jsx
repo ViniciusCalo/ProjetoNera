@@ -7,6 +7,8 @@ import ButtonBlue from '../../components/ButtonBlue';
 import CheckBox from '../../components/CheckBox';
 import ClassroomModal from '../../components/teacher/ClassroomModal';
 
+import { useSelector, useDispatch } from 'react-redux'
+import { decrement, increment } from '../../features/counter/counterSlice'
 
 
 const CreateClass = () => {
@@ -20,7 +22,8 @@ const CreateClass = () => {
     const modules = [{ id: 1, modulo: 'Módulo 1' }, { id: 2, modulo: 'Módulo 2' }, { id: 3, modulo: 'Módulo 3' }];
     const trails = [{ id: 1, trilha: 'Fração' }, { id: 2, trilha: 'Porcentagem' }, { id: 3, trilha: 'Matrizes' }, { id: 4, trilha: 'Geometria' }, { id: 5, trilha: 'Expressão' }];
 
-
+    const count = useSelector(state => state.counter.value)
+    const dispatch = useDispatch()
 
     return (
         <View style={styles.container}>
@@ -28,7 +31,7 @@ const CreateClass = () => {
                 <HeaderTeacher />
             </View>
             <View style={styles.form}>
-                <Text style={styles.title}>Criar sala</Text>
+                <Text style={styles.title}>Criar sala {count}</Text>
                 <Text style={styles.label}>Título</Text>
                 <TextInput
                     style={styles.input}
@@ -75,7 +78,7 @@ const CreateClass = () => {
                     </Picker>
                 </View>
                 <View style={styles.buttons}>
-                    <ButtonBlue title="Cancelar" />
+                    <ButtonBlue onPress={() => dispatch(increment())} title="Cancelar" />
                     <ButtonBlue onPress={() => setModalVisible(!modalVisible)} title="Criar Sala" />
                 </View>
             </View>

@@ -13,6 +13,10 @@ import StudentTrails from './src/screens/student/StudentTrails';
 import FractionTrails from './src/screens/student/FractionTrails';
 import FractionScreen from './src/screens/student/FractionScreen';
 
+//Redux
+import { Provider } from 'react-redux';
+import store from './src/app/store';
+
 const Stack = createStackNavigator();
 
 
@@ -20,6 +24,7 @@ const Stack = createStackNavigator();
 
 export default function App() {
     return (
+        <Provider store={store}>
         <NavigationContainer>
             <Stack.Navigator initialRouteName="LoginScreen" screenOptions={{headerShown: false}}>
                 <Stack.Screen name="Splash" component={SplashScreen} />
@@ -35,5 +40,6 @@ export default function App() {
                 <Stack.Screen name="FractionScreen" component={FractionScreen} />
             </Stack.Navigator>
         </NavigationContainer>
+        </Provider>
     );
 };

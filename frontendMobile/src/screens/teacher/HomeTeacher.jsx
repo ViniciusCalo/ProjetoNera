@@ -4,9 +4,14 @@ import HeaderTeacher from '../../components/teacher/HeaderTeacher';
 import BottomMenuTeacher from '../../components/MenuTeacher';
 import ClassroomCard from '../../components/teacher/ClassroomCard';
 import TrailCard from '../../components/teacher/TrailCard';
+import { useSelector, useDispatch } from 'react-redux'
+import { decrement, increment } from '../../features/counter/counterSlice'
 
 
 const Home = () => {
+
+    const count = useSelector(state => state.counter.value)
+    const dispatch = useDispatch()
 
     return (
         <View style={styles.container}>
@@ -14,6 +19,8 @@ const Home = () => {
                 <HeaderTeacher />
             </View>
             <View style={styles.panner}>
+                <Text>{count}</Text>
+                
             </View>
             <View style={styles.salas}>
                 <Text style={styles.title}>Minhas salas</Text>
