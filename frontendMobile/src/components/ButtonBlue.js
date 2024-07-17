@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     buttonText: {
-        fontSize: 16,
+        fontSize: 14,
         color: 'white',
         textAlign: 'center',
     },
