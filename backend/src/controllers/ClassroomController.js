@@ -1,12 +1,13 @@
 const classroomRepo = require('../repositories/ClassroomRepository');
+const teacherRepo = require('../repositories/TeacherRepository');
+const teacherController = require('../controllers/TeacherController');
 const express = require('express');
 const passport = require('passport');
 const router = express.Router();
 const { generateHash } = require('../util/hash');
 
-router.get('/', passport.authenticate('jwt', { session: false }), async (request, response) => {
+router.get('/', async (request, response) => {
     try {
-        console.log("Usuario ", request.user);
         const classrooms = await classroomRepo.getAllClassrooms();
         return response.status(200).json(classrooms);
     } catch (error) {
@@ -15,9 +16,8 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (request
     }
 });
 
-router.get('/:id',  passport.authenticate('jwt', { session: false }), async (request, response) => {
+router.get('/:id', passport.authenticate('jwt', { session: false }), async (request, response) => {
     try {
-        const teacherid = request.params.id;
         const classrooms = await classroomRepo.getAllClassroomByTeacherId(teacherid);
         
         if (!classrooms.length) {
@@ -31,15 +31,30 @@ router.get('/:id',  passport.authenticate('jwt', { session: false }), async (req
         return response.status(500).json({ message: error.message || "Internal server error" });
     }
 });
+
 router.post('/create', passport.authenticate('jwt', { session: false }), async (request, response) => {
     try {
-        const { classroomname, classroomdescription, teacherid, trackid, moduleid } = request.body;
-        tokenclass = generateHash(Date.now());
-        const newClassroom = await classroomRepo.createClassroom({classroomname, classroomdescription, teacherid, trackid, moduleid, tokenclass});
+        const { classroomname, classroomdescription, trackid, moduleid } = request.body;
+        const { teacherid } = request.user; // Extraindo teacherid do objeto request.user
+
+        if (!teacherid) {
+            return response.status(403).json({ message: "You are not authorized to create a classroom" });
+        }
+
+        const tokenclass = generateHash(Date.now());
+        const newClassroom = await classroomRepo.createClassroom({
+            classroomname,
+            classroomdescription,
+            trackid,
+            moduleid,
+            tokenclass,
+            teacherid // Passando teacherid para o repositório
+        });
+
         return response.status(201).json({ message: "Classroom created successfully", newClassroom });
     } catch (error) {
         console.error('Error creating classroom:', error);
-        return response.status(500).json({ message: error.message ||  "Internal server error" });
+        return response.status(500).json({ message: error.message || "Internal server error" });
     }
 });
 
