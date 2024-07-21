@@ -21,10 +21,16 @@
       "adaptiveIcon": {
         "foregroundImage": "src/assets/Icone.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.anonymous.neramobile"
     },
     "web": {
       "favicon": "src/assets/Icone.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "79a8da81-382d-4cbf-a0af-3fe0838f7709"
+      }
     }
   }
 }

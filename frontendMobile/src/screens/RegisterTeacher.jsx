@@ -3,9 +3,16 @@ import { StatusBar, StyleSheet, Text, View, Image, Pressable, TextInput, Keyboar
 import colors from '../components/styles';
 import Switch from '../components/SwitchProfile';
 import axios from 'axios';
+import * as WebBrowser from "expo-web-browser";
+import * as Google from "expo-auth-session/providers/google";
 
 
 const LoginScreen = ({ navigation }) => {
+
+    const[request, response, promptAsync] = Google.useAuthRequest({
+        androidClientId: "925583381049-idks9njsg98mk8hkf029gblhfob95hd0.apps.googleusercontent.com",
+        webClientId: "925583381049-fgqie9ocvvaojvpvg0acvkisgnl9erst.apps.googleusercontent.com"
+    })
 
     const [isViewVisible, setIsViewVisible] = useState(true);
 
@@ -131,8 +138,7 @@ const LoginScreen = ({ navigation }) => {
                             <Text style={stylesForm.textButton}>Criar conta</Text>
                         </Pressable>
 
-                        <Pressable style={stylesForm.button_google} onPress={handleEntrar}>
-
+                        <Pressable style={stylesForm.button_google} onPress={promptAsync}>
                             <Text style={[stylesForm.textButton, { color: '#3F3F3F' }]}>Google</Text>
                         </Pressable>
 
