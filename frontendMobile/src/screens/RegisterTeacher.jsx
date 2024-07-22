@@ -33,6 +33,7 @@ const LoginScreen = ({ navigation }) => {
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
+    const [cpf, setCpf] = useState("");
     const [role, setRole] = useState('teacher');
 
     const toggleRole = () => {
@@ -54,7 +55,8 @@ const LoginScreen = ({ navigation }) => {
                 username: nome,
                 useremail: email,
                 userpassword: senha,
-                role: role
+                role: role,
+                teachercpf : cpf
             });
             window.location.reload()
         } catch (err) {
@@ -96,6 +98,8 @@ const LoginScreen = ({ navigation }) => {
                         style={stylesForm.input_cpf}
                         placeholder='CPF'
                         placeholderTextColor="#888888"
+                        value={cpf}
+                        onChangeText={(texto) => setCpf(texto)}
                     />
 
                     <TextInput
