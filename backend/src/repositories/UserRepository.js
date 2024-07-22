@@ -4,15 +4,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const jwtConfig = require('../config/jwtConfig');
 
-// const getStudentById = async ({id}) => {
-//     try {
-//         const studentId = await Student.findByPk(id);
-//         return studentId;
-//     } catch (error) {
-//         console.error('Error trying to get student: ', error);
-//         throw error;
-//     }
-// };
 
 const getAll = async () => {
     try {
@@ -39,7 +30,6 @@ const createUser = async ({ username, useremail, userpassword, role}) => {
 
         const hashedPassword = await bcrypt.hash(userpassword, 10);
         const userExists = await userModel.User.findOne({ where: { useremail } });
-
         if (userExists) {
             throw new Error('User already exists');
         }
@@ -48,10 +38,8 @@ const createUser = async ({ username, useremail, userpassword, role}) => {
             username,
             useremail,
             userpassword: hashedPassword,
-            role,
-            teacherCpf: hashedTeacherCpf
+            role
         });
-
         return newUser;
     } catch (error) {
         console.error('Error creating user:', error);
@@ -82,7 +70,6 @@ const loginUser = async ({ useremail, userpassword, role }) => {
         throw error;
     }
 };
-
 module.exports = {
     getAll,
     getUserById,

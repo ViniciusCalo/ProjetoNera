@@ -7,28 +7,16 @@ const Student = sequelize.define('User', {
         primaryKey: true,
         autoIncrement: true
     },
-
+    userid: {
+        type: Sequelize.INTEGER,
+        references: {
+            model: 'User', //referenciando o userId como FK na tabela student
+            key: 'userid'
+        }
+    }
 }, {
     tableName: 'tbstudent',
     timestamps: false
 });
-
-const getAllStudents = async () => {
-    try {
-        const students = await Student.findAll();
-        return students;
-    } catch (error) {
-        console.error('Error fetching users:', error);
-    }
-}
-
-const getStudentById = async (id) => {
-    try {
-        const student = await Student.findByPk(id);
-        return student;
-    } catch (error) {
-        console.error('Error fetching user:', error);
-    }
-}
 
 module.exports = Student;
