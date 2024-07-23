@@ -4,14 +4,29 @@ import fracaoIcon from '../../assets/fracao.png';
 
 
 
-const TrailCard = ({value}) => {
+const TrailCard = ({trail, module}) => {
+
+    if ( trail === 1 ) {
+        trail = 'Fração';
+    } else if ( trail === 2 ) {
+        trail = 'Porcentagem';
+    }
+    else if ( trail === 3 ) {
+        trail = 'Matrizes';
+    }
+    else if ( trail === 4 ) {
+        trail = 'Geometria';
+    }
+    else if ( trail === 5 ) {
+        trail = 'Expressão';
+    }
     return (
         <View style={styles.container}>
             <View style={styles.polygon}>
                 <Image source={fracaoIcon} style={styles.iconTrail} />
             </View>
-            <Text style={styles.title}>Fração</Text>
-            <Text style={styles.text}>Modulo {value} </Text>
+            <Text style={styles.title}>{trail}</Text>
+            <Text style={styles.text}>Modulo {module} </Text>
         </View>
     );
 };
