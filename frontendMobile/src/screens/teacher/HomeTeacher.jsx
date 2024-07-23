@@ -40,7 +40,8 @@ const Home = () => {
                         keyExtractor={(item) => item.id.toString()}
                         renderItem={({ item }) => (
                                 <TrailCard
-                                value={item.id}
+                                module={item.id}
+                                trail={item.id}
                                 />
                         )}
                         horizontal

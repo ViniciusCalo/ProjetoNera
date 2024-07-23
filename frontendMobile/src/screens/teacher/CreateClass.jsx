@@ -25,6 +25,12 @@ const CreateClass = () => {
     const modules = [{ id: 1, modulo: 'Módulo 1' }, { id: 2, modulo: 'Módulo 2' }, { id: 3, modulo: 'Módulo 3' }];
     const trails = [{ id: 1, trilha: 'Fração' }, { id: 2, trilha: 'Porcentagem' }, { id: 3, trilha: 'Matrizes' }, { id: 4, trilha: 'Geometria' }, { id: 5, trilha: 'Expressão' }];
 
+    const clearForm = () => {
+        setTitle('');
+        setDescription('');
+        selectedModule('');
+        selectedTrail('');
+    };
 
     // Create a classroom function 
     const creatClassroom = async (e) => {
@@ -45,6 +51,8 @@ const CreateClass = () => {
             console.log(res.data.message);
             console.log(classroom);
             setModalVisible(true);
+            clearForm();
+            selectedTrail('');
         } catch (error) {
             console.log(error);
         }
@@ -111,8 +119,8 @@ const CreateClass = () => {
                     ))}
                 </Picker>
                 <View style={styles.buttons}>
-                    <ButtonBlue title="Cancelar" />
-                    <ButtonBlue onPress={() => setModalVisible(!modalVisible)} title="Criar Sala" />
+                    <ButtonBlue onPress={() => setModalVisible(!modalVisible)} title="Cancelar" />
+                    <ButtonBlue onPress={creatClassroom} title="Criar Sala" />
                 </View>
             </View>
             <BottomMenuTeacher />
