@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Dimensions } from 'react-native';
 import HeaderTeacher from '../../components/teacher/HeaderTeacher';
 import BottomMenuTeacher from '../../components/MenuTeacher';
-import ButtonBlue from '../../components/ButtonBlue';
+import ClassroomCard from '../../components/teacher/ClassroomCard';
 
 const TeacherClassroom = ({ navigation }) => {
     const handleCreateClassPress = () => {
@@ -16,112 +16,66 @@ const TeacherClassroom = ({ navigation }) => {
         { id: 4, url: require('../../assets/classAqua.png'), label: '7 ano A' },
         { id: 5, url: require('../../assets/classBlue.png'), label: '6 ano A' },
         { id: 6, url: require('../../assets/classYellow.png'), label: '7 ano C' },
+        { id: 7, url: require('../../assets/classYellow.png'), label: '7 ano C' },
+        { id: 8, url: require('../../assets/classYellow.png'), label: '7 ano C' },
+        { id: 9, url: require('../../assets/classYellow.png'), label: '7 ano C' },
     ];
 
     return (
-        <View style={styles.page}>
-            <HeaderTeacher />
-            <View style={styles.containerMyClassroom}>
-                <Text style={styles.titleContainerMyClassroom}>Minhas salas</Text>
-                <FlatList
-                    data={imageUrls}
-                    keyExtractor={(item) => item.id.toString()}
-                    numColumns={3}
-                    renderItem={({ item }) => (
-                        <View style={styles.imageContainer}>
-                            <Image style={styles.image} source={item.url} />
-                            <Text style={styles.imageLabel}>{item.label}</Text>
-                        </View>
-                    )}
-                />
+        <View style={styles.container}>
+            <View style={styles.header}>
+                <HeaderTeacher />
             </View>
-
-            <View style={styles.containerCreateClassroom}>
-                <ButtonBlue onPress={handleCreateClassPress} title="Criar nova sala" />
-            </View>
+            <Text style={styles.titleContainerMyClassroom}>Minhas salas</Text>
+            <FlatList
+                style={styles.flatList}
+                data={imageUrls}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({ item }) => (
+                    <View style={styles.classroomCardContainer}>
+                        <ClassroomCard label={item.label} />
+                    </View>
+                )}
+                numColumns={2}
+                columnWrapperStyle={styles.row}
+                showsVerticalScrollIndicator={false}
+            />
             <BottomMenuTeacher />
         </View>
     );
 };
 
+const screenWidth = Dimensions.get('window').width;
+
 const styles = StyleSheet.create({
-    page: {
+    container: {
         flex: 1,
-        justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'F6F7FF',
+        backgroundColor: '#F6F7FF',
     },
-    topIcon: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 50
-    },
-    containerMyClassroom: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'white',
-        position: 'absolute',
-        top: '20%',
-        left: '10%',
-        width: '80%',
-        height: '35%',
-        borderRadius: 40,
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 1,
-            height: 1,
-        },
-        shadowOpacity: 0.3,
-        shadowRadius: 3,
-        elevation: 5,
+    header: {
+        width: '100%',
+        height: '15%',
+        marginBottom: '2%',
     },
     titleContainerMyClassroom: {
         fontSize: 25,
-        top: '5%',
+        marginVertical: 10,
         fontWeight: '600',
     },
-    containerCreateClassroom: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'white',
-        position: 'absolute',
-        top: 550,
-        left: 35,
-        right:5,
-        transform: [{ translateX: 10 }],
-        width: '80%',
-        height: '10%',
-        borderRadius: 30,
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 1,
-            height: 1,
-        },
-        shadowOpacity: 0.3,
-        shadowRadius: 3,
-        elevation: 5,
+    flatList: {
+        width: '100%',
     },
-    imageContainer: {
+    row: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        margin: 7,
+        justifyContent: 'space-between',
+        paddingHorizontal: 10,
     },
-    image: {
-        top: 22,
-        width: 90,
-        height: 85,
-        resizeMode: 'cover',
-    },
-    imageLabel: {
-        top: 22,
-        marginTop: 5,
-        fontSize: 14,
-        fontWeight: 'bold',
+    classroomCardContainer: {
+        flex: 1,
+        margin: 5,
+        minWidth: (screenWidth / 2) - 20,
+        maxWidth: (screenWidth / 2) - 20,
     },
 });
 
