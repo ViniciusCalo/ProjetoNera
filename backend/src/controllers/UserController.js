@@ -45,8 +45,8 @@ router.post('/login', async (request, response) => {
             if (!teachercpf) {
                 return response.status(400).json({ message: "CPF is required for teachers" });
             }
-            const teacherToken = await teacherController.teacherLogin({ useremail, teachercpf });
-            return response.status(200).json({ message: "Teacher logged successfully", token: teacherToken });
+            const {token} = await teacherController.teacherLogin({ useremail, teachercpf });
+            return response.status(200).json({ message: "Teacher logged successfully", token });
         }
 
         return response.status(200).json({ message: "Login successful", token });
