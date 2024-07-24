@@ -34,6 +34,10 @@ const createUser = async ({ username, useremail, userpassword, role}) => {
             throw new Error('User already exists');
         }
 
+        if(userpassword === null || userpassword.length === 0) {
+            throw new Error('Password cannot be empty');
+        }
+
         const newUser = await userModel.User.create({
             username,
             useremail,
@@ -57,7 +61,7 @@ const loginUser = async ({ useremail, userpassword, role }) => {
 
         const isPasswordValid = await bcrypt.compare(userpassword, user.userpassword);
 
-        if (!isPasswordValid) {
+        if (!isPasswordValid || isPasswordValid.length === 0) {
             throw new Error('Invalid email or password');
         }
 
