@@ -8,12 +8,16 @@ const StudentProfile = () => {
     return (
         <View style={styles.div_main}>
             <View style={styles.div_perfil}>
-                <Image source={require('../../assets/ImgProfile.png')} resizeMode="contain" style={[{ width: 80 }, { height: 80 }]}></Image>
-                <View>
-                    <Text style={{ fontWeight: 'bold' }}>@Nickname</Text>
-                    <Text style={{ fontWeight: 'bold' }}>Nome Sobrenome</Text>
+                <View style={styles.defaultView}>
+                    <Image source={require('../../assets/ImgProfile.png')} resizeMode="contain" style={[{ width: '70%', height: '70%' }]}></Image>
                 </View>
-                <Image source={require('../../assets/icone.png')} style={styles.img_icone} resizeMode="contain"></Image>
+                <View style={styles.defaultView}>
+                    <Text style={[{ fontWeight: 'bold', fontSize: 15 }]}>@KEKEKEKE</Text>
+                    <Text style={[{ fontWeight: 'bold', fontSize: '70%' }]}>Kedsson Figueredo</Text>
+                </View>
+                <View style={styles.defaultView}>
+                    <Image source={require('../../assets/icone.png')} resizeMode="contain" style={[styles.img_icone,{ width: '50%', height: '50%' }]}></Image>
+                </View>
             </View>
 
             <View style={styles.div_conquistas}>
@@ -44,7 +48,7 @@ const StudentProfile = () => {
                     <View style={[{ width: '48%' }, { height: '90%' }, { borderRadius: 25 }, { borderColor: '#F29F05' }, { borderWidth: 3 }]}>
 
                     </View>
-                    
+
                 </View>
 
                 <View style={[{ width: '100%' }, { height: '43%' }, { display: 'flex' }, { flexDirection: 'row' }, { alignItems: 'center' }, { padding: 10 }, { gap: 10 }]}>
@@ -64,7 +68,7 @@ const StudentProfile = () => {
 
             </View>
 
-            <BottomMenuStudent/>
+            <BottomMenuStudent />
         </View>
     )
 }
@@ -72,6 +76,7 @@ const StudentProfile = () => {
 const styles = StyleSheet.create({
     div_main: {
         display: "flex",
+        flex: 1,
         flexDirection: 'column',
         width: '100%',
         height: '100%',
@@ -85,7 +90,8 @@ const styles = StyleSheet.create({
         height: '20%',
         width: '100%',
         gap: 10,
-        paddingLeft: 30
+        paddingLeft: 30,
+
     },
 
     img_icone: {
@@ -118,8 +124,13 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
 
+    defaultView: {
+        flex: 1,
+        justifyContent: "center",
+        height: '100%',
+    }
+
 
 })
-
 
 export default StudentProfile;

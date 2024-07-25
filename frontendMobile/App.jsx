@@ -35,7 +35,7 @@ export default function App() {
     return (
         <Provider store={store}>
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="LoginScreen" screenOptions={{headerShown: false}}>
+            <Stack.Navigator initialRouteName="RegisterTeacher" screenOptions={{headerShown: false}}>
                 <Stack.Screen name="Splash" component={SplashScreen} />
                 <Stack.Screen name="LoginScreen" component={LoginScreen} />
                 <Stack.Screen name="HomeTeacher" component={HomeTeacher} />

@@ -62,7 +62,7 @@ const LoginScreen = ({ navigation }) => {
                 useremail: email,
                 userpassword: senha,
                 role: role,
-                teachercpf: cpf
+                teachercpf : cpf
             });
             console.log(res.data.token);
             if (res.data.token && role === 'teacher') {
@@ -95,7 +95,7 @@ const LoginScreen = ({ navigation }) => {
                 <View
                     style={stylesForm.formulario}>
                     <Text
-                        style={{ fontWeight: 'bold', color: 'white', fontSize: 25, marginTop: "5%" }}>
+                        style={{ fontWeight: 'bold', color: 'white', fontSize: 25 }}>
                         Crie seu Perfil
                     </Text>
 
