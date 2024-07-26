@@ -1,5 +1,4 @@
 const userModel = require('../models/CanonicalDataModel/UserModel');
-const Teacher = require('../models/CanonicalDataModel/TeacherModel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const jwtConfig = require('../config/jwtConfig');
