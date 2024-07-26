@@ -1,11 +1,25 @@
 import { useState, useEffect } from 'react';
 import { StatusBar, StyleSheet, Text, View, Image, Pressable, TextInput, Keyboard, Dimensions} from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../components/styles';
 import Switch from '../components/SwitchProfile';
 import axios from 'axios';
 
 
 const LoginScreen = ({ navigation }) => {
+
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+    const [cpf, setCpf] = useState("");
+    const [role, setRole] = useState('teacher');
+
+    const storeData = async (value) => {
+        try {
+            await AsyncStorage.setItem('token', value);
+        } catch (e) {
+          // saving error
+        }
+      };
 
     const { width, height } = Dimensions.get('window');
     const [isViewVisible, setIsViewVisible] = useState(true);
@@ -24,33 +38,39 @@ const LoginScreen = ({ navigation }) => {
         };
     }, []);
 
-    const [email, setEmail] = useState("");
-    const [senha, setSenha] = useState("");
-    const [role, setRole] = useState('teacher');
 
     const toggleRole = () => {
       setRole(prevRole => (prevRole === 'teacher' ? 'student' : 'teacher'));
     };
     const stylesButtons = stylesButton(width);
 
-    const Login = () => {
+    const criar = () => {
         navigation.replace('RegisterTeacher')
+    }
+
+    const entrar = () => {
+        navigation.replace('HomeTeacher')
     }
 
     const handleEntrar = () => {
         navigation.navigate('StudentProfile');
     };
-
-    const handleClick = async (e) => {
+    const login = async (e) => {
         e.preventDefault();
         try {
-           const res = await axios.post("http://localhost:3333/user/login", {
+           const res = await axios.post("http://localhost:3333/users/login", {
                 useremail: email,
                 userpassword: senha,
+                role: role,
+                teachercpf: cpf
             });
-            console.log(res.data.token)
-            if (res.data.token){
+            console.log(res.data.token);
+            if (res.data.token && role === 'teacher') {
+                storeData(res.data.token["token"]);
                 navigation.navigate('HomeTeacher');
+            } else if (res.data.token && role === 'student') {
+                storeData(res.data.token);
+                navigation.navigate('StudentProfile');
             }
         } catch (err) {
             console.log(err);
@@ -75,7 +95,7 @@ const LoginScreen = ({ navigation }) => {
                 <View
                     style={stylesForm.formulario}>
                     <Text
-                        style={{ fontWeight: 'bold', color: 'white', fontSize: 25 }}>
+                        style={{ fontWeight: 'bold', color: 'white', fontSize: 25, marginTop: "5%" }}>
                         Crie seu Perfil
                     </Text>
 
@@ -91,6 +111,8 @@ const LoginScreen = ({ navigation }) => {
                         style={stylesForm.input_cpf}
                         placeholder='CPF'
                         placeholderTextColor="#888888"
+                        value={cpf}
+                        onChangeText={(texto) => setCpf(texto)}
                     />
 
                     
@@ -115,16 +137,16 @@ const LoginScreen = ({ navigation }) => {
 
                 {isViewVisible && (
                     <View style={stylesForm.opcoesEntrar}>
-                        <Pressable style={stylesForm.button_entrar} onPress={handleClick}>
+                        <Pressable style={stylesForm.button_entrar} onPress={login}>
                             <Text style={stylesForm.textButton}>Entrar</Text>
                         </Pressable>
 
-                        <Pressable style={stylesForm.button_google} onPress={handleEntrar}>
+                        <Pressable style={stylesForm.button_google} onPress={entrar}>
 
                             <Text style={[stylesForm.textButton, { color: '#3F3F3F' }]}>Google</Text>
                         </Pressable>
 
-                        <Pressable style={stylesForm.button_criarCon} onPress={Login}>
+                        <Pressable style={stylesForm.button_criarCon} onPress={criar}>
                             <Text style={stylesForm.textButton}>Criar Conta</Text>
                         </Pressable>
                     </View>
@@ -145,7 +167,7 @@ const stylesForm = StyleSheet.create({
         flex: 2,
         alignItems: 'center',
         gap: 20,
-        backgroundColor: colors.amarelo,
+        backgroundColor: colors.laranja,
         borderRadius: 14
 
     },
@@ -155,7 +177,7 @@ const stylesForm = StyleSheet.create({
         flexDirection: 'column',
         flex: 1,
         alignItems: 'center',
-        backgroundColor: colors.amarelo,
+        backgroundColor: colors.laranja,
         borderBottomLeftRadius: 15,
         borderBottomRightRadius: 15,
         gap: 5,
@@ -168,7 +190,7 @@ const stylesForm = StyleSheet.create({
         height: '15%',
         borderWidth: 3,
         borderColor: '#BBBBBB',
-        borderRadius: 18,
+        borderRadius: 15,
         backgroundColor: colors.branco,
         fontSize: 16,
         fontWeight: 'bold',
@@ -180,19 +202,7 @@ const stylesForm = StyleSheet.create({
         height: '15%',
         borderWidth: 3,
         borderColor: "#BBBBBB",
-        borderRadius: 18,
-        backgroundColor: colors.branco,
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-
-    input_nome: {
-        paddingLeft: 10,
-        width: '90%',
-        height: '15%',
-        borderWidth: 3,
-        borderColor: "#BBBBBB",
-        borderRadius: 18,
+        borderRadius: 15,
         backgroundColor: colors.branco,
         fontSize: 16,
         fontWeight: 'bold',
@@ -204,7 +214,7 @@ const stylesForm = StyleSheet.create({
         height: '15%',
         borderWidth: 3,
         borderColor: '#BBBBBB',
-        borderRadius: 18,
+        borderRadius: 15,
         backgroundColor: colors.branco,
         fontSize: 16,
         fontWeight: 'bold',
@@ -266,7 +276,7 @@ const stylesButton = (widths) =>StyleSheet.create({
     },
 
     top: {
-        width: '100%',
+        width: '80%',
         height: '20%',
         alignItems: "center",
 
@@ -274,7 +284,7 @@ const stylesButton = (widths) =>StyleSheet.create({
 
     img: {
         width: '100%',
-        height: '100%',
+        height: '90%',
         resizeMode: "contain"
     },
 

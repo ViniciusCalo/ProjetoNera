@@ -43,7 +43,7 @@ const LoginScreen = ({ navigation }) => {
     const handleClick = async (e) => {
         e.preventDefault();
         try {
-            await axios.post("http://localhost:3333/user/register", {
+            await axios.post("http://localhost:3333/users/register", {
                 username: nome,
                 useremail: email,
                 userpassword: senha,

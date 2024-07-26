@@ -4,14 +4,14 @@ import fracaoIcon from '../../assets/fracao.png';
 
 
 
-const TrailCard = () => {
+const TrailCard = ({value}) => {
     return (
         <View style={styles.container}>
             <View style={styles.polygon}>
-            <Image source={fracaoIcon} style={styles.iconTrail} />
+                <Image source={fracaoIcon} style={styles.iconTrail} />
             </View>
             <Text style={styles.title}>Fração</Text>
-            <Text style={styles.text}>10 Modulos</Text>
+            <Text style={styles.text}>Modulo {value} </Text>
         </View>
     );
 };
@@ -24,9 +24,12 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         width: 152,
         height: 98,
-        backgroundImage: 'linear-gradient(35deg, rgba(255,255,255,1) 64%, rgba(242,5,116,1) 85%, rgba(242,5,116,1) 99%)',
+        backgroundColor: '#fff',
         borderRadius: 8,
-        marginTop: 50,
+        marginTop: 20,
+        marginBottom: 16,
+        marginLeft: 10,
+        marginRight: 10,
         gap: 10,
         shadowColor: '#000',
         shadowOffset: {
@@ -49,10 +52,10 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         paddingTop: 10,
         backgroundColor: '#fff',
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-        
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+
     },
     iconTrail: {
         position: 'absolute',
