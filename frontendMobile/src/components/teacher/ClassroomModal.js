@@ -1,19 +1,37 @@
 import React, { useState } from 'react';
-import { Alert, Modal, StyleSheet, Text, Pressable, View, Image } from 'react-native';
+import { Alert, Modal, StyleSheet, Text, Pressable, View, Share, Image } from 'react-native';
 import seta from '../../assets/seta.png';
 import classIcon from '../../assets/classPink.png';
 import share from '../../assets/share.png';
 import copy from '../../assets/copy.png';
 import studentIcon from '../../assets/studentIcon.png';
-//import Clipboard
-import * as Clipboard from 'expo-clipboard';
 import TrailCard from './TrailCard';
 import { useNavigation } from '@react-navigation/native'; // Importe o hook useNavigation
+import * as Clipboard from 'expo-clipboard';//import Clipboard
+import * as FileSystem from 'expo-file-system';
 
 
 const ClassroomModal = ({ classroom, modalVisible, setModalVisible }) => {
     const navigation = useNavigation();
-
+    // Função para compartilhar o código da sala
+    const shareCode = async () => {
+        try {
+            const result = await Share.share({
+                message: `Código da sala: ${classroom.tokenclass}`,
+            });
+            if (result.action === Share.sharedAction) {
+                if (result.activityType) {
+                    // shared with activity type of result.activityType
+                } else {
+                    // shared
+                }
+            } else if (result.action === Share.dismissedAction) {
+                // dismissed
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    };
     // Função para copiar o código da sala para a área de transferência
     const copyToClipboard = async () => {
         await Clipboard.setStringAsync(classroom.tokenclass);
@@ -54,7 +72,7 @@ const ClassroomModal = ({ classroom, modalVisible, setModalVisible }) => {
                                     <Pressable onPress={copyToClipboard} style={styles.icones}>
                                         <Image source={copy} style={styles.copy} />
                                     </Pressable>
-                                    <Pressable style={styles.icones} >
+                                    <Pressable onPress={shareCode} style={styles.icones} >
                                         <Image source={share} style={styles.share} />
                                     </Pressable>
                                 </View>
@@ -149,12 +167,11 @@ const styles = StyleSheet.create({
         width: 50,
         height: 60,
         padding: 10,
-        borderRadius: 20,
-        padding: 10,
-        elevation: 2,
         position: 'absolute',
         top: 0,
-        left: 0
+        left: 0,
+        borderRadius: 20,
+        backgroundColor: '#fff',
     },
     seta: {
         padding: 10,
