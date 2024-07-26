@@ -3,11 +3,19 @@ import { StatusBar, StyleSheet, Text, View, Image, Pressable, TextInput, Keyboar
 import colors from '../components/styles';
 import Switch from '../components/SwitchProfile';
 import axios from 'axios';
+import * as Google from "expo-auth-session/providers/google"; //import google auth
 
 
 const LoginScreen = ({ navigation }) => {
 
     const [isViewVisible, setIsViewVisible] = useState(true);
+
+    //função de autenticação do google
+    const[request, response, promptAsync] = Google.useAuthRequest({
+        //androidClientId: ""
+        webClientId: "925583381049-fgqie9ocvvaojvpvg0acvkisgnl9erst.apps.googleusercontent.com",
+        //iosClientId: ""
+    })
 
     useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
@@ -131,7 +139,7 @@ const LoginScreen = ({ navigation }) => {
                             <Text style={stylesForm.textButton}>Criar conta</Text>
                         </Pressable>
 
-                        <Pressable style={stylesForm.button_google} onPress={handleEntrar}>
+                        <Pressable style={stylesForm.button_google} onPress={promptAsync /*botão de login com google*/}>
 
                             <Text style={[stylesForm.textButton, { color: '#3F3F3F' }]}>Google</Text>
                         </Pressable>
