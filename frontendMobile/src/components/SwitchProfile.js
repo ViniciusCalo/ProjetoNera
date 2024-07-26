@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { TouchableOpacity, Text, StyleSheet, Pressable, View } from 'react-native';
+import { Text, StyleSheet, Pressable, View } from 'react-native';
 
 const SwitchProfile = ({ width, height, onpress, value}) => {
 
