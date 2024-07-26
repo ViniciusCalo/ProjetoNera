@@ -10,7 +10,7 @@ const HeaderTeacher = () => {
     const route = useRoute(); // Obtenha a rota atual usando o hook useRoute
 
     const goToTeacherProfile = () => {
-        navigation.navigate('TeacherProfile');
+        navigation.navigate('PerfilTeacher');
     };
 
     const goToHomeTeacher = () => {
