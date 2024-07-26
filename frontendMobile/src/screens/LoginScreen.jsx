@@ -66,7 +66,7 @@ const LoginScreen = ({ navigation }) => {
             });
             console.log(res.data.token);
             if (res.data.token && role === 'teacher') {
-                storeData(res.data.token["token"]);
+                storeData(res.data.token);
                 navigation.navigate('HomeTeacher');
             } else if (res.data.token && role === 'student') {
                 storeData(res.data.token);

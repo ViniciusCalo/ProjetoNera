@@ -5,12 +5,20 @@ import classIcon from '../../assets/classPink.png';
 import share from '../../assets/share.png';
 import copy from '../../assets/copy.png';
 import studentIcon from '../../assets/studentIcon.png';
+//import Clipboard
+import * as Clipboard from 'expo-clipboard';
 import TrailCard from './TrailCard';
 import { useNavigation } from '@react-navigation/native'; // Importe o hook useNavigation
 
 
 const ClassroomModal = ({ classroom, modalVisible, setModalVisible }) => {
     const navigation = useNavigation();
+
+    // Função para copiar o código da sala para a área de transferência
+    const copyToClipboard = async () => {
+        await Clipboard.setStringAsync(classroom.tokenclass);
+        alert('Código Copiado!');
+    };
 
     const goToTeacherClassroom = () => {
         navigation.navigate('TeacherClassroom');
@@ -43,7 +51,7 @@ const ClassroomModal = ({ classroom, modalVisible, setModalVisible }) => {
                                 <Text style={styles.title}>{classroom.classroomname}</Text>
                                 <View style={styles.students}>
                                     <Text style={styles.titleS}>{classroom.tokenclass}</Text>
-                                    <Pressable style={styles.icones}>
+                                    <Pressable onPress={copyToClipboard} style={styles.icones}>
                                         <Image source={copy} style={styles.copy} />
                                     </Pressable>
                                     <Pressable style={styles.icones} >
