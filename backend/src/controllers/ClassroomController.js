@@ -1,6 +1,4 @@
 const classroomRepo = require('../repositories/ClassroomRepository');
-const teacherRepo = require('../repositories/TeacherRepository');
-const teacherController = require('../controllers/TeacherController');
 const express = require('express');
 const passport = require('passport');
 const router = express.Router();
