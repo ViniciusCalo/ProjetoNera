@@ -1,7 +1,5 @@
 const teacherModel = require('../models/CanonicalDataModel/TeacherModel');
 const userModel = require('../models/CanonicalDataModel/UserModel');
-const userRepo = require('../repositories/UserRepository');
-const authentication = require('../config/auth');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const jwtConfig = require('../config/jwtConfig');
@@ -63,15 +61,15 @@ const loginTeacher = async ({ useremail, teachercpf }) => {
     }
 };
 
-const getAll = async () => {
-    try {
-        const teachers = await teacherModel.Teacher.findAll();
-        return teachers;
-    } catch (error) {
-        console.error('Error fetching teachers:', error);
-        throw error;
-    }
-};
+// const getAll = async () => {
+//     try {
+//         const teachers = await teacherModel.Teacher.findAll();
+//         return teachers;
+//     } catch (error) {
+//         console.error('Error fetching teachers:', error);
+//         throw error;
+//     }
+// };
 
 const getTeacherById = async (request) => {
     try {
