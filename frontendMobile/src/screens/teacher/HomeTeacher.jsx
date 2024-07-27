@@ -4,15 +4,15 @@ import HeaderTeacher from '../../components/teacher/HeaderTeacher';
 import BottomMenuTeacher from '../../components/MenuTeacher';
 import ClassroomCard from '../../components/teacher/ClassroomCard';
 import TrailCard from '../../components/teacher/TrailCard';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useState } from 'react';
 
 
 const Home = () => {
-
-
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <HeaderTeacher />
+                <HeaderTeacher/>
             </View>
             <View style={styles.panner}>
                 

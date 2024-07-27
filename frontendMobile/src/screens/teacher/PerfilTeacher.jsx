@@ -4,9 +4,22 @@ import * as ImagePicker from 'expo-image-picker';
 import HeaderTeacher from '../../components/teacher/HeaderTeacher';
 import BottomMenuTeacher from '../../components/MenuTeacher';
 import icon1 from '../../assets/addImg.png';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const PerfilTeacher = () => {
     const [image, setImage] = useState(null);
+
+    AsyncStorage.getItem('image').then((value) => {
+        setImage(value);
+    });
+
+    const storeData = async (value) => {
+        try {
+            await AsyncStorage.setItem('image', value)
+        } catch (e) {
+          // saving error
+        }
+      };
 
     const pickImage = async () => {
         // No permissions request is necessary for launching the image library
@@ -16,18 +29,20 @@ const PerfilTeacher = () => {
             aspect: [4, 3],
             quality: 1,
         });
-
         console.log(result);
 
         if (!result.canceled) {
             setImage(result.assets[0].uri);
+            storeData(result.assets[0].uri);
         }
     };
 
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <HeaderTeacher />
+            <HeaderTeacher
+            image={image}
+            />
             </View>
             <Text style={styles.title}>Perfil</Text>
             <View style={styles.infoPerfil}>
