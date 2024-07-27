@@ -2,7 +2,7 @@
 const { sequelize, Sequelize } = require('../../database/db');
 
 const GameResult = sequelize.define('GameResult', {
-    gameResultId: {
+    gameresultid: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
@@ -11,19 +11,19 @@ const GameResult = sequelize.define('GameResult', {
         type: Sequelize.INTEGER,
         allowNull: false
     },
-    timeSpent: {
+    timespent: {
         type: Sequelize.TIME,
         allowNull: false
     },
-    resultDate: {
+    resultdate: {
         type: Sequelize.DATE,
         allowNull: false
     },
-    studentId: {
+    studentid: {
         type: Sequelize.INTEGER,
         allowNull: false
     },
-    gameId: {
+    gameid: {
         type: Sequelize.INTEGER,
         allowNull: false
     }
@@ -33,6 +33,3 @@ const GameResult = sequelize.define('GameResult', {
 });
 
 module.exports = { GameResult };
-
-
-

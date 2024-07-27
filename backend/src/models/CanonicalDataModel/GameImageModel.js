@@ -3,24 +3,24 @@
 const { sequelize, Sequelize } = require('../../database/db');
 
 const GameImage = sequelize.define('GameImage', {
-    imageId: {
+    imagesid: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    imageUrl: {
+    imageurl: {
         type: Sequelize.STRING,
         allowNull: false
     },
-    imageDescription: {
+    imagedescription: {
         type: Sequelize.STRING,
         allowNull: false
     },
-    gameId: {
+    gameid: {
         type: Sequelize.INTEGER,
         references: {
             model: 'TBGAME',
-            key: 'gameId'
+            key: 'gameid'
         }
     }
 }, {
