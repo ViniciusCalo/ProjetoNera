@@ -13,6 +13,10 @@ const User = sequelize.define('User', {
         allowNull: false
     },
     userpassword: Sequelize.STRING,
+    profilepicture: {
+        type: Sequelize.STRING,
+        allowNull: true
+    },
     role: {
         type: Sequelize.ENUM('student', 'teacher'),
         allowNull: false
