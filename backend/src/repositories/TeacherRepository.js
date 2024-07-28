@@ -70,15 +70,15 @@ const loginTeacher = async ({ useremail, teachercpf }) => {
 };
 
 
-const getAll = async () => {
-    try {
-        const teachers = await teacherModel.Teacher.findAll();
-        return teachers;
-    } catch (error) {
-        console.error('Error fetching teachers:', error);
-        throw error;
-    }
-};
+// const getAll = async () => {
+//     try {
+//         const teachers = await teacherModel.Teacher.findAll();
+//         return teachers;
+//     } catch (error) {
+//         console.error('Error fetching teachers:', error);
+//         throw error;
+//     }
+// };
 
 const getTeacherById = async (request) => {
     try {

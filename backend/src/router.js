@@ -1,14 +1,18 @@
+// importa e usa os controladores responsáveis por cada conjunto de funcionalidades, 
+// organizando todas as rotas da aplicação em um único lugar.
+
 const express = require('express');
-const passport = require('passport');
 const user = require('./controllers/UserController');
 const classroom = require('./controllers/ClassroomController');
-const teacherController = require('./controllers/TeacherController');
-const achievement = require('../src/controllers/AchievementsController');
+const achievement = require('./controllers/AchievementsController');
+const memoryGame = require('./controllers/MemoryGameController');
+
 const router = express.Router();
 
 router.use("/users", user);
 router.use("/classrooms", classroom);
-router.use("/api",achievement);
+router.use("/api", achievement);
+router.use("/memory-game", memoryGame);
 
 
 module.exports = router;
