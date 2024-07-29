@@ -14,11 +14,11 @@ router.get('/', async (request, response) => {
     }
 });
 
-const registerUserAsATeacher = async ({userid, teachercpf}) => {
+const registerUserAsATeacher = async ({ userid, teachercpf }) => {
     try {
-        const newTeacher = await teacherRepo.registerUserAsATeacher({ 
-            userid : userid,
-            teachercpf : teachercpf,
+        const newTeacher = await teacherRepo.registerUserAsATeacher({
+            userid: userid,
+            teachercpf: teachercpf,
         });
         return newTeacher;
 
@@ -27,14 +27,15 @@ const registerUserAsATeacher = async ({userid, teachercpf}) => {
     }
 };
 
-const teacherLogin = async ({useremail, teachercpf}) => {
+const teacherLogin = async ({ useremail, teachercpf }) => {
     try {
-        const token = await teacherRepo.loginTeacher({ useremail, teachercpf });
-        return token;
+        const { token, name, profilePic } = await teacherRepo.loginTeacher({ useremail, teachercpf });
+        return { token, name, profilePic };
     } catch (error) {
         throw new Error('Erro no login do professor: ' + error.message);
     }
 }
+
 
 const getTeacherById = async (request, response) => {
     try {
@@ -50,8 +51,14 @@ const getTeacherById = async (request, response) => {
     }
 };
 
+const CpfIsNull = async ({teachercpf}) => {
+    if (teachercpf === null || teachercpf.length === 0) {
+        throw new Error('CPF cannot be empty');
+    }
+}
 module.exports = {
     registerUserAsATeacher,
     teacherLogin,
-    getTeacherById
+    getTeacherById,
+    CpfIsNull
 };
