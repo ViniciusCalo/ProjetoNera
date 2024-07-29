@@ -56,9 +56,9 @@ router.post('/create', passport.authenticate('jwt', { session: false }), async (
     }
 });
 
-router.put('/update/:id', passport.authenticate('jwt', { session: false }), async (request, response) => {
+router.put('/update', passport.authenticate('jwt', { session: false }), async (request, response) => {
     try{
-        const classroomid = request.params.id;
+        const classroomid = request.user;
         const { classroomdescription, trackid, moduleid } = request.body;
 
         const tokenclass = generateHash(Date.now());
