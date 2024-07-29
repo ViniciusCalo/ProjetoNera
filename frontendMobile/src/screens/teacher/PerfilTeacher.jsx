@@ -9,7 +9,7 @@ import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import { Buffer } from 'buffer';
-import { AZURE_STORAGE_URL, SAS_TOKEN } from '@env';
+import { AZURE_STORAGE_URL, SAS_TOKEN, API_NERA_URL } from '@env';
 
 
 const PerfilTeacher = () => {

@@ -8,6 +8,7 @@ import ButtonBlue from '../../components/ButtonBlue';
 import ClassroomModal from '../../components/teacher/ClassroomModal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import { API_NERA_URL } from '@env';
 
 const CreateClass = () => {
     const [classroom, setClassroom] = useState([{}]);
@@ -37,7 +38,7 @@ const CreateClass = () => {
     const creatClassroom = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:3333/classrooms/create/', {
+            const res = await axios.post(`${API_NERA_URL}/classrooms/create/`, {
                 classroomname: title,
                 classroomdescription: description,
                 trackid: trail,

@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../components/styles';
 import Switch from '../components/SwitchProfile';
 import axios from 'axios';
+import { API_NERA_URL } from '@env';
 import { useDispatch, useSelector  } from 'react-redux';
 import { setName, setProfileImageUrl } from '../features/user/userSlice';
 
@@ -68,7 +69,7 @@ const LoginScreen = ({ navigation }) => {
     const login = async (e) => {
         e.preventDefault();
         try {
-           const res = await axios.post("http://localhost:3333/users/login", {
+           const res = await axios.post(`${API_NERA_URL}/users/login`, {
                 useremail: email,
                 userpassword: senha,
                 role: role,

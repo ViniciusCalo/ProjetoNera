@@ -3,6 +3,7 @@ import { StatusBar, StyleSheet, Text, View, Image, Pressable, TextInput, Keyboar
 import colors from '../components/styles';
 import Switch from '../components/SwitchProfile';
 import axios from 'axios';
+import { API_NERA_URL } from '@env';
 
 
 const LoginScreen = ({ navigation }) => {
@@ -43,7 +44,7 @@ const LoginScreen = ({ navigation }) => {
     const handleClick = async (e) => {
         e.preventDefault();
         try {
-            await axios.post("http://localhost:3333/users/register", {
+            await axios.post(`${API_NERA_URL}/users/register`, {
                 username: nome,
                 useremail: email,
                 userpassword: senha,
