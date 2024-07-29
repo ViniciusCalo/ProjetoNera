@@ -4,14 +4,24 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../components/styles';
 import Switch from '../components/SwitchProfile';
 import axios from 'axios';
+import { useDispatch, useSelector  } from 'react-redux';
+import { setName, setProfileImageUrl } from '../features/user/userSlice';
 
 
 const LoginScreen = ({ navigation }) => {
+    const dispatch = useDispatch();
+    const { name, profileImageUrl } = useSelector((state) => state.user);
+   console.log(name, profileImageUrl);
 
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [cpf, setCpf] = useState("");
     const [role, setRole] = useState('teacher');
+
+    const createProfile = (username,userpicture) => {
+        dispatch(setName(username));
+        dispatch(setProfileImageUrl(userpicture));
+    };
 
     const storeData = async (value) => {
         try {
@@ -62,9 +72,12 @@ const LoginScreen = ({ navigation }) => {
                 useremail: email,
                 userpassword: senha,
                 role: role,
-                teachercpf: cpf
+                teachercpf: cpf     
             });
             console.log(res.data.token);
+            console.log(res.data.username);
+            console.log(res.data.userpicture);
+            createProfile(res.data.username, res.data.userpicture);
             if (res.data.token && role === 'teacher') {
                 storeData(res.data.token);
                 navigation.navigate('HomeTeacher');
