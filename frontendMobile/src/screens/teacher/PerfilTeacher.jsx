@@ -10,11 +10,40 @@ import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import { Buffer } from 'buffer';
 import { AZURE_STORAGE_URL, SAS_TOKEN, API_NERA_URL } from '@env';
+import { useDispatch, useSelector } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { setName, setProfileImageUrl } from '../../features/user/userSlice';
 
 
 const PerfilTeacher = () => {
-    const [imageUri, setImageUri] = useState('');
+    const [token, setToken] = useState('');
     const [error, setError] = useState('');
+    const dispatch = useDispatch();
+    const { name, profileImageUrl } = useSelector((state) => state.user);
+
+    // Pegando o token do usuário
+    AsyncStorage.getItem('token').then((value) => {
+        setToken(value);
+    });
+
+    // Função para atualizar imagem do user do redux utilizando api
+    const updateProfile = async (uriImagem) => {
+        try {
+            const res = await axios.put(`${API_NERA_URL}/users/uploadpic/23`, {
+                profilepicture: uriImagem
+            },
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+            console.log(res.data);
+            dispatch(setProfileImageUrl(uriImagem));
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
 
 
     const pickImage = async () => {
@@ -28,11 +57,12 @@ const PerfilTeacher = () => {
         console.log(result);
 
         if (!result.canceled) {
-            const uri =  result.assets[0].uri;
+            const uri = result.assets[0].uri;
             console.log(uri);
-            const userUri =  await uploadImage(uri);
+            const userUri = await uploadImage(uri);
             console.info("Setando imagem" + userUri);
-            setImageUri(userUri);
+            //dispatch(setProfileImageUrl(userUri));
+            await updateProfile(userUri);
         }
     };
 
@@ -44,11 +74,11 @@ const PerfilTeacher = () => {
         const baseUrl = AZURE_STORAGE_URL;
         const sasToken = SAS_TOKEN;
 
-        
+
         try {
             // const fileInfo = await FileSystem.getInfoAsync(imageUri);
             const extension = imageUri.split('.').pop();
-            const mimeType = "image/" + extension; 
+            const mimeType = "image/" + extension;
 
             // Gera um novo nome para o arquivo
             const fileId = uuidv4() || 'invalid-file-id';
@@ -60,7 +90,7 @@ const PerfilTeacher = () => {
             // const fileStats = await RNFS.stat(imageUri);
             const fileContent = await FileSystem.readAsStringAsync(imageUri, {
                 encoding: FileSystem.EncodingType.Base64,
-              });
+            });
             console.log("info" + fileContent);
 
             const options = {
@@ -92,12 +122,12 @@ const PerfilTeacher = () => {
             <Text style={styles.title}>Perfil</Text>
             <View style={styles.infoPerfil}>
                 <View style={styles.image}>
-                    {imageUri && <Image source={{ uri: imageUri }} style={styles.img} />}
+                    <Image source={{ uri: profileImageUrl }} style={styles.img} />
                     <Pressable onPress={pickImage} style={styles.btnfoto}>
                         <Image source={icon1} style={styles.icon} />
                     </Pressable>
                 </View>
-                <Text style={styles.texto}>Nome </Text>
+                <Text style={styles.texto}>{name} </Text>
             </View>
             <View style={styles.infoText}>
                 <Text style={styles.texto}>Notificações</Text>

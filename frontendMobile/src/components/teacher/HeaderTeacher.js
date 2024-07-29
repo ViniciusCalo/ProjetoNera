@@ -3,18 +3,13 @@ import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native'; // Importe o hook useNavigation e useRoute
 import notificationIncon from '../../assets/notification.png';
 import logoIcon from '../../assets/favicon.png';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useState } from 'react';
+import { useSelector  } from 'react-redux';
 
 const HeaderTeacher = () => {
-    const [imageProfile, setImageProfile] = useState(null);
+    const { profileImageUrl } = useSelector((state) => state.user);
     const navigation = useNavigation();
     const route = useRoute(); // Obtenha a rota atual usando o hook useRoute
 
-    // Recupere a imagem do perfil do professor armazenada no AsyncStorage
-    AsyncStorage.getItem('image').then((value) => {
-        setImageProfile(value);
-    }   );
 
 
     const goToTeacherProfile = () => {
@@ -36,7 +31,7 @@ const HeaderTeacher = () => {
         <View style={isHomeTeacher ? styles.container : styles.container2}>
             {isHomeTeacher && (
                 <TouchableOpacity style={styles.button} onPress={goToTeacherProfile}>
-                    <Image source={{uri: imageProfile}} style={styles.iconPerfil}  />
+                    <Image source={{uri: profileImageUrl}} style={styles.iconPerfil}  />
                 </TouchableOpacity>
             )}
             <TouchableOpacity style={styles.button} onPress={goToHomeTeacher}>

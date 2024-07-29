@@ -9,7 +9,7 @@ import { useSelector  } from 'react-redux';
 
 
 const Home = () => {
-    const { name, profileImageUrl } = useSelector((state) => state.user);
+    const { name } = useSelector((state) => state.user);
     return (
         <View style={styles.container}>
             <View style={styles.header}>
