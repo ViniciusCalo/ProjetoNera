@@ -4,17 +4,20 @@ import HeaderTeacher from '../../components/teacher/HeaderTeacher';
 import BottomMenuTeacher from '../../components/MenuTeacher';
 import ClassroomCard from '../../components/teacher/ClassroomCard';
 import TrailCard from '../../components/teacher/TrailCard';
+import { useSelector  } from 'react-redux';
+
 
 
 const Home = () => {
-
-
+    const { name } = useSelector((state) => state.user);
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <HeaderTeacher />
+                <HeaderTeacher/>
             </View>
             <View style={styles.panner}>
+                <Text style={styles.texto}>🎉 Bem-vindo(a), Professor(a) {name}! 📚</Text>
+                <Text style={styles.texto}>Pronto(a) para mostrar quanto a matemática é divertida através do N.E.R.A? 🚀✨</Text>
                 
             </View>
             <View style={styles.salas}>
@@ -69,6 +72,8 @@ const styles = StyleSheet.create({
     },
     panner: {
         display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         height: '15%',
         width: '90%',
         backgroundColor: '#fff',
@@ -82,6 +87,14 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#000',
         marginTop: 10,
+    },
+    texto : {
+        width: '90%',
+        textAlign: 'Center',
+        fontSize: 16,
+        fontWeight: 'Regular',
+        color: '#000',
+        marginTop: 5,
     },
     salas: {
         display: 'flex',

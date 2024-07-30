@@ -4,14 +4,25 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../components/styles';
 import Switch from '../components/SwitchProfile';
 import axios from 'axios';
+import { API_NERA_URL } from '@env';
+import { useDispatch  } from 'react-redux';
+import { setName, setProfileImageUrl } from '../features/user/userSlice';
+
+
 
 
 const LoginScreen = ({ navigation }) => {
+    const dispatch = useDispatch();
 
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [cpf, setCpf] = useState("");
     const [role, setRole] = useState('teacher');
+
+    const createProfile = (username,userpicture) => {
+        dispatch(setName(username));
+        dispatch(setProfileImageUrl(userpicture));
+    };
 
     const storeData = async (value) => {
         try {
@@ -58,15 +69,18 @@ const LoginScreen = ({ navigation }) => {
     const login = async (e) => {
         e.preventDefault();
         try {
-           const res = await axios.post("http://localhost:3333/users/login", {
+           const res = await axios.post(`${API_NERA_URL}/users/login`, {
                 useremail: email,
                 userpassword: senha,
                 role: role,
-                teachercpf: cpf
+                teachercpf: cpf     
             });
             console.log(res.data.token);
+            console.log(res.data.username);
+            console.log(res.data.profilepic);
+            createProfile(res.data.username, res.data.profilepic);
             if (res.data.token && role === 'teacher') {
-                storeData(res.data.token["token"]);
+                storeData(res.data.token);
                 navigation.navigate('HomeTeacher');
             } else if (res.data.token && role === 'student') {
                 storeData(res.data.token);

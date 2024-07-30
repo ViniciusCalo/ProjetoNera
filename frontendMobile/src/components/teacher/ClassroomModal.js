@@ -1,14 +1,41 @@
 import React, { useState } from 'react';
-import { Alert, Modal, StyleSheet, Text, Pressable, View, Image } from 'react-native';
+import { Alert, Modal, StyleSheet, Text, Pressable, View, Share, Image } from 'react-native';
 import seta from '../../assets/seta.png';
 import classIcon from '../../assets/classPink.png';
+import share from '../../assets/share.png';
+import copy from '../../assets/copy.png';
 import studentIcon from '../../assets/studentIcon.png';
 import TrailCard from './TrailCard';
 import { useNavigation } from '@react-navigation/native'; // Importe o hook useNavigation
+import * as Clipboard from 'expo-clipboard';//import Clipboard
 
 
-const ClassroomModal = ({classroom, modalVisible, setModalVisible}) => {
+const ClassroomModal = ({ classroom, modalVisible, setModalVisible }) => {
     const navigation = useNavigation();
+    // Função para compartilhar o código da sala
+    const shareCode = async () => {
+        try {
+            const result = await Share.share({
+                message: `Código da sala: ${classroom.tokenclass}`,
+            });
+            if (result.action === Share.sharedAction) {
+                if (result.activityType) {
+                    // shared with activity type of result.activityType
+                } else {
+                    // shared
+                }
+            } else if (result.action === Share.dismissedAction) {
+                // dismissed
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    };
+    // Função para copiar o código da sala para a área de transferência
+    const copyToClipboard = async () => {
+        await Clipboard.setStringAsync(classroom.tokenclass);
+        alert('Código Copiado!');
+    };
 
     const goToTeacherClassroom = () => {
         navigation.navigate('TeacherClassroom');
@@ -22,7 +49,7 @@ const ClassroomModal = ({classroom, modalVisible, setModalVisible}) => {
                 transparent={true}
                 visible={modalVisible}
                 onRequestClose={() => {
-                    Alert.alert('Modal has been closed.');
+                    Alert.alert('Modal foi fechado.');
                     setModalVisible(!modalVisible);
                 }}>
                 <View style={styles.centeredView}>
@@ -41,14 +68,21 @@ const ClassroomModal = ({classroom, modalVisible, setModalVisible}) => {
                                 <Text style={styles.title}>{classroom.classroomname}</Text>
                                 <View style={styles.students}>
                                     <Text style={styles.titleS}>{classroom.tokenclass}</Text>
+                                    <Pressable onPress={copyToClipboard} style={styles.icones}>
+                                        <Image source={copy} style={styles.copy} />
+                                    </Pressable>
+                                    <Pressable onPress={shareCode} style={styles.icones} >
+                                        <Image source={share} style={styles.share} />
+                                    </Pressable>
                                 </View>
                             </View>
                         </View>
                         <Text style={styles.subtitulo}>Descrição</Text>
                         <Text>{classroom.classroomdescription}</Text>
                         <Text style={styles.subtitulo}>Trilha da Sala</Text>
-                        <TrailCard 
-                        value={classroom.moduleid}
+                        <TrailCard
+                            trail={classroom.trackid}
+                            module={classroom.moduleid}
                         />
                         <Text style={styles.subtitulo}>Alunos</Text>
                         <View style={styles.div3}>
@@ -69,7 +103,7 @@ const ClassroomModal = ({classroom, modalVisible, setModalVisible}) => {
                                 <Image source={studentIcon} style={styles.icon2} />
                             </View>
                         </View>
-                        
+
                     </View>
                 </View>
             </Modal>
@@ -124,25 +158,37 @@ const styles = StyleSheet.create({
         marginTop: '5%',
     },
     textAluno: {
-       fontSize: 14,
-       color: '#135794',
-       marginBottom: '25%',
+        fontSize: 14,
+        color: '#135794',
+        marginBottom: '25%',
     },
     button: {
         width: 50,
         height: 60,
         padding: 10,
-        borderRadius: 20,
-        padding: 10,
-        elevation: 2,
         position: 'absolute',
         top: 0,
-        left: 0
+        left: 0,
+        borderRadius: 20,
+        backgroundColor: '#fff',
     },
     seta: {
         padding: 10,
         width: 30,
         height: 20,
+    },
+    icones: {
+        width: '30%',
+    },
+    share: {
+        padding: "20%",
+        width: "20%",
+        height: "20%",
+    },
+    copy: {
+        padding: "20%",
+        width: "20%",
+        height: "20%",
     },
     title: {
         fontSize: 16,
@@ -161,12 +207,13 @@ const styles = StyleSheet.create({
         marginBottom: '2%',
     },
     students: {
+        display: 'flex',
         width: "90%",
         height: 28,
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         backgroundColor: '#F6F7FF',
         borderRadius: 8,
     },

@@ -1,16 +1,19 @@
 import React from 'react';
 import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native'; // Importe o hook useNavigation e useRoute
-import imgProfile from '../../assets/ImgProfile.png';
 import notificationIncon from '../../assets/notification.png';
 import logoIcon from '../../assets/favicon.png';
+import { useSelector  } from 'react-redux';
 
 const HeaderTeacher = () => {
+    const { profileImageUrl } = useSelector((state) => state.user);
     const navigation = useNavigation();
     const route = useRoute(); // Obtenha a rota atual usando o hook useRoute
 
+
+
     const goToTeacherProfile = () => {
-        navigation.navigate('TeacherProfile');
+        navigation.navigate('PerfilTeacher');
     };
 
     const goToHomeTeacher = () => {
@@ -28,7 +31,7 @@ const HeaderTeacher = () => {
         <View style={isHomeTeacher ? styles.container : styles.container2}>
             {isHomeTeacher && (
                 <TouchableOpacity style={styles.button} onPress={goToTeacherProfile}>
-                    <Image source={imgProfile} style={styles.icon}  />
+                    <Image source={{uri: profileImageUrl}} style={styles.iconPerfil}  />
                 </TouchableOpacity>
             )}
             <TouchableOpacity style={styles.button} onPress={goToHomeTeacher}>
@@ -84,6 +87,13 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
     },
+    iconPerfil: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: 'gray'
+    },
+
 });
 
 export default HeaderTeacher;
