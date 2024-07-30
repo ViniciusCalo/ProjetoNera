@@ -77,8 +77,8 @@ const LoginScreen = ({ navigation }) => {
             });
             console.log(res.data.token);
             console.log(res.data.username);
-            console.log(res.data.userpicture);
-            createProfile(res.data.username, res.data.userpicture);
+            console.log(res.data.profilepic);
+            createProfile(res.data.username, res.data.profilepic);
             if (res.data.token && role === 'teacher') {
                 storeData(res.data.token);
                 navigation.navigate('HomeTeacher');
