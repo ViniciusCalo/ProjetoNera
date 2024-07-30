@@ -8,7 +8,6 @@ import studentIcon from '../../assets/studentIcon.png';
 import TrailCard from './TrailCard';
 import { useNavigation } from '@react-navigation/native'; // Importe o hook useNavigation
 import * as Clipboard from 'expo-clipboard';//import Clipboard
-import * as FileSystem from 'expo-file-system';
 
 
 const ClassroomModal = ({ classroom, modalVisible, setModalVisible }) => {
@@ -50,7 +49,7 @@ const ClassroomModal = ({ classroom, modalVisible, setModalVisible }) => {
                 transparent={true}
                 visible={modalVisible}
                 onRequestClose={() => {
-                    Alert.alert('Modal has been closed.');
+                    Alert.alert('Modal foi fechado.');
                     setModalVisible(!modalVisible);
                 }}>
                 <View style={styles.centeredView}>

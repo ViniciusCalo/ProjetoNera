@@ -29,7 +29,7 @@ const PerfilTeacher = () => {
     // Função para atualizar imagem do user do redux utilizando api
     const updateProfile = async (uriImagem) => {
         try {
-            const res = await axios.put(`${API_NERA_URL}/users/uploadpic/23`, {
+            const res = await axios.put(`${API_NERA_URL}/users/uploadpic`, {
                 profilepicture: uriImagem
             },
                 {
@@ -44,10 +44,7 @@ const PerfilTeacher = () => {
         }
     }
 
-
-
     const pickImage = async () => {
-        // No permissions request is necessary for launching the image library
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
@@ -76,7 +73,6 @@ const PerfilTeacher = () => {
 
 
         try {
-            // const fileInfo = await FileSystem.getInfoAsync(imageUri);
             const extension = imageUri.split('.').pop();
             const mimeType = "image/" + extension;
 
