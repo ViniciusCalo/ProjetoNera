@@ -1,6 +1,6 @@
 const request = require('supertest');
 const express = require('express');
-const { authenticateJWT, authorizeRole } = require('../middlewares/auth');
+const { authenticateJWT, authorizeRole } = require('../config/auth');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
