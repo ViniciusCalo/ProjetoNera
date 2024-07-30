@@ -21,11 +21,19 @@ const GameResult = sequelize.define('GameResult', {
     },
     studentid: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        references: {
+            model: 'Student', //referenciando o studentid como FK na tbgameresult
+            key: 'studentid'
+        },
+        unique: true
     },
     gameid: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        references: {
+            model: 'Game', //referenciando o gameid como FK na tbgameresult
+            key: 'gameid'
+        },
+        unique: true
     }
 }, {
     tableName: 'tbgameresult',

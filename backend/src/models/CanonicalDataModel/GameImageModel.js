@@ -19,7 +19,7 @@ const GameImage = sequelize.define('GameImage', {
     gameid: {
         type: Sequelize.INTEGER,
         references: {
-            model: 'TBGAME',
+            model: 'Game', //referenciando o gameid como FK na tbgameimages
             key: 'gameid'
         }
     }

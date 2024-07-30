@@ -1,7 +1,6 @@
 const { sequelize, Sequelize} = require('../../database/db');
-const user = require('../CanonicalDataModel/UserModel');
 
-const Student = sequelize.define('User', {
+const Student = sequelize.define('Student', {
     studentid: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -10,7 +9,7 @@ const Student = sequelize.define('User', {
     userid: {
         type: Sequelize.INTEGER,
         references: {
-            model: 'User', //referenciando o userId como FK na tabela student
+            model: 'User', //referenciando o userId como FK na tbstudent
             key: 'userid'
         }
     }

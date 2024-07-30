@@ -9,7 +9,7 @@ const Teacher = sequelize.define('Teacher', {
     userid: {
         type: Sequelize.INTEGER,
         references: {
-            model: 'User', //referenciando o userId como FK na tabela teacher
+            model: 'User', //referenciando o userId como FK na tbteacher
             key: 'userid'
         },
         unique: true
