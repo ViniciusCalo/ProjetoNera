@@ -45,9 +45,9 @@ router.post('/register', async (request, response) => {
 });
 
 // Nova rota para atualizar a profilepicture
-router.put('/uploadpic/:userid', passport.authenticate('jwt', { session: false }), async (request, response) => {
+router.put('/uploadpic', passport.authenticate('jwt', { session: false }), async (request, response) => {
     try {
-        const { userid } = request.params;
+        const { userid } = request.user;
         const { profilepicture } = request.body;
 
         // Verifica se a URL da foto de perfil foi fornecida
@@ -66,9 +66,9 @@ router.put('/uploadpic/:userid', passport.authenticate('jwt', { session: false }
 });
 
 // Rota para obter a foto de perfil do usuário
-router.get('/profilepicture/:userid', passport.authenticate('jwt', { session: false }), async (request, response) => {
+router.get('/profilepicture/', passport.authenticate('jwt', { session: false }), async (request, response) => {
     try {
-        const { userid } = request.params;
+        const { userid } = request.user;
 
         const profilepicture = await userRepo.getProfilePicture(userid);
 
