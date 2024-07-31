@@ -1,4 +1,4 @@
-const { sequelize, Sequelize} = require('../../database/db');
+const { sequelize, Sequelize } = require('../../database/db');
 
 const Student = sequelize.define('Student', {
     studentid: {
@@ -11,11 +11,12 @@ const Student = sequelize.define('Student', {
         references: {
             model: 'User', //referenciando o userId como FK na tbstudent
             key: 'userid'
-        }
+        },
+        unique: true
     }
 }, {
     tableName: 'tbstudent',
     timestamps: false
 });
 
-module.exports = Student;
+module.exports = {Student};

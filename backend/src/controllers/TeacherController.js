@@ -14,6 +14,17 @@ router.get('/', async (request, response) => {
     }
 });
 
+const googleRegisterUserAsATeacher = async ({userid}) => {
+    try{
+        const newTeacher = await teacherRepo.registerUserAsATeacherViaGoogle({
+            userid: userid
+        });
+        return newTeacher;
+    } catch (error) {
+        throw new Error('Erro ao registrar professor via Google: ', error.message);
+    }
+}
+
 const registerUserAsATeacher = async ({ userid, teachercpf }) => {
     try {
         const newTeacher = await teacherRepo.registerUserAsATeacher({
@@ -30,6 +41,15 @@ const registerUserAsATeacher = async ({ userid, teachercpf }) => {
 const teacherLogin = async ({ useremail, teachercpf }) => {
     try {
         const { token, name, profilePic } = await teacherRepo.loginTeacher({ useremail, teachercpf });
+        return { token, name, profilePic };
+    } catch (error) {
+        throw new Error('Erro no login do professor: ' + error.message);
+    }
+}
+
+const teacherGoogleLogin = async ({ useremail}) => {
+    try {
+        const { token, name, profilePic } = await teacherRepo.loginTeacherGoogle({ useremail });
         return { token, name, profilePic };
     } catch (error) {
         throw new Error('Erro no login do professor: ' + error.message);
@@ -60,5 +80,7 @@ module.exports = {
     registerUserAsATeacher,
     teacherLogin,
     getTeacherById,
-    CpfIsNull
+    CpfIsNull,
+    googleRegisterUserAsATeacher,
+    teacherGoogleLogin
 };

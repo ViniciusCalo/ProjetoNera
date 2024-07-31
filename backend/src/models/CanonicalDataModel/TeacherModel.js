@@ -13,7 +13,6 @@ const Teacher = sequelize.define('Teacher', {
             key: 'userid'
         },
         unique: true
-
     },
     teachercpf: {
         type: Sequelize.STRING,
