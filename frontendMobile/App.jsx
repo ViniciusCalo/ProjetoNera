@@ -5,6 +5,7 @@ import SplashScreen from './src/screens/SplashScreen';
 import HomeTeacher from './src/screens/teacher/HomeTeacher';
 import TeacherClassroom from './src/screens/teacher/TeacherClassroom';
 import TeacherProfile from './src/screens/TeacherProfile';
+import PerfilTeacher from './src/screens/teacher/PerfilTeacher';
 import LoginScreen from './src/screens/LoginScreen';
 import StudentProfile from './src/screens/student/StudentProfile';
 import CreateClass from './src/screens/teacher/CreateClass';
@@ -47,6 +48,7 @@ export default function App() {
                 <Stack.Screen name="StudentTrails" component={StudentTrails} />
                 <Stack.Screen name="FractionTrails" component={FractionTrails} />
                 <Stack.Screen name="FractionScreen" component={FractionScreen} />
+                <Stack.Screen name="PerfilTeacher" component={PerfilTeacher} />
             </Stack.Navigator>
         </NavigationContainer>
         </Provider>

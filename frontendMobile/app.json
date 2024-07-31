@@ -4,13 +4,21 @@
     "slug": "nera-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "src/assets/Icone.png",
+    "icon": "src/assets/icone.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "src/assets/Icone.png",
+      "image": "src/assets/icone.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
+        }
+      ]
+    ],
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -19,12 +27,13 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "src/assets/Icone.png",
+        "foregroundImage": "src/assets/icone.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "src/assets/Icone.png"
+      "favicon": "src/assets/icone.png"
     }
+  
   }
 }
