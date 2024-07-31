@@ -4,14 +4,14 @@ const ClassroomStudent = sequelize.define('ClassroomStudent', {
     classroomid: {
         type: Sequelize.INTEGER,
         references: {
-            model: 'Classrooms', // Ajuste para corresponder ao nome da tabela de salas
+            model: 'Classrooms',
             key: 'classroomid'
         }
     },
     studentid: {
         type: Sequelize.INTEGER,
         references: {
-            model: 'Users', // Ajuste para corresponder ao nome da tabela de usuários
+            model: 'Users',
             key: 'userid'
         }
     }
