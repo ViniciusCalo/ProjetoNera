@@ -19,11 +19,9 @@ describe('Testando todas as rotas de sala de aula', () => {
         };
 
         beforeEach(() => {
-            jest.spyOn(passport, 'authenticate').mockImplementation((strategy, options, callback) => {
-                return (req, res, next) => {
-                    req.user = mockUser.user;
-                    next();
-                };
+            jest.spyOn(passport, 'authenticate').mockImplementation((strategy, options) => (req, res, next) => {
+                req.user = mockUser.user;
+                next();
             });
         });
 
