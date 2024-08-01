@@ -2,7 +2,8 @@ const express = require('express');
 const router = require('./router');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const passport = require('./config/auth'); // Ajuste o caminho conforme necessário
+const passport = require('passport');
+require('./config/auth'); 
 
 const app = express();
 
