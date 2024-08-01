@@ -43,7 +43,7 @@ const applyPassportStrategy = passport => {
                 if (student) {
                   console.log('Student Found');
                   return done(null, {
-                    studentid: student.teacherid,
+                    studentid: student.studentid,
                     userid: student.userid,
                     role: user.role
                   });

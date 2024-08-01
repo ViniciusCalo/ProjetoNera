@@ -1,8 +1,8 @@
 const express = require('express');
 const passport = require('passport');
 const userRepo = require('../repositories/UserRepository');
-const userModel = require('../models/CanonicalDataModel/UserModel');
 const teacherController = require('../controllers/TeacherController');
+const studentController = require('../controllers/StudentController');
 const router = express.Router();
 
 router.get('/', async (request, response) => {
@@ -15,6 +15,35 @@ router.get('/', async (request, response) => {
     }
 });
 
+router.post('/googleRegister', async (request, response) => {
+    try{
+        const { username, useremail, role } = request.body;
+        let profilepicture = null; 
+
+        // Cria usuário
+        const newUser = await userRepo.createUser({ username, useremail, role, profilepicture });
+
+        // Se a role do user for igual a teacher, então registra como teacher na tbteacher
+        if (role === 'teacher') {
+            const newTeacher = await teacherController.googleRegisterUserAsATeacher({
+                userid: newUser.userid,
+            });
+            return response.status(201).json({ message: "Teacher created successfully", newUser, newTeacher });
+        } 
+        // Se a role do user for igual a student, então registra como student na tbstudent
+        if (role === 'student') {
+            const newStudent = await studentController.googleRegisterUserAsStudent({
+                userid: newUser.userid
+            });
+            return response.status(201).json({ message: "Student created successfully", newUser, newStudent });
+        }
+        return response.status(201).json({ message: "User created successfully", newUser });
+    } catch (error) {
+        console.error(error);
+        return response.status(500).json({ message: error.message || "Internal server error" });
+    }
+})
+
 router.post('/register', async (request, response) => {
     try {
         const { username, useremail, userpassword, role, teachercpf } = request.body;
@@ -24,7 +53,6 @@ router.post('/register', async (request, response) => {
         if (role === 'teacher' && (!teachercpf || teachercpf.trim() === '')) {
             return response.status(400).json({ message: "CPF do professor é obrigatório." });
         }
-
         // Cria usuário
         const newUser = await userRepo.createUser({ username, useremail, userpassword, role, profilepicture });
 
@@ -35,8 +63,14 @@ router.post('/register', async (request, response) => {
                 teachercpf: teachercpf
             });
             return response.status(201).json({ message: "Teacher created successfully", newUser, newTeacher });
+        } 
+        // Se a role do user for igual a student, então registra como student na tbstudent
+        if (role === 'student') {
+            const newStudent = await studentController.registerUserStudent({
+                userid: newUser.userid
+            });
+            return response.status(201).json({ message: "Student created successfully", newUser, newStudent });
         }
-
         return response.status(201).json({ message: "User created successfully", newUser });
     } catch (error) {
         console.error(error);
@@ -84,6 +118,33 @@ router.get('/profilepicture/', passport.authenticate('jwt', { session: false }),
 });
 
 
+router.post('/googleLogin', async (request, response) => {
+    try {
+        const { useremail, username, role } = request.body;
+        const userGoogleLoginResult = await userRepo.loginUserGoole({ useremail, username, role });
+
+        if (role === 'teacher') {
+            const teacherLoginResult = await teacherController.teacherGoogleLogin({ useremail });
+            return response.status(200).json({
+                message: "Teacher logged successfully",
+                token: teacherLoginResult.token,
+                username: teacherLoginResult.name,
+                profilepic: userLoginResult.profilepic
+            });
+        } else if (role === 'student') {
+            const studentLoginResult = await studentController.studentGoogleLogin({ useremail });
+            return response.status(200).json({
+                message: "Student logged successfully",
+                token: studentLoginResult.token,
+                username: studentLoginResult.name,
+                profilepic: userGoogleLoginResult.profilepic
+            });
+        }
+    } catch (error) {
+        console.error(error);
+        return response.status(500).json({ message: error.message || "Internal server error" });
+    }
+});
 
 router.post('/login', async (request, response) => {
     try {
@@ -102,11 +163,19 @@ router.post('/login', async (request, response) => {
                 profilepic: userLoginResult.profilepic
             });
         }
-
+        if (role === 'student') {
+            const studentLoginResult = await studentController.studentLogin({ useremail, userpassword });
+            return response.status(200).json({
+                message: "Student logged successfully",
+                token: studentLoginResult.token,
+                username: studentLoginResult.name,
+                profilepic: userLoginResult.profilepic
+            });
+        }
         return response.status(200).json({
             message: "Login successful",
             token,
-            username: name,
+            username: username,
             profilepic: profilepic
         });
     } catch (error) {

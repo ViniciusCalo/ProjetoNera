@@ -1,26 +1,27 @@
 const { sequelize, Sequelize } = require('../../database/db');
 
-const Game = sequelize.define('Game', {
-    gameid: {
+const Module = sequelize.define('Module', {
+    moduleid: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
-    }, 
-    gamename: {
-        type: Sequelize.STRING,
-        allowNull: true
     },
-    gamedescription: {
+    modulename: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    moduledescription: {
         type: Sequelize.TEXT,
         allowNull: true
     },
-    moduleid:{
+    trackid: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
-            model: 'Module', //referenciando o moduleid como FK na tbgame
-            key:'moduleid' 
+            model: 'Track',
+            key: 'id'
         }
     }
-
-
 });
+
+module.exports = Module;
