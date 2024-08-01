@@ -6,6 +6,7 @@ import axios from 'axios';
 import endpoint from '../../config/endpoint'
 /* import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin'; */
 import { useNavigation } from '@react-navigation/native';
+import { Link } from 'expo-router';
 
 export default function HomeScreen({ navigationA }) {
   const navigation = useNavigation();
@@ -154,7 +155,7 @@ export default function HomeScreen({ navigationA }) {
             <Pressable style={stylesForm.button_google} onPress={() => promptAsync()}>
               <Text style={[stylesForm.textButton, { color: '#3F3F3F' }]}>Google</Text>
             </Pressable>
-            <Pressable style={stylesForm.button_criarCon} onPress={() => navigation.navigate('HomeTeacher')}>
+            <Pressable style={stylesForm.button_criarCon} on Press={() => navigation.navigate('StudentTrails')}>
               <Text style={stylesForm.textButton}>Entrar</Text>
             </Pressable>
           </View>

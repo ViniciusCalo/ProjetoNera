@@ -12,8 +12,8 @@ const LoginScreen = ({ navigationA }) => {
 /*     GoogleSignin.configure({
         androidClientId: '925583381049-703pdr2vo5nqsqk5gied874grf94t3jq.apps.googleusercontent.com',
       });
- */
-/*     const handleSocialLogin = async (userEmail, userName) => {
+
+    const handleSocialLogin = async (userEmail, userName) => {
         try {
           await axios.post(`http://${endpoint}:3333/users/login`, {
             username: userName,

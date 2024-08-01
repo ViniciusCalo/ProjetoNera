@@ -1,21 +1,26 @@
-import { Image, Text, View, StyleSheet, ScrollView } from "react-native";
+import { Image, Text, View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import CircleConquist from '../../components/CircleConquist';
 import BottomMenuStudent from '../../components/MenuStudent';
-
+import { useSelector } from 'react-redux';
+import { useNavigation, useRoute } from '@react-navigation/native'; // Importe o hook useNavigation e useRoute
 
 const StudentProfile = () => {
 
+    const { profileImageUrl, name } = useSelector((state) => state.user);
+    const navigation = useNavigation();
     return (
         <View style={styles.div_main}>
             <View style={styles.div_perfil}>
                 <View style={styles.defaultView}>
-                    <Image source={require('../../assets/ImgProfile.png')} resizeMode="contain" style={[{ width: '70%', height: '70%' }]}></Image>
+                    <TouchableOpacity style={{ width: '70%', height: '70%' }} onPress={() => navigation.navigate('StudentEditProfile')}>
+                        <Image source={{ uri: profileImageUrl }} resizeMode="contain" style={{ width: '100%', height: '100%' }}></Image>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.defaultView}>
-                    <Text style={[{ fontWeight: 'bold', fontSize: 15 }]}>@N.E.R.A Equipe</Text>
+                    <Text style={[{ fontWeight: 'bold', fontSize: 15 }]}>{name}</Text>
                 </View>
                 <View style={styles.defaultView}>
-                    <Image source={require('../../assets/icone.png')} resizeMode="contain" style={[styles.img_icone,{ width: '50%', height: '50%' }]}></Image>
+                    <Image source={require('../../assets/icone.png')} resizeMode="contain" style={[styles.img_icone, { width: '50%', height: '50%' }]}></Image>
                 </View>
             </View>
 
