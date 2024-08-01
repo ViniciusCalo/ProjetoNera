@@ -21,7 +21,7 @@ export default function HomeScreen({ navigationA }) {
   }) */
 
 
-  const [isViewVisible, setIsViewVisible] = useState(true);
+/*   const [isViewVisible, setIsViewVisible] = useState(true);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
@@ -35,12 +35,13 @@ export default function HomeScreen({ navigationA }) {
       keyboardDidShowListener.remove();
       keyboardDidHideListener.remove();
     };
-  }, []);
+  }, []); */
 
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [role, setRole] = useState('teacher');
+  const [cpf, setCpf] = useState("");
   const [googleUserInfo, setGoogleUserInfo] = useState(null);
 
 
@@ -82,11 +83,13 @@ export default function HomeScreen({ navigationA }) {
 
   const handleClick = async () => {
     try {
-      await axios.post(`http://${endpoint}:3333/users/register`, {
+      await axios.post(`${process.env.EXPO_PUBLIC_API_NERA_URL}/users/register`, {
         username: nome,
         useremail: email,
         userpassword: senha,
-        role: role
+        role: role,
+        teachercpf: cpf
+
       });
       navigation.navigate('LoginScreen');
     } catch (err) {
@@ -115,7 +118,9 @@ export default function HomeScreen({ navigationA }) {
           <TextInput
             style={stylesForm.input_cpf}
             placeholder='CPF'
+            value={cpf}
             placeholderTextColor="#888888"
+            onChangeText={(texto) => setCpf(texto)}
           />
           <TextInput
             style={stylesForm.input_nome}
@@ -147,7 +152,6 @@ export default function HomeScreen({ navigationA }) {
             value={role}
           />
         </View>
-        {isViewVisible && (
           <View style={stylesForm.opcoesEntrar}>
             <Pressable style={stylesForm.button_entrar} onPress={handleClick}>
               <Text style={stylesForm.textButton}>Criar conta</Text>
@@ -155,11 +159,10 @@ export default function HomeScreen({ navigationA }) {
             <Pressable style={stylesForm.button_google} onPress={() => promptAsync()}>
               <Text style={[stylesForm.textButton, { color: '#3F3F3F' }]}>Google</Text>
             </Pressable>
-            <Pressable style={stylesForm.button_criarCon} on Press={() => navigation.navigate('StudentTrails')}>
+            <Pressable style={stylesForm.button_criarCon} onPress={() => navigation.navigate('LoginScreen')}>
               <Text style={stylesForm.textButton}>Entrar</Text>
             </Pressable>
           </View>
-        )}
       </View>
     </View>
   );
