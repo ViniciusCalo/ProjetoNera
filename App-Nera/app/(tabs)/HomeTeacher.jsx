@@ -1,34 +1,68 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, ScrollView } from 'react-native';
 import HeaderTeacher from '../../components/teacher/HeaderTeacher';
 import BottomMenuTeacher from '../../components/MenuTeacher';
 import ClassroomCard from '../../components/teacher/ClassroomCard';
 import TrailCard from '../../components/teacher/TrailCard';
-import { useSelector  } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import { setItems } from '../store/classroomTeacherSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
 const Home = () => {
+    const dispatch = useDispatch();
+    const [token, setToken] = useState('');
+
+    //Pergar as salas do professor na api rota quando chegar nessa tela `${process.env.EXPO_PUBLIC_API_NERA_URL}/classrooms/teacher`
+
+    useEffect(() => {
+        const getItems = async () => {
+            AsyncStorage.getItem('token').then((value) => {
+                setToken(value);
+            });
+            try {
+                const res = await axios.get(`${process.env.EXPO_PUBLIC_API_NERA_URL}/classrooms/teacher`, {
+
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                console.log(res.data);
+                dispatch(setItems(res.data));
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        getItems();
+    }, [token]);
+
     const { name } = useSelector((state) => state.user);
+    const { items } = useSelector((state) => state.classrooms);
+
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <HeaderTeacher/>
+                <HeaderTeacher />
             </View>
             <View style={styles.panner}>
                 <Text style={styles.texto}>🎉 Bem-vindo(a), Professor(a) {name}! 📚</Text>
                 <Text style={styles.texto}>Pronto(a) para mostrar quanto a matemática é divertida através do N.E.R.A? 🚀✨</Text>
-                
+
             </View>
             <View style={styles.salas}>
                 <Text style={styles.title}>Minhas salas</Text>
                 <ScrollView horizontal={true} >
                     <FlatList
                         style={{ width: '100%' }}
-                        data={[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }]}
-                        keyExtractor={(item) => item.id.toString()}
+                        data={items}
+                        keyExtractor={(item) => item.classroomid.toString()}
                         renderItem={({ item }) => (
-                            <ClassroomCard />
+                            <ClassroomCard
+                                titulo={item.classroomname}
+                            />
                         )}
                         horizontal
                         showsHorizontalScrollIndicator={false}
@@ -42,9 +76,9 @@ const Home = () => {
                         data={[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }]}
                         keyExtractor={(item) => item.id.toString()}
                         renderItem={({ item }) => (
-                                <TrailCard
+                            <TrailCard
                                 value={item.id}
-                                />
+                            />
                         )}
                         horizontal
                         showsHorizontalScrollIndicator={false}
@@ -88,7 +122,7 @@ const styles = StyleSheet.create({
         color: '#000',
         marginTop: 10,
     },
-    texto : {
+    texto: {
         width: '90%',
         textAlign: 'Center',
         fontSize: 16,
