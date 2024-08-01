@@ -94,17 +94,10 @@ const LoginScreen = ({ navigationA }) => {
     };
     const stylesButtons = stylesButton(width);
 
-    const criar = () => {
-        navigation.replace('RegisterTeacher')
-    }
-
-    const handleEntrar = () => {
-        navigation.navigate('StudentProfile');
-    };
-
     const login = async (e) => {
         e.preventDefault();
         console.log(apiUrl);
+        console.log(role);
         try {
             const res = await axios.post(`${apiUrl}/users/login`, {
                 useremail: email,
@@ -117,9 +110,11 @@ const LoginScreen = ({ navigationA }) => {
             if (res.data.token || role === 'teacher') {
                 storeData(res.data.token);
                 navigation.navigate('HomeTeacher');
-            } else if (res.data.token || role === 'student') {
+            } 
+            
+            if (res.data.token || role === 'student') {
                 storeData(res.data.token);
-                navigation.navigate('HomeStudent');
+                navigation.navigate('StudentProfile');
             }
         } catch (err) {
             console.log(err);
