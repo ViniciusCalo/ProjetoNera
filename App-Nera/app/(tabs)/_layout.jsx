@@ -20,6 +20,8 @@ export default function TabLayout() {
         <Tabs.Screen name="CreateClass" />
         <Tabs.Screen name="TeacherClassroom" />
         <Tabs.Screen name="StudentTrails" />
+        <Tabs.Screen name="JoinClassroom" />
+        <Tabs.Screen name="StudentClassroom" />
       </Tabs>
     </Provider>
   );

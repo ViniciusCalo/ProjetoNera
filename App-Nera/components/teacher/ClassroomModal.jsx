@@ -179,6 +179,7 @@ const styles = StyleSheet.create({
     },
     icones: {
         width: '30%',
+        marginLeft: 0,
     },
     share: {
         padding: "20%",
@@ -213,13 +214,14 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-around',
+        justifyContent: 'center',
         backgroundColor: '#F6F7FF',
         borderRadius: 8,
     },
     titleS: {
         fontSize: 12,
         marginLeft: 5,
+        marginRight: 5,
     },
     iconS:
     {

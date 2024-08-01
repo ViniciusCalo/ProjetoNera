@@ -10,19 +10,19 @@ import reportIcon from '../assets/report.png';
 const BottomMenuTeacher = () => {
     const navigation = useNavigation();
 
-    const goToHomeTeacher = () => {
-        navigation.navigate('HomeTeacher');
+    const goToStudentProfile = () => {
+        navigation.navigate('StudentProfile');
     };
 
-    const goToTeacherTrial = () => {
-        navigation.navigate('TeacherTrial');
+    const goToStudentTrails = () => {
+        navigation.navigate('StudentTrails');
     }
-    const goToCreateClass = () => {
-        navigation.navigate('CreateClass');
+    const goToJoinClassroom = () => {
+        navigation.navigate('JoinClassroom');
     }
 
-    const goToTeacherClassroom = () => {
-        navigation.navigate('TeacherClassroom');
+    const goToStudentClassroom = () => {
+        navigation.navigate('StudentClassroom');
     };
 
     const goToTeacherReport = () => {
@@ -41,17 +41,17 @@ const BottomMenuTeacher = () => {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.button} onPress={goToHomeTeacher}>
-                <Image source={profileIcon} style={getIconStyle('HomeTeacher')} />
+            <TouchableOpacity style={styles.button} onPress={goToStudentProfile}>
+                <Image source={profileIcon} style={getIconStyle('StudentProfile')} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={goToTeacherTrial}>
-                <Image source={trailIcon} style={getIconStyle('TeacherTrial')} />
+            <TouchableOpacity style={styles.button} onPress={goToStudentTrails}>
+                <Image source={trailIcon} style={getIconStyle('StudentTrails')} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonJoin} onPress={goToCreateClass}>
-                <Image source={joinIcon} style={[getIconStyle('CreateClass'),styles.iconCreate]}  />
+            <TouchableOpacity style={styles.buttonJoin} onPress={goToJoinClassroom}>
+                <Image source={joinIcon} style={[getIconStyle('JoinClassroom'),styles.iconCreate]}  />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={goToTeacherClassroom}>
-                <Image source={classroomIcon} style={getIconStyle('TeacherClassroom')} />
+            <TouchableOpacity style={styles.button} onPress={goToStudentClassroom}>
+                <Image source={classroomIcon} style={getIconStyle('StudentClassroom')} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={goToTeacherReport}>
                 <Image source={reportIcon} style={getIconStyle('TeacherReport')} />

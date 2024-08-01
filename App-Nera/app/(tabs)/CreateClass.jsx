@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, FlatList } from 'react-native';
+import { Alert, View, Text, StyleSheet, TextInput, FlatList } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import HeaderTeacher from '../../components/teacher/HeaderTeacher';
 import BottomMenuTeacher from '../../components/MenuTeacher';
@@ -33,11 +33,17 @@ const CreateClass = () => {
         selectedTrail('');
     };
 
+    //verificar se os campos estão preenchidos
+
+
+
+
+
     // Create a classroom function 
     const creatClassroom = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post(`${process.env.API_NERA_URL}/classrooms/create/`, {
+            const res = await axios.post(`${process.env.EXPO_PUBLIC_API_NERA_URL}/classrooms/create/`, {
                 classroomname: title,
                 classroomdescription: description,
                 trackid: trail,
@@ -54,7 +60,14 @@ const CreateClass = () => {
             setModalVisible(true);
             clearForm();
         } catch (error) {
-            console.log(error);
+            // Captura o erro e exibe a mensagem
+            const err = error.response.data;
+            if (err.message === 'Classroom already exists') {
+                alert('O titulo da sala de aula já existe!');      
+            } else {
+                alert('Ocorreu um erro ao criar a sala de aula.');
+            }
+            console.error(err);
         }
     };
 
@@ -81,7 +94,7 @@ const CreateClass = () => {
                     placeholder="Digite a descrição da Sala"
                     placeholderTextColor={"#6296C4"}
                 />
-                
+
                 <Text style={styles.label}>Trilhas</Text>
                 <RadioButton.Group
                     onValueChange={newValue => selectedTrail(newValue)}
@@ -110,7 +123,7 @@ const CreateClass = () => {
                     style={styles.select}
                     selectedValue={module}
                     onValueChange={(itemValue) => selectedModule(itemValue)}
-                    itemStyle={{ color: '#6296C4', height: 40, position: 'absolute', top: 0, bottom: 0, left: 0, right: 0}}
+                    itemStyle={{ color: '#6296C4', height: 40, position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}
                 >
                     <Picker.Item
                         label="Selecione um Módulo" value="" />

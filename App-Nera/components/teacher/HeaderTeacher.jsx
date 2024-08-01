@@ -21,7 +21,7 @@ const HeaderTeacher = () => {
     };
 
     const goToTeacherNotification = () => {
-        navigation.navigate('TeacherNotification');
+        navigation.navigate('PerfilTeacher');
     };
 
     // Verifique se a rota atual é a página inicial do professor

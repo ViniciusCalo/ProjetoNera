@@ -23,8 +23,10 @@ const removeValue = async () => {
 removeValue();
 
 export default function HomeScreen({ navigationA }) {
-  const navigation = useNavigation();
 
+      
+
+  const navigation = useNavigation();
 /*   GoogleSignin.configure({
     androidClientId: '925583381049-703pdr2vo5nqsqk5gied874grf94t3jq.apps.googleusercontent.com',
   }); */
