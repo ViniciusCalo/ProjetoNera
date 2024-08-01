@@ -1,11 +1,13 @@
 import React from 'react';
-import { View, Text, ScrollView, StyleSheet, Image } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import colors from '../../components/styles';
 import BottomMenuStudent from '../../components/MenuStudent';
 import HeaderTeacher from '../../components/teacher/HeaderTeacher';
+import { useNavigation } from '@react-navigation/native';
 
 
 const StudentTrails = () => {
+    const navigation = useNavigation();
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -16,8 +18,10 @@ const StudentTrails = () => {
                 <View style={styles.main}>
                     <ScrollView horizontal={true} style={{ display: 'flex', flexDirection: 'row'}}>
                         <View style={styles.trilha1}>
+                            <TouchableOpacity onPress={() => navigation.navigate('FractionTrails')}>
                             <Image source={require('../../assets/fracao.png')} style={styles.img} />
                             <Text style={styles.text}>Trilha de Frações</Text>
+                            </TouchableOpacity>
                         </View>
                         <View style={styles.trilha2}>
                             <Image source={require('../../assets/por.png')} style={styles.img} />
