@@ -3,10 +3,24 @@ import { StatusBar, StyleSheet, Text, View, Image, Pressable, TextInput, Keyboar
 import colors from '../../components/styles';
 import Switch from '../../components/SwitchProfile';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import endpoint from '../../config/endpoint'
 /* import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin'; */
 import { useNavigation } from '@react-navigation/native';
 import { Link } from 'expo-router';
+
+
+const removeValue = async () => {
+  try {
+    await AsyncStorage.removeItem('token')
+  } catch(e) {
+    // remove error
+  }
+
+  console.log('Done.')
+}
+
+removeValue();
 
 export default function HomeScreen({ navigationA }) {
   const navigation = useNavigation();
