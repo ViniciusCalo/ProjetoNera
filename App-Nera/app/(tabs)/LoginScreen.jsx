@@ -4,16 +4,16 @@ import colors from '../../components/styles';
 import Switch from '../../components/SwitchProfile';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
-import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+/* import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin'; */
 import endpoint from '../../config/endpoint';
 
 const LoginScreen = ({ navigationA }) => {
     const navigation = useNavigation();
-    GoogleSignin.configure({
+/*     GoogleSignin.configure({
         androidClientId: '925583381049-703pdr2vo5nqsqk5gied874grf94t3jq.apps.googleusercontent.com',
-      });
+      }); */
 
-    const handleSocialLogin = async (userEmail, userName) => {
+/*     const handleSocialLogin = async (userEmail, userName) => {
         try {
           await axios.post(`http://${endpoint}:3333/users/login`, {
             username: userName,
@@ -43,7 +43,7 @@ const LoginScreen = ({ navigationA }) => {
             alert('Erro desconhecido: ', error);
           }
         }
-      };
+      }; */
 
     const { width, height } = Dimensions.get('window');
     const [isViewVisible, setIsViewVisible] = useState(true);

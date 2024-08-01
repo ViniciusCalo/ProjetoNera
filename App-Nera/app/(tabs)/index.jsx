@@ -4,15 +4,16 @@ import colors from '../../components/styles';
 import Switch from '../../components/SwitchProfile';
 import axios from 'axios';
 import endpoint from '../../config/endpoint'
-import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+/* import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin'; */
 import { useNavigation } from '@react-navigation/native';
+import { Link } from 'expo-router';
 
 export default function HomeScreen({ navigationA }) {
   const navigation = useNavigation();
 
-  GoogleSignin.configure({
+/*   GoogleSignin.configure({
     androidClientId: '925583381049-703pdr2vo5nqsqk5gied874grf94t3jq.apps.googleusercontent.com',
-  });
+  }); */
 
   /* const [request, response, promptAsync] = Google.useAuthRequest({
     androidClientId: "925583381049-703pdr2vo5nqsqk5gied874grf94t3jq.apps.googleusercontent.com",
@@ -43,7 +44,7 @@ export default function HomeScreen({ navigationA }) {
   const [googleUserInfo, setGoogleUserInfo] = useState(null);
 
 
-  const handleSocialLogin = async (userEmail, userName) => {
+/*   const handleSocialLogin = async (userEmail, userName) => {
     try {
       await axios.post(`http://${endpoint}:3333/users/register`, {
         username: userName,
@@ -73,7 +74,7 @@ export default function HomeScreen({ navigationA }) {
         alert('Erro desconhecido: ', error);
       }
     }
-  };
+  }; */
 
   const toggleRole = () => {
     setRole(prevRole => (prevRole === 'teacher' ? 'student' : 'teacher'));
@@ -154,7 +155,7 @@ export default function HomeScreen({ navigationA }) {
             <Pressable style={stylesForm.button_google} onPress={() => promptAsync()}>
               <Text style={[stylesForm.textButton, { color: '#3F3F3F' }]}>Google</Text>
             </Pressable>
-            <Pressable style={stylesForm.button_criarCon} onPress={() => navigation.navigate('HomeTeacher')}>
+            <Pressable style={stylesForm.button_criarCon} on Press={() => navigation.navigate('StudentTrails')}>
               <Text style={stylesForm.textButton}>Entrar</Text>
             </Pressable>
           </View>
