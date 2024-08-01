@@ -4,11 +4,35 @@ import colors from '../../components/styles';
 import Switch from '../../components/SwitchProfile';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch  } from 'react-redux';
+import { setName, setProfileImageUrl } from '../store/userSlice';
 /* import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin'; */
 import endpoint from '../../config/endpoint';
 
 const LoginScreen = ({ navigationA }) => {
+    const dispatch = useDispatch();
+    const apiUrl = process.env.EXPO_PUBLIC_API_NERA_URL;
     const navigation = useNavigation();
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+    const [role, setRole] = useState('teacher');
+    const [cpf, setCpf] = useState("");
+
+
+    const createProfile = (username,userpicture) => {
+        dispatch(setName(username));
+        dispatch(setProfileImageUrl(userpicture));
+    };
+
+    const storeData = async (value) => {
+        try {
+            await AsyncStorage.setItem('token', value);
+        } catch (e) {
+          // saving error
+        }
+      };
+
 /*     GoogleSignin.configure({
         androidClientId: '925583381049-703pdr2vo5nqsqk5gied874grf94t3jq.apps.googleusercontent.com',
       });
@@ -46,7 +70,7 @@ const LoginScreen = ({ navigationA }) => {
       }; */
 
     const { width, height } = Dimensions.get('window');
-    const [isViewVisible, setIsViewVisible] = useState(true);
+/*     const [isViewVisible, setIsViewVisible] = useState(true);
 
     useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
@@ -60,14 +84,13 @@ const LoginScreen = ({ navigationA }) => {
             keyboardDidShowListener.remove();
             keyboardDidHideListener.remove();
         };
-    }, []);
+    }, []); */
 
-    const [email, setEmail] = useState("");
-    const [senha, setSenha] = useState("");
-    const [role, setRole] = useState('teacher');
+
 
     const toggleRole = () => {
         setRole(prevRole => (prevRole === 'teacher' ? 'student' : 'teacher'));
+
     };
     const stylesButtons = stylesButton(width);
 
@@ -81,18 +104,21 @@ const LoginScreen = ({ navigationA }) => {
 
     const login = async (e) => {
         e.preventDefault();
+        console.log(apiUrl);
         try {
-            const res = await axios.post(`http://${endpoint}:3333/users/login`, {
+            const res = await axios.post(`${apiUrl}/users/login`, {
                 useremail: email,
                 userpassword: senha,
-                role: role
+                role: role,
+                teachercpf: cpf
             });
             console.log(res.data.token)
+            createProfile(res.data.username, res.data.profilepic);
             if (res.data.token || role === 'teacher') {
-                localStorage.setItem('token', res.data.token);
+                storeData(res.data.token);
                 navigation.navigate('HomeTeacher');
             } else if (res.data.token || role === 'student') {
-                localStorage.setItem('token', res.data.token);
+                storeData(res.data.token);
                 navigation.navigate('HomeStudent');
             }
         } catch (err) {
@@ -131,9 +157,12 @@ const LoginScreen = ({ navigationA }) => {
                     />
 
                     <TextInput
+                        id='cpf'
                         style={stylesForm.input_cpf}
                         placeholder='CPF'
+                        value={cpf}
                         placeholderTextColor="#888888"
+                        onChangeText={(texto) => setCpf(texto)}
                     />
 
 
@@ -153,9 +182,7 @@ const LoginScreen = ({ navigationA }) => {
                         value={role}
                     />
 
-                </View>
-
-                {isViewVisible && (
+                </View>           
                     <View style={stylesForm.opcoesEntrar}>
                         <Pressable style={stylesForm.button_entrar} onPress={login}>
                             <Text style={stylesForm.textButton}>Entrar</Text>
@@ -170,7 +197,6 @@ const LoginScreen = ({ navigationA }) => {
                             <Text style={stylesForm.textButton}>Criar Conta</Text>
                         </Pressable>
                     </View>
-                )}
             </View>
         </View>
     );
