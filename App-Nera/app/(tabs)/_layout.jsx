@@ -33,6 +33,12 @@ export default function TabLayout() {
         <Tabs.Screen
           name="HomeTeacher"
         />
+        <Tabs.Screen
+          name="CreateClass"
+        />
+        <Tabs.Screen
+          name="TeacherClassrom"
+        />
       </Tabs>
     </Provider>
   );
