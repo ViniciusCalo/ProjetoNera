@@ -81,7 +81,7 @@ export default function HomeScreen({ navigationA }) {
 
   const handleClick = async () => {
     try {
-      await axios.post(`http://${endpoint}:3333/users/register`, {
+      await axios.post(`${process.env.API_NERA_URL}/users/register`, {
         username: nome,
         useremail: email,
         userpassword: senha,
