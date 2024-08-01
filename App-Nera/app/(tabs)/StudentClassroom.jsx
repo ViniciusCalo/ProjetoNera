@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     },
     header: {
         width: '100%',
-        height: '15%',
+        height: '10%',
         marginBottom: '2%',
     },
     titleContainerMyClassroom: {

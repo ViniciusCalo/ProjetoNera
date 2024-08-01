@@ -1,11 +1,16 @@
-import { View, StyleSheet, Text} from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import BottomMenuStudent from '../../components/MenuStudent';
+import HeaderTeacher from '../../components/teacher/HeaderTeacher';
 
 const JoinClassroom = () => {
 
     return (
-        <View style={styles.div_main}>
-            <Text>Join Classroom</Text>
+        <View style={styles.container}>
+            <View style={styles.header}>
+                <HeaderTeacher />
+            </View>
+
+            <Text style={styles.titulo} >Join Classroom</Text>
 
             <BottomMenuStudent />
         </View>
@@ -13,16 +18,18 @@ const JoinClassroom = () => {
 }
 
 const styles = StyleSheet.create({
-    div_main: {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+    container: {
         flex: 1,
-        flexDirection: 'column',
+    },
+    header: {
         width: '100%',
-        height: '100%',
-        backgroundColor: 'white'
-    }
+        height: '12%',
+    },
+    titulo: {
+        fontSize: 25,
+        marginVertical: 10,
+        textAlign: 'center',
+    },
 
 
 })
