@@ -43,7 +43,7 @@ const applyPassportStrategy = passport => {
                 if (student) {
                   console.log('Student Found');
                   return done(null, {
-                    studentid: student.teacherid,
+                    studentid: student.studentid,
                     userid: student.userid,
                     role: user.role
                   });
@@ -61,7 +61,6 @@ const applyPassportStrategy = passport => {
                 userid: user.userid,
                 role: user.role
               });
-              
             }
           } else {
             console.log('User not found');
@@ -78,4 +77,18 @@ const applyPassportStrategy = passport => {
 
 applyPassportStrategy(passport);
 
-module.exports = passport;
+const authenticateJWT = passport.authenticate('jwt', { session: false });
+
+const authorizeRole = (role) => {
+  return (req, res, next) => {
+    if (req.user.role !== role) {
+      return res.status(403).json({ message: 'Acesso negado' });
+    }
+    next();
+  };
+};
+
+module.exports = {
+  authenticateJWT,
+  authorizeRole
+};
