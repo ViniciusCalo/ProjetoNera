@@ -11,12 +11,11 @@ import axios from 'axios';
 import { Buffer } from 'buffer';
 import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { setName, setProfileImageUrl } from '../store/userSlice';
+import { setProfileImageUrl } from '../store/userSlice';
 
 
 const PerfilTeacher = () => {
     const [token, setToken] = useState('');
-    const [error, setError] = useState('');
     const dispatch = useDispatch();
     const { name, profileImageUrl } = useSelector((state) => state.user);
 
@@ -28,7 +27,7 @@ const PerfilTeacher = () => {
     // Função para atualizar imagem do user do redux utilizando api
     const updateProfile = async (uriImagem) => {
         try {
-            const res = await axios.put(`${process.env.API_NERA_URL}/users/uploadpic`, {
+            const res = await axios.put(`${process.env.EXPO_PUBLIC_API_NERA_URL}/users/uploadpic`, {
                 profilepicture: uriImagem
             },
                 {
@@ -57,7 +56,6 @@ const PerfilTeacher = () => {
             console.log(uri);
             const userUri = await uploadImage(uri);
             console.info("Setando imagem" + userUri);
-            //dispatch(setProfileImageUrl(userUri));
             await updateProfile(userUri);
         }
     };
@@ -67,8 +65,8 @@ const PerfilTeacher = () => {
         const imageUri = uri;
 
         // Substitua pela sua URL base da conta de armazenamento e o token SAS
-        const baseUrl = process.env.AZURE_STORAGE_URL;
-        const sasToken = process.env.SAS_TOKEN;
+        const baseUrl = process.env.EXPO_PUBLIC_AZURE_STORAGE_URL;
+        const sasToken = process.env.EXPO_PUBLIC_SAS_TOKEN;
 
 
         try {
@@ -105,7 +103,6 @@ const PerfilTeacher = () => {
             return signedUrl;
         } catch (err) {
             console.log('Error Unknown error: ' + err.message);
-            setError(JSON.stringify(err));
         }
     };
 
@@ -126,7 +123,7 @@ const PerfilTeacher = () => {
             </View>
             <View style={styles.infoText}>
                 <Text style={styles.texto}>Notificações</Text>
-                <Text style={styles.texto}>{error}</Text>
+                <Text style={styles.texto}></Text>
 
             </View>
 
