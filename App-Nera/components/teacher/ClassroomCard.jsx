@@ -5,14 +5,14 @@ import fracaoIcon from '../../assets/fracao.png';
 import studentIcon from '../../assets/studentIcon.png';
 
 
-const ClassroomCard = () => {
+const ClassroomCard = ({titulo}) => {
     return (
         <View style={styles.container}>
             <View style={styles.polygon}>
             <Image source={fracaoIcon} style={styles.iconTrail} />
             </View>
             <Image source={classIcon} style={styles.image} />
-            <Text style={styles.title}>Turma</Text>
+            <Text style={styles.title}>{titulo}</Text>
             <View style={styles.students}>
                 <Image source={studentIcon} style={styles.iconS} />
                 <Text style={styles.titleS}> X Alunos</Text>
