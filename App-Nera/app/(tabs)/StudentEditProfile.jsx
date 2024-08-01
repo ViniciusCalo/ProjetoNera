@@ -28,7 +28,7 @@ const PerfilTeacher = () => {
     // Função para atualizar imagem do user do redux utilizando api
     const updateProfile = async (uriImagem) => {
         try {
-            const res = await axios.put(`${process.env.API_NERA_URL}/users/uploadpic`, {
+            const res = await axios.put(`${process.env.EXPO_PUBLIC_API_NERA_URL}/users/uploadpic`, {
                 profilepicture: uriImagem
             },
                 {
@@ -67,8 +67,8 @@ const PerfilTeacher = () => {
         const imageUri = uri;
 
         // Substitua pela sua URL base da conta de armazenamento e o token SAS
-        const baseUrl = process.env.AZURE_STORAGE_URL;
-        const sasToken = process.env.SAS_TOKEN;
+        const baseUrl = process.env.EXPO_PUBLIC_AZURE_STORAGE_URL;
+        const sasToken = process.env.EXPO_PUBLIC_SAS_TOKEN;
 
 
         try {
