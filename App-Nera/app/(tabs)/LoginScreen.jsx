@@ -107,12 +107,12 @@ const LoginScreen = ({ navigationA }) => {
             });
             console.log(res.data.token)
             createProfile(res.data.username, res.data.profilepic);
-            if (res.data.token || role === 'teacher') {
+            if (res.data.token && role === 'teacher') {
                 storeData(res.data.token);
                 navigation.navigate('HomeTeacher');
             } 
             
-            if (res.data.token || role === 'student') {
+            if (res.data.token && role === 'student') {
                 storeData(res.data.token);
                 navigation.navigate('StudentProfile');
             }
@@ -183,7 +183,7 @@ const LoginScreen = ({ navigationA }) => {
                             <Text style={stylesForm.textButton}>Entrar</Text>
                         </Pressable>
 
-                        <Pressable style={stylesForm.button_google} /* onPress={() => promptAsync()} */ onPress={() => navigation.navigate('StudentProfile')}>
+                        <Pressable style={stylesForm.button_google} /* onPress={() => promptAsync()} */ onPress={() => navigation.navigate('HomeTeacher')}>
 
                             <Text style={[stylesForm.textButton, { color: '#3F3F3F' }]}>Google</Text>
                         </Pressable>

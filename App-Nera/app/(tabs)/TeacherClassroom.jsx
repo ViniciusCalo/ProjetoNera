@@ -3,23 +3,11 @@ import { View, Text, StyleSheet, FlatList, Dimensions } from 'react-native';
 import HeaderTeacher from '../../components/teacher/HeaderTeacher';
 import BottomMenuTeacher from '../../components/MenuTeacher';
 import ClassroomCard from '../../components/teacher/ClassroomCard';
+import { useSelector } from 'react-redux';
 
-const TeacherClassroom = ({ navigation }) => {
-    const handleCreateClassPress = () => {
-        navigation.navigate('CreateClass');
-    };
 
-    const imageUrls = [
-        { id: 1, url: require('../../assets/classBlue.png'), label: '6 ano C' },
-        { id: 2, url: require('../../assets/classPink.png'), label: '7 ano B' },
-        { id: 3, url: require('../../assets/classYellow.png'), label: '6 ano B' },
-        { id: 4, url: require('../../assets/classAqua.png'), label: '7 ano A' },
-        { id: 5, url: require('../../assets/classBlue.png'), label: '6 ano A' },
-        { id: 6, url: require('../../assets/classYellow.png'), label: '7 ano C' },
-        { id: 7, url: require('../../assets/classYellow.png'), label: '7 ano C' },
-        { id: 8, url: require('../../assets/classYellow.png'), label: '7 ano C' },
-        { id: 9, url: require('../../assets/classYellow.png'), label: '7 ano C' },
-    ];
+const TeacherClassroom = () => {
+    const { items } = useSelector((state) => state.classrooms);
 
     return (
         <View style={styles.container}>
@@ -29,11 +17,13 @@ const TeacherClassroom = ({ navigation }) => {
             <Text style={styles.titleContainerMyClassroom}>Minhas salas</Text>
             <FlatList
                 style={styles.flatList}
-                data={imageUrls}
-                keyExtractor={(item) => item.id.toString()}
+                data={items}
+                keyExtractor={(item) => item.classroomid.toString()}
                 renderItem={({ item }) => (
                     <View style={styles.classroomCardContainer}>
-                        <ClassroomCard label={item.label} />
+                        <ClassroomCard label={item.classroomname} 
+                        titulo={item.classroomname}
+                        />
                     </View>
                 )}
                 numColumns={2}

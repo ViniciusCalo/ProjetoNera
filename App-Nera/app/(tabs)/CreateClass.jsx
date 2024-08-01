@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, View, Text, StyleSheet, TextInput, FlatList } from 'react-native';
+import {View, Text, StyleSheet, TextInput, FlatList } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import HeaderTeacher from '../../components/teacher/HeaderTeacher';
 import BottomMenuTeacher from '../../components/MenuTeacher';
@@ -8,8 +8,12 @@ import ButtonBlue from '../../components/ButtonBlue';
 import ClassroomModal from '../../components/teacher/ClassroomModal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { addItem } from '../store/classroomTeacherSlice';
+
 
 const CreateClass = () => {
+    const dispatch = useDispatch();
     const [classroom, setClassroom] = useState([{}]);
     const [modalVisible, setModalVisible] = useState(false);
     const [title, setTitle] = useState('');
@@ -33,7 +37,7 @@ const CreateClass = () => {
         selectedTrail('');
     };
 
-    //verificar se os campos estão preenchidos
+    //atualizar as salas de aula do professor
 
 
 
@@ -58,6 +62,7 @@ const CreateClass = () => {
             console.log(res.data.message);
             console.log(classroom);
             setModalVisible(true);
+            dispatch(addItem(res.data.newClassroom));
             clearForm();
         } catch (error) {
             // Captura o erro e exibe a mensagem
