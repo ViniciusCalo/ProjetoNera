@@ -9,7 +9,6 @@ import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import { Buffer } from 'buffer';
-import {AZURE_STORAGE_URL, SAS_TOKEN, API_NERA_URL} from '@env'
 import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setName, setProfileImageUrl } from '../store/userSlice';
@@ -29,7 +28,7 @@ const PerfilTeacher = () => {
     // Função para atualizar imagem do user do redux utilizando api
     const updateProfile = async (uriImagem) => {
         try {
-            const res = await axios.put(`${API_NERA_URL}/users/uploadpic`, {
+            const res = await axios.put(`${process.env.API_NERA_URL}/users/uploadpic`, {
                 profilepicture: uriImagem
             },
                 {
@@ -68,8 +67,8 @@ const PerfilTeacher = () => {
         const imageUri = uri;
 
         // Substitua pela sua URL base da conta de armazenamento e o token SAS
-        const baseUrl = AZURE_STORAGE_URL;
-        const sasToken = SAS_TOKEN;
+        const baseUrl = process.env.AZURE_STORAGE_URL;
+        const sasToken = process.env.SAS_TOKEN;
 
 
         try {
