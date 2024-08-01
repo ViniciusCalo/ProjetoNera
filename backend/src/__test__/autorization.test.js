@@ -1,15 +1,16 @@
 const request = require('supertest');
 const express = require('express');
-const { authenticateJWT, authorizeRole, passport } = require('../config/auth'); 
+// const passport = require('passport'); // Comentado
+const { authenticateJWT, authorizeRole } = require('../config/auth');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 // Configurando o aplicativo Express para os testes
 const app = express();
 app.use(express.json());
-app.use(passport.initialize()); // Inicializa o Passport
+// app.use(passport.initialize()); // Comentado
 
-// Aplicando o middleware authenticateJWT em uma rota protegida de exemplo
+// Mock da rota de criação de sala de aula, que requer a role de 'professor'
 app.post('/classroom/create', authenticateJWT, authorizeRole('professor'), (req, res) => {
     res.status(201).json({ message: "Sala de aula criada com sucesso" });
 });

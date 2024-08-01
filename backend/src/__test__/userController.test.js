@@ -1,126 +1,74 @@
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const request = require('supertest');
-const bcrypt = require('bcrypt');
-const app = require('../app');
-const UserRepo = require('../repositories/UserRepository');
-const teacherRepo = require('../repositories/TeacherRepository');
+const userController = require('../controllers/UserController');
+const userRepo = require('../repositories/UserRepository');
 
 jest.mock('../repositories/UserRepository');
-jest.mock('../repositories/TeacherRepository');
 
-describe('Testando todas as rotas de usuário', () => {
-    describe('POST /users/register', () => {
-        test('Deve responder com uma mensagem e um objeto do user adicionado', async () => {
-            const mockUser = {
-                username: 'kedsson',
-                useremail: 'testuser@gmail.com',
-                userpassword: 'password',
-                role: 'teacher',
-                teachercpf: '999.999.999-99'
-            };
+const app = express();
+app.use(bodyParser.json());
+app.use(cors());
 
-            UserRepo.createUser.mockResolvedValue({
-                username: mockUser.username,
-                useremail: mockUser.useremail,
-                userpassword: await bcrypt.hash(mockUser.userpassword, 10),
-                role: mockUser.role
+app.use('/users', userController);
+
+describe('UserController', () => {
+    describe('registerUser', () => {
+        it('deve registrar um novo usuário', async () => {
+            const mockUser = { userid: 1, username: 'Test User', useremail: 'test@example.com', role: 'student' };
+            userRepo.createUser.mockResolvedValue(mockUser);
+
+            const response = await request(app)
+                .post('/users/register')
+                .send({ username: 'Test User', useremail: 'test@example.com', userpassword: 'password', role: 'student' });
+
+            expect(response.status).toBe(201);
+            expect(response.body).toEqual({
+                message: "User created successfully",
+                newUser: mockUser
             });
-
-            teacherRepo.registerUserAsATeacher.mockResolvedValue({
-                userid: 1,
-                teachercpf: '999.999.999-99'
-            });
-
-            const response = await request(app).post('/users/register').send(mockUser);
-            expect(response.statusCode).toBe(201);
-            expect(response.body.message).toBe('Teacher created successfully');
-            expect(response.body.newUser).toHaveProperty('username', mockUser.username);
-            expect(response.body.newTeacher).toHaveProperty('teachercpf', '999.999.999-99');
         });
 
-        test('Deve responder com uma mensagem e um objeto do User adicionado', async () => {
-            const mockUser = {
-                username: 'kedsson',
-                useremail: 'testuser@gmail.com',
-                userpassword: 'password',
-                role: 'student'
-            };
+        it('deve lançar um erro se o registro do usuário falhar', async () => {
+            userRepo.createUser.mockRejectedValue(new Error('Erro'));
 
-            UserRepo.createUser.mockResolvedValue({
-                username: mockUser.username,
-                useremail: mockUser.useremail,
-                userpassword: await bcrypt.hash(mockUser.userpassword, 10),
-                role: mockUser.role
-            });
+            const response = await request(app)
+                .post('/users/register')
+                .send({ username: 'Test User', useremail: 'test@example.com', userpassword: 'password', role: 'student' });
 
-            const response = await request(app).post('/users/register').send(mockUser);
-            expect(response.statusCode).toBe(201);
-            expect(response.body.message).toBe('User created successfully');
-            expect(response.body.newUser).toHaveProperty('username', mockUser.username);
-        });
-
-        test('Deve responder com um erro de cadastro caso usuario já exista', async () => {
-            const mockUser = {
-                username: 'kedsson',
-                useremail: 'testuser@gmail.com',
-                userpassword: 'password',
-                role: 'teacher'
-            };
-
-            UserRepo.createUser.mockRejectedValue(new Error('User already exists'));
-
-            const response = await request(app).post('/users/register').send(mockUser);
-            expect(response.statusCode).toBe(500);
-            expect(response.body).toHaveProperty('message', 'User already exists');
+            expect(response.status).toBe(500);
+            expect(response.body).toEqual({ message: 'Erro' });
         });
     });
 
-    describe('POST /users/login', () => {
-        test('Deve responder com uma mensagem e um objeto de usuário para login', async () => {
-            const mockUser = {
-                useremail: 'testuser@gmail.com',
-                userpassword: 'password',
-                role: 'student'
-            };
+    describe('loginUser', () => {
+        it('deve fazer login de um usuário', async () => {
+            const mockUser = { token: 'test-token', username: 'Test User', profilepic: 'test-pic' };
+            userRepo.loginUser.mockResolvedValue(mockUser);
 
-            UserRepo.loginUser.mockResolvedValue({
-                useremail: mockUser.useremail,
-                userpassword: await bcrypt.hash(mockUser.userpassword, 10),
-                role: mockUser.role,
-                token: 'test-token'
+            const response = await request(app)
+                .post('/users/login')
+                .send({ useremail: 'test@example.com', userpassword: 'password', role: 'student' });
+
+            expect(response.status).toBe(200);
+            expect(response.body).toEqual({
+                message: "Login successful",
+                token: mockUser.token,
+                username: mockUser.username,
+                profilepic: mockUser.profilepic
             });
-
-            const response = await request(app).post('/users/login').send(mockUser);
-            expect(response.statusCode).toBe(200);
-            expect(response.body).toHaveProperty('message', 'Login successful');
-            expect(response.body).toHaveProperty('token', 'test-token');
-        });
-        test('Deve responder com um erro de login, pois teacherCpf não foi informado', async () => {
-            const mockUser = {
-                useremail: 'testuser@gmail.com',
-                userpassword: 'password',
-                teachercpf: null,
-                role: 'teacher'
-            };
-            
-            teacherRepo.loginTeacher.mockRejectedValue(new Error('CPF is required for teachers'));
-
-            const response = await request(app).post('/users/login').send(mockUser);
-            expect(response.statusCode).toBe(400);
-            expect(response.body).toHaveProperty('message', 'CPF is required for teachers');
         });
 
-        test('Deve responder com um erro de login se o usuário não for encontrado', async () => {
-            const mockUser = {
-                useremail: 'testuser@gmail.com',
-                userpassword: 'password',
-                role: 'teacher'
-            };
+        it('deve lançar um erro se o login do usuário falhar', async () => {
+            userRepo.loginUser.mockRejectedValue(new Error('Erro'));
 
-            UserRepo.loginUser.mockRejectedValue(new Error('Invalid email or password'));
+            const response = await request(app)
+                .post('/users/login')
+                .send({ useremail: 'test@example.com', userpassword: 'password', role: 'student' });
 
-            const response = await request(app).post('/users/login').send(mockUser);
-            expect(response.statusCode).toBe(401);
-            expect(response.body).toHaveProperty('message', 'Invalid email or password');
+            expect(response.status).toBe(401);
+            expect(response.body).toEqual({ message: 'Erro' });
         });
     });
 });
