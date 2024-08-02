@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch } from 'react-redux';
 import { setName, setProfileImageUrl } from '../store/userSlice';
-/* import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin'; */
+import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import endpoint from '../../config/endpoint';
 
 const LoginScreen = ({ navigationA }) => {
@@ -33,24 +33,34 @@ const LoginScreen = ({ navigationA }) => {
         }
     };
 
-    /*     GoogleSignin.configure({
+       GoogleSignin.configure({
             androidClientId: '925583381049-703pdr2vo5nqsqk5gied874grf94t3jq.apps.googleusercontent.com',
           });
     
-        const handleSocialLogin = async (userEmail, userName) => {
+          const handleSocialLogin = async (email, name) => {
+            console.log(apiUrl);
+            console.log(role);
             try {
-              await axios.post(`http://${endpoint}:3333/users/login`, {
-                username: userName,
-                useremail: userEmail,
-                role: role
-              });
-              navigation.navigate('StudentProfile');
-              alert("Login social realizado com sucesso!");
+                const res = await axios.post(`${apiUrl}/users/googleLogin`, {
+                    useremail: email,
+                    username: name,
+                    role: role
+                });
+                console.log(res.data.token)
+                createProfile(res.data.username, res.data.profilepic);
+                if (res.data.token && role === 'teacher') {
+                    storeData(res.data.token);
+                    navigation.navigate('HomeTeacher');
+                }
+                if (res.data.token && role === 'student') {
+                    storeData(res.data.token);
+                    navigation.navigate('StudentProfile');
+                }
             } catch (err) {
-              console.log(err);
+                console.log(err);
             }
           };
-        
+
           const promptAsync = async () => {
             try {
               await GoogleSignin.hasPlayServices();
@@ -67,7 +77,7 @@ const LoginScreen = ({ navigationA }) => {
                 alert('Erro desconhecido: ', error);
               }
             }
-          }; */
+          }; 
 
     const { width, height } = Dimensions.get('window');
     const [isViewVisible, setIsViewVisible] = useState(true);
@@ -185,8 +195,7 @@ const LoginScreen = ({ navigationA }) => {
                             <Text style={stylesForm.textButton}>Entrar</Text>
                         </Pressable>
 
-                        <Pressable style={stylesForm.button_google} /* onPress={() => promptAsync()} */ onPress={() => navigation.navigate('StudentProfile')}>
-
+                        <Pressable style={stylesForm.button_google} onPress={() => promptAsync()}>
                             <Text style={[stylesForm.textButton, { color: '#3F3F3F' }]}>Google</Text>
                         </Pressable>
 
