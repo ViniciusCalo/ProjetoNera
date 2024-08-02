@@ -185,7 +185,7 @@ const LoginScreen = ({ navigationA }) => {
                             <Text style={stylesForm.textButton}>Entrar</Text>
                         </Pressable>
 
-                        <Pressable style={stylesForm.button_google} /* onPress={() => promptAsync()} */ onPress={() => navigation.navigate('HomeTeacher')}>
+                        <Pressable style={stylesForm.button_google} /* onPress={() => promptAsync()} */ onPress={() => navigation.navigate('StudentProfile')}>
 
                             <Text style={[stylesForm.textButton, { color: '#3F3F3F' }]}>Google</Text>
                         </Pressable>
