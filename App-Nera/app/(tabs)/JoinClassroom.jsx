@@ -14,7 +14,7 @@ const JoinClassroom = () => {
     const [token, setToken] = useState('');
     const [tokenclassr, setTokenClass] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
-    const [classroom, setClassroom] = useState({});
+    const [classroom, setClassroom] = useState([{}]);
 
     // Pegando o token do usuário
     AsyncStorage.getItem('token').then((value) => {
@@ -42,7 +42,7 @@ const JoinClassroom = () => {
             console.log(res.data.message);
             console.log(classroom);
             setModalVisible(true);
-            dispatch(addItem(res.data.newClassroom));
+            dispatch(addItem(res.data.result));
             clearForm
         } catch (error) {
             // Captura o erro e exibe a mensagem
