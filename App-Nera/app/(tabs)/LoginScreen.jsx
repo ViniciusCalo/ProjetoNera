@@ -104,6 +104,14 @@ const LoginScreen = ({ navigationA }) => {
     };
     const stylesButtons = stylesButton(width);
 
+
+    // Clear form function
+    const clearForm = () => {
+        setEmail('');
+        setSenha('');
+        setCpf('');
+    };
+
     const login = async (e) => {
         e.preventDefault();
         console.log(apiUrl);
@@ -126,6 +134,7 @@ const LoginScreen = ({ navigationA }) => {
                 storeData(res.data.token);
                 navigation.navigate('StudentProfile');
             }
+            clearForm();
         } catch (err) {
             console.log(err);
         }

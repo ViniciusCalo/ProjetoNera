@@ -25,6 +25,15 @@ removeValue();
 export default function HomeScreen({ navigationA }) {
 
 
+//Clear form
+  const clearForm = () => {
+    setNome("");
+    setEmail("");
+    setSenha("");
+    setRole('teacher');
+    setCpf("");
+  }
+
 
   const navigation = useNavigation();
   /*   GoogleSignin.configure({
@@ -107,6 +116,7 @@ export default function HomeScreen({ navigationA }) {
         teachercpf: cpf
 
       });
+      clearForm();
       navigation.navigate('LoginScreen');
     } catch (err) {
       console.log(err);

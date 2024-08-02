@@ -1,28 +1,26 @@
-import React from 'react';
-import { useState } from 'react';
-import { TouchableOpacity, Text, StyleSheet, Pressable, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, StyleSheet, Pressable, View } from 'react-native';
 
-const SwitchProfile = ({ width, height, onpress, value}) => {
-
+const SwitchProfile = ({ width, height, onpress, value }) => {
     const [flexDirection, setflexDirection] = useState("row");
 
-
-    const changeDirection = () => {
+    useEffect(() => {
         if (value === 'teacher') {
-            setflexDirection("row-reverse")
-            return <Text style={styles.switchText}>Professor</Text>
+            setflexDirection("row-reverse");
         } else {
-            setflexDirection("row")
-            return <Text style={styles.switchText}>Aluno</Text>
+            setflexDirection("row");
         }
-    };
+    }, [value]);
+
     return (
         <View style={[styles.viewSwitch, { width: width, height: height, flexDirection: flexDirection }]}>
             <Pressable
                 style={styles.Switch}
                 onPress={onpress}
             >
-               {changeDirection}
+                <Text style={styles.switchText}>
+                    {value === 'teacher' ? 'Professor' : 'Aluno'}
+                </Text>
             </Pressable>
         </View>
     );
@@ -42,12 +40,12 @@ const styles = StyleSheet.create({
         borderWidth: 6,
         borderColor: '#0F406B',
         borderRadius: 17,
-        justifyContent:'center',
-        alignItems:'center',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     switchText: {
         fontSize: 16,
-        fontWeight:'bold',
+        fontWeight: 'bold',
         color: 'white'
     }
 });

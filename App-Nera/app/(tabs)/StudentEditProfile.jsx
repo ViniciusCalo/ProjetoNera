@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Image, View, StyleSheet, Text, Pressable } from 'react-native';
+import { Image, View, StyleSheet, Text, Pressable, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import HeaderTeacher from '../../components/teacher/HeaderTeacher';
 import BottomMenuStudent from '../../components/MenuStudent';
@@ -8,13 +9,15 @@ import * as FileSystem from 'expo-file-system';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
-import { Buffer } from 'buffer';
+import { Buffer, constants } from 'buffer';
 import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setName, setProfileImageUrl } from '../store/userSlice';
+import { setItems } from '../store/classroomSlice';
 
 
 const PerfilTeacher = () => {
+    const navigation = useNavigation();
     const [token, setToken] = useState('');
     const [error, setError] = useState('');
     const dispatch = useDispatch();
@@ -24,6 +27,13 @@ const PerfilTeacher = () => {
     AsyncStorage.getItem('token').then((value) => {
         setToken(value);
     });
+
+    // Função para fazer lougout do usuário remover o token do AsyncStorage e navegar para a tela de login
+    const logout = () => {
+        AsyncStorage.removeItem('token');
+        navigation.navigate('LoginScreen');
+        dispatch(setItems([]));
+    }
 
     // Função para atualizar imagem do user do redux utilizando api
     const updateProfile = async (uriImagem) => {
@@ -129,6 +139,14 @@ const PerfilTeacher = () => {
                 <Text style={styles.texto}>{error}</Text>
 
             </View>
+            <View style={styles.divButton}>
+                <TouchableOpacity style={styles.button} onPress={logout}>
+                    <Image
+                        source={require('../../assets/sair.png')}
+                        style={styles.imageb}
+                    />
+                </TouchableOpacity>
+            </View>
 
             <BottomMenuStudent />
         </View>
@@ -161,7 +179,7 @@ const styles = StyleSheet.create({
         marginTop: '5%',
         display: 'flex',
         width: '90%',
-        height: '50%',
+        height: '40%',
         alignItems: 'center',
         backgroundColor: '#fff',
         borderRadius: 20,
@@ -212,6 +230,33 @@ const styles = StyleSheet.create({
         width: '50%',
         height: '50%',
     },
+    divButton: {
+        display: 'flex',
+        width: '90%',
+        height: '15%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'relative',
+    },
+    button: {
+        justifyContent: 'center',
+        position: 'absolute',
+        bottom: '5%',
+        right: 0,
+        alignItems: 'center',
+        backgroundColor: 'white', // Altere conforme a necessidade
+        padding: 10,
+        borderRadius: 50, // Altere conforme a necessidade
+        elevation: 5, // Adiciona sombra no Android
+        shadowColor: '#000', // Adiciona sombra no iOS
+        shadowOffset: { width: 0, height: 2 }, // Adiciona sombra no iOS
+        shadowOpacity: 0.8, // Adiciona sombra no iOS
+        shadowRadius: 2, // Adiciona sombra no iOS
+      },
+      imageb: {
+        width: 24, // Tamanho da imagem
+        height: 24, // Tamanho da imagem
+      },
 });
 
 export default PerfilTeacher;

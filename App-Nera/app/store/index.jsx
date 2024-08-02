@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
 import userRedducer from './userSlice'
-import classroomTeacherSlice from './classroomTeacherSlice'
+import classroomSlice from './classroomSlice'
 
 export default configureStore({
   reducer: {
     user: userRedducer,
-    classrooms: classroomTeacherSlice,
+    classrooms: classroomSlice,
   },
 })

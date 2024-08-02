@@ -4,7 +4,7 @@ const initialState = {
     items: [], // Array de objetos
 };
 
-const classroomTeacherSlice = createSlice({
+const classroomSlice = createSlice({
     name: 'classrooms',
     initialState,
     reducers: {
@@ -23,10 +23,11 @@ const classroomTeacherSlice = createSlice({
             if (index !== -1) {
                 state.items[index] = data;
             }
-        },
+        }
+        ,
     },
 });
 
-export const { setItems, addItem, removeItem, updateItem } = classroomTeacherSlice.actions;
+export const { setItems, addItem, removeItem, updateItem } = classroomSlice.actions;
 
-export default classroomTeacherSlice.reducer;
+export default classroomSlice.reducer;

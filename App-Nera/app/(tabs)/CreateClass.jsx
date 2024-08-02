@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import {View, Text, StyleSheet, TextInput, FlatList } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TextInput, FlatList, Keyboard, Platform } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import HeaderTeacher from '../../components/teacher/HeaderTeacher';
 import BottomMenuTeacher from '../../components/MenuTeacher';
@@ -9,7 +9,7 @@ import ClassroomModal from '../../components/teacher/ClassroomModal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { addItem } from '../store/classroomTeacherSlice';
+import { addItem } from '../store/classroomSlice';
 
 
 const CreateClass = () => {
@@ -37,7 +37,21 @@ const CreateClass = () => {
         selectedTrail('');
     };
 
-    //atualizar as salas de aula do professor
+    const [isViewVisible, setIsViewVisible] = useState(true);
+
+    useEffect(() => {
+        const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+            setIsViewVisible(false);
+        });
+        const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+            setIsViewVisible(true);
+        });
+
+        return () => {
+            keyboardDidShowListener.remove();
+            keyboardDidHideListener.remove();
+        };
+    }, []);
 
 
 
@@ -68,7 +82,7 @@ const CreateClass = () => {
             // Captura o erro e exibe a mensagem
             const err = error.response.data;
             if (err.message === 'Classroom already exists') {
-                alert('O titulo da sala de aula já existe!');      
+                alert('O titulo da sala de aula já existe!');
             } else {
                 alert('Ocorreu um erro ao criar a sala de aula.');
             }
@@ -101,6 +115,8 @@ const CreateClass = () => {
                 />
 
                 <Text style={styles.label}>Trilhas</Text>
+
+
                 <RadioButton.Group
                     onValueChange={newValue => selectedTrail(newValue)}
                     value={trail}
@@ -122,7 +138,10 @@ const CreateClass = () => {
                         )}
                     />
                 </RadioButton.Group>
+
+
                 <Text style={styles.label}>Módulos</Text>
+
 
                 <Picker
                     style={styles.select}
@@ -136,12 +155,17 @@ const CreateClass = () => {
                         <Picker.Item key={item.id} label={item.modulo} value={item.id} />
                     ))}
                 </Picker>
-                <View style={styles.buttons}>
-                    <ButtonBlue onPress={() => setModalVisible(!modalVisible)} title="Cancelar" />
-                    <ButtonBlue onPress={creatClassroom} title="Criar Sala" />
-                </View>
+
+                {isViewVisible && (
+                    <View style={styles.buttons}>
+                        <ButtonBlue onPress={() => setModalVisible(!modalVisible)} title="Cancelar" />
+                        <ButtonBlue onPress={creatClassroom} title="Criar Sala" />
+                    </View>
+                )}
             </View>
-            <BottomMenuTeacher />
+            {isViewVisible && (
+                <BottomMenuTeacher />
+            )}
             <ClassroomModal
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}
@@ -189,7 +213,7 @@ const styles = StyleSheet.create({
     },
     input: {
         width: '100%',
-        height: "5%",
+        height: 40,
         borderColor: '#6296C4',
         backgroundColor: '#fff',
         borderWidth: 1,
