@@ -3,14 +3,14 @@ import { Alert, Modal, StyleSheet, Text, Pressable, View, Image } from 'react-na
 import seta from '../../assets/seta.png';
 import classIcon from '../../assets/classPink.png';
 import TrailCard from './TrailCard';
-import { useNavigation } from '@react-navigation/native'; 
-import ButtonBlue from '../../components/ButtonBlue'; 
+import { useNavigation } from '@react-navigation/native';
+import ButtonBlue from '../../components/ButtonBlue';
 
 
 const ClassroomModal = ({ classroom, modalVisible, setModalVisible }) => {
     const navigation = useNavigation();
 
-    const goToTeacherClassroom = () => {
+    const goToStudentClassroom = () => {
         navigation.navigate('StudentClassroom');
         setModalVisible(!modalVisible);
     };
@@ -29,7 +29,7 @@ const ClassroomModal = ({ classroom, modalVisible, setModalVisible }) => {
                     <View style={styles.modalView}>
                         <Pressable
                             style={styles.button}
-                            onPress={goToTeacherClassroom}
+                            onPress={goToStudentClassroom}
                         >
                             <Image source={seta} style={styles.seta} />
                         </Pressable>
@@ -39,7 +39,10 @@ const ClassroomModal = ({ classroom, modalVisible, setModalVisible }) => {
                             </View>
                             <View style={styles.div2}>
                                 <Text style={styles.subtitulo}>{classroom.classroomDetails.classroomname}</Text>
+
+                                <Text style={styles.titleS}>Professor: {classroom.teacherUsername}</Text>
                             </View>
+
                         </View>
                         <Text style={styles.subtitulo}>Descrição</Text>
                         <Text>{classroom.classroomDetails.classroomdescription}</Text>
@@ -48,10 +51,10 @@ const ClassroomModal = ({ classroom, modalVisible, setModalVisible }) => {
                             trail={classroom.classroomDetails.trackid}
                             module={classroom.classroomDetails.moduleid}
                         />
-                    <ButtonBlue 
-                    onPress={() => setModalVisible(true)} 
-                    title="Entrar" 
-                    />
+                        <ButtonBlue
+                            onPress={() => setModalVisible(true)}
+                            title="Entrar"
+                        />
                     </View>
                 </View>
             </Modal>
