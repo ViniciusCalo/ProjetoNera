@@ -3,6 +3,7 @@ const classroomStudentModel = require('../models/CanonicalDataModel/ClassroomStu
 const classroomRepo = require('../repositories/ClassroomRepository');
 const studentModel = require('../models/CanonicalDataModel/StudentModel');
 const userModel = require('../models/CanonicalDataModel/UserModel');
+const teacherModel = require('../models/CanonicalDataModel/TeacherModel');
 
 const addStudentOnClassroom = async ({ studentid, tokenclass }) => {
     try {
@@ -28,23 +29,26 @@ const addStudentOnClassroom = async ({ studentid, tokenclass }) => {
             classroomid: classroom.classroomid,
             studentid
         });
-        // Buscar detalhes da sala de aula
-        const classroomDetails = {
-            classroomname: classroom.classroomname,
-            classroomdescription: classroom.classroomdescription,
-            moduleid: classroom.moduleid,
-            trackid: classroom.trackid
-        };
         // Buscar o nome de usuário do professor
-        const teacher = await userModel.User.findOne({ where: { userid: classroom.teacherid, role: 'teacher' } });
+        const teacher = await teacherModel.Teacher.findOne({ where: { teacherid: classroom.teacherid } });
         if (!teacher) {
             throw new Error('Professor não encontrado');
         }
-        return {
-            newEnrollment,
-            classroomDetails,
-            teacherUsername: teacher.username
+        console.log(teacher);
+
+        const user = await userModel.User.findOne({ where: { userid: teacher.userid}});
+        // Buscar detalhes da sala de aula
+        const classroomDetails = {
+            classroomid: classroom.classroomid,
+            studentid,
+            classroomname: classroom.classroomname,
+            classroomdescription: classroom.classroomdescription,
+            moduleid: classroom.moduleid,
+            trackid: classroom.trackid,
+            teacherUsername: user.username
         };
+        
+        return { classroomDetails };
     } catch (error) {
         console.error('Error adding student to classroom: ', error);
         throw error;
