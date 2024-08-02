@@ -12,7 +12,9 @@ const FractionTrails = () => {
     const handleAccessModulePress = () => {
         navigation.navigate('FractionScreen');
     };
-
+    const handleAccessModulePress2 = () => {
+        navigation.navigate('FractionScreen2');
+    };
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -37,7 +39,7 @@ const FractionTrails = () => {
                         />
                     </Svg>
                     <View style={[styles.moduleContainer, styles.left]}>
-                        <ButtonModules color={colors.rosa} />
+                        <ButtonModules onPress={handleAccessModulePress2} color={colors.rosa} />
                     </View>
                     <Svg height="100" width="100">
                         <Path
