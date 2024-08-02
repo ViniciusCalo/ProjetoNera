@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Modal, StyleSheet, Text, Pressable, View, Share, Image } from 'react-native';
+import { Alert, Modal, StyleSheet, Text, Pressable, View, Image } from 'react-native';
 import seta from '../../assets/seta.png';
 import classIcon from '../../assets/classPink.png';
 import TrailCard from './TrailCard';
@@ -11,7 +11,7 @@ const ClassroomModal = ({ classroom, modalVisible, setModalVisible }) => {
     const navigation = useNavigation();
 
     const goToTeacherClassroom = () => {
-        navigation.navigate('TeacherClassroom');
+        navigation.navigate('StudentClassroom');
         setModalVisible(!modalVisible);
     };
 
@@ -38,15 +38,15 @@ const ClassroomModal = ({ classroom, modalVisible, setModalVisible }) => {
                                 <Image source={classIcon} style={styles.image} />
                             </View>
                             <View style={styles.div2}>
-                                <Text style={styles.subtitulo}>Descrição</Text>
+                                <Text style={styles.subtitulo}>{classroom.classroomDetails.classroomname}</Text>
                             </View>
                         </View>
                         <Text style={styles.subtitulo}>Descrição</Text>
-                        <Text>{classroom.classroomdescription}</Text>
+                        <Text>{classroom.classroomDetails.classroomdescription}</Text>
                         <Text style={styles.subtitulo}>Trilha da Sala</Text>
                         <TrailCard
-                            trail={classroom.trackid}
-                            module={classroom.moduleid}
+                            trail={classroom.classroomDetails.trackid}
+                            module={classroom.classroomDetails.moduleid}
                         />
                     <ButtonBlue 
                     onPress={() => setModalVisible(true)} 
@@ -97,13 +97,6 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         alignItems: 'center',
         justifyContent: 'space-around',
-    },
-    div3: {
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginTop: '5%',
     },
     textAluno: {
         fontSize: 14,
