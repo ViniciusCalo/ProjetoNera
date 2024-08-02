@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 
 const TeacherClassroom = () => {
     const { items } = useSelector((state) => state.classrooms);
+    console.log(items);
 
     return (
         <View style={styles.container}>

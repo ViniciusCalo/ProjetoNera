@@ -9,7 +9,7 @@ import ClassroomModal from '../../components/teacher/ClassroomModal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { addItem } from '../store/classroomTeacherSlice';
+import { addItem } from '../store/classroomSlice';
 
 
 const CreateClass = () => {
