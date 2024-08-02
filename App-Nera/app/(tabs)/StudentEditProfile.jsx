@@ -13,6 +13,7 @@ import { Buffer, constants } from 'buffer';
 import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setName, setProfileImageUrl } from '../store/userSlice';
+import { setItems } from '../store/classroomSlice';
 
 
 const PerfilTeacher = () => {
@@ -31,6 +32,7 @@ const PerfilTeacher = () => {
     const logout = () => {
         AsyncStorage.removeItem('token');
         navigation.navigate('LoginScreen');
+        dispatch(setItems([]));
     }
 
     // Função para atualizar imagem do user do redux utilizando api

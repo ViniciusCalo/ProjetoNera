@@ -6,8 +6,11 @@ import ButtonBlue from '../../components/ButtonBlue';
 import ClassroomModal from '../../components/student/ClassroomModal';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch } from 'react-redux';
+import { addItem } from '../store/classroomSlice';
 
 const JoinClassroom = () => {
+    const dispatch = useDispatch();
     const [token, setToken] = useState('');
     const [tokenclassr, setTokenClass] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
@@ -18,6 +21,10 @@ const JoinClassroom = () => {
         setToken(value);
     });
 
+        // Clear form function
+        const clearForm = () => {
+            setTokenClass('');
+        };
 
     // Função para entrar na sala utilizando api  metodo put /student/joinClassroom
     const joinClass = async (e) => {
@@ -35,6 +42,8 @@ const JoinClassroom = () => {
             console.log(res.data.message);
             console.log(classroom);
             setModalVisible(true);
+            dispatch(addItem(res.data.newClassroom));
+            clearForm
         } catch (error) {
             // Captura o erro e exibe a mensagem
             const err = error.response.data;

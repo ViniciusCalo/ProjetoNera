@@ -23,7 +23,8 @@ const classroomSlice = createSlice({
             if (index !== -1) {
                 state.items[index] = data;
             }
-        },
+        }
+        ,
     },
 });
 
