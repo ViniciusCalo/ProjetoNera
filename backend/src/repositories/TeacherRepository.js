@@ -43,7 +43,7 @@ const registerUserAsATeacher = async ({ userid, teachercpf }) => {
     }
 }
 
-const loginTeacherGoogle = async ({ userid }) => {
+const loginTeacherGoogle = async ({ useremail, userid }) => {
     try {
         // Verificando se os user inputs estão corretos
         const user = await userModel.User.findOne({ where: { useremail, role: 'teacher' } });

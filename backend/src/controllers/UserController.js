@@ -121,7 +121,7 @@ router.get('/profilepicture/', passport.authenticate('jwt', { session: false }),
 router.post('/googleLogin', async (request, response) => {
     try {
         const { useremail, username, role } = request.body;
-        const userGoogleLoginResult = await userRepo.loginUserGoole({ useremail, username, role });
+        const userGoogleLoginResult = await userRepo.loginUserGoogle({ useremail, username, role });
 
         if (role === 'teacher') {
             const teacherLoginResult = await teacherController.teacherGoogleLogin({ useremail });
@@ -129,7 +129,7 @@ router.post('/googleLogin', async (request, response) => {
                 message: "Teacher logged successfully",
                 token: teacherLoginResult.token,
                 username: teacherLoginResult.name,
-                profilepic: userLoginResult.profilepic
+                profilepic: userGoogleLoginResult.profilepic
             });
         } else if (role === 'student') {
             const studentLoginResult = await studentController.studentGoogleLogin({ useremail });
@@ -140,6 +140,12 @@ router.post('/googleLogin', async (request, response) => {
                 profilepic: userGoogleLoginResult.profilepic
             });
         }
+        return response.status(200).json({
+            message: "Login successful",
+            token,
+            username: username,
+            profilepic: profilepic
+        });
     } catch (error) {
         console.error(error);
         return response.status(500).json({ message: error.message || "Internal server error" });
