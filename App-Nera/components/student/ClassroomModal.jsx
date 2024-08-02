@@ -10,6 +10,7 @@ import ButtonBlue from '../../components/ButtonBlue';
 const ClassroomModal = ({ classroom, modalVisible, setModalVisible }) => {
     const navigation = useNavigation();
 
+
     const goToStudentClassroom = () => {
         navigation.navigate('StudentClassroom');
         setModalVisible(!modalVisible);
@@ -38,18 +39,18 @@ const ClassroomModal = ({ classroom, modalVisible, setModalVisible }) => {
                                 <Image source={classIcon} style={styles.image} />
                             </View>
                             <View style={styles.div2}>
-                                <Text style={styles.subtitulo}>{classroom.classroomDetails.classroomname}</Text>
+                                <Text style={styles.subtitulo}>{classroom.classroomname}</Text>
 
                                 <Text style={styles.titleS}>Professor: {classroom.teacherUsername}</Text>
                             </View>
 
                         </View>
                         <Text style={styles.subtitulo}>Descrição</Text>
-                        <Text>{classroom.classroomDetails.classroomdescription}</Text>
+                        <Text>{classroom.classroomdescription}</Text>
                         <Text style={styles.subtitulo}>Trilha da Sala</Text>
                         <TrailCard
-                            trail={classroom.classroomDetails.trackid}
-                            module={classroom.classroomDetails.moduleid}
+                            trail={classroom.moduleid}
+                            module={classroom.trackid}
                         />
                         <ButtonBlue
                             onPress={() => setModalVisible(true)}

@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, ScrollView } from 'react-native';
 import HeaderTeacher from '../../components/teacher/HeaderTeacher';
@@ -6,7 +7,7 @@ import ClassroomCard from '../../components/teacher/ClassroomCard';
 import TrailCard from '../../components/teacher/TrailCard';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { setItems } from '../store/classroomTeacherSlice';
+import { setItems } from '../store/classroomSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 

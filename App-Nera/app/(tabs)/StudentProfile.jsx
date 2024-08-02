@@ -1,13 +1,41 @@
 import { Image, Text, View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import CircleConquist from '../../components/CircleConquist';
 import BottomMenuStudent from '../../components/MenuStudent';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setItems } from '../store/classroomSlice';
+import React, { useEffect, useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native'; // Importe o hook useNavigation e useRoute
 
 const StudentProfile = () => {
-
+    const dispatch = useDispatch();
+    const [token, setToken] = useState('');
     const { profileImageUrl, name } = useSelector((state) => state.user);
     const navigation = useNavigation();
+
+
+    //Pergar as salas do professor na api rota quando chegar nessa tela `${process.env.EXPO_PUBLIC_API_NERA_URL}/classrooms/teacher`
+
+    useEffect(() => {
+        const getItems = async () => {
+            AsyncStorage.getItem('token').then((value) => {
+                setToken(value);
+            });
+            try {
+                const res = await axios.get(`${process.env.EXPO_PUBLIC_API_NERA_URL}/student/classrooms`, {
+
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                console.log(res.data.classrooms);
+                dispatch(setItems(res.data.classrooms));
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        getItems();
+    }, [token]);
+
     return (
         <View style={styles.div_main}>
             <View style={styles.div_perfil}>

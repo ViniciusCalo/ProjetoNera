@@ -16,7 +16,7 @@ import { setName, setProfileImageUrl } from '../store/userSlice';
 
 
 const PerfilTeacher = () => {
-    const navigation = useNavigation(); ``
+    const navigation = useNavigation();
     const [token, setToken] = useState('');
     const [error, setError] = useState('');
     const dispatch = useDispatch();

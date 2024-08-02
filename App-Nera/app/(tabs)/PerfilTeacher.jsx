@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Image, View, StyleSheet, Text, Pressable, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import { useNavigation } from '@react-navigation/native';
 import HeaderTeacher from '../../components/teacher/HeaderTeacher';
 import BottomMenuTeacher from '../../components/MenuTeacher';
 import icon1 from '../../assets/addImg.png';
@@ -15,6 +16,7 @@ import { setProfileImageUrl } from '../store/userSlice';
 
 
 const PerfilTeacher = () => {
+    const navigation = useNavigation(); ``
     const [token, setToken] = useState('');
     const dispatch = useDispatch();
     const { name, profileImageUrl } = useSelector((state) => state.user);
@@ -141,6 +143,7 @@ const PerfilTeacher = () => {
                 </TouchableOpacity>
             </View>
 
+
             <BottomMenuTeacher />
         </View>
     );
@@ -172,7 +175,7 @@ const styles = StyleSheet.create({
         marginTop: '5%',
         display: 'flex',
         width: '90%',
-        height: '50%',
+        height: '40%',
         alignItems: 'center',
         backgroundColor: '#fff',
         borderRadius: 20,
@@ -245,11 +248,11 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 }, // Adiciona sombra no iOS
         shadowOpacity: 0.8, // Adiciona sombra no iOS
         shadowRadius: 2, // Adiciona sombra no iOS
-      },
-      imageb: {
+    },
+    imageb: {
         width: 24, // Tamanho da imagem
         height: 24, // Tamanho da imagem
-      },
+    },
 });
 
 export default PerfilTeacher;
