@@ -13,7 +13,7 @@ import { Link } from 'expo-router';
 const removeValue = async () => {
   try {
     await AsyncStorage.removeItem('token')
-  } catch(e) {
+  } catch (e) {
     // remove error
   }
 
@@ -24,12 +24,12 @@ removeValue();
 
 export default function HomeScreen({ navigationA }) {
 
-      
+
 
   const navigation = useNavigation();
-/*   GoogleSignin.configure({
-    androidClientId: '925583381049-703pdr2vo5nqsqk5gied874grf94t3jq.apps.googleusercontent.com',
-  }); */
+  /*   GoogleSignin.configure({
+      androidClientId: '925583381049-703pdr2vo5nqsqk5gied874grf94t3jq.apps.googleusercontent.com',
+    }); */
 
   /* const [request, response, promptAsync] = Google.useAuthRequest({
     androidClientId: "925583381049-703pdr2vo5nqsqk5gied874grf94t3jq.apps.googleusercontent.com",
@@ -37,7 +37,7 @@ export default function HomeScreen({ navigationA }) {
   }) */
 
 
-/*   const [isViewVisible, setIsViewVisible] = useState(true);
+  const [isViewVisible, setIsViewVisible] = useState(true);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
@@ -51,7 +51,7 @@ export default function HomeScreen({ navigationA }) {
       keyboardDidShowListener.remove();
       keyboardDidHideListener.remove();
     };
-  }, []); */
+  }, []);
 
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
@@ -61,37 +61,37 @@ export default function HomeScreen({ navigationA }) {
   const [googleUserInfo, setGoogleUserInfo] = useState(null);
 
 
-/*   const handleSocialLogin = async (userEmail, userName) => {
-    try {
-      await axios.post(`http://${endpoint}:3333/users/register`, {
-        username: userName,
-        useremail: userEmail,
-        role: role
-      });
-      navigation.navigate('LoginScreen');
-      alert("Login social realizado com sucesso!");
-    } catch (err) {
-      console.log(err);
-    }
-  }; */
-
-/*   const promptAsync = async () => {
-    try {
-      await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      handleSocialLogin(userInfo.user.email, userInfo.user.name);
-    } catch (error) {
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        alert('Usuário cancelou o login.');
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        alert('Operação de login em andamento.');
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        alert('Play Services não disponível ou desatualizado.');
-      } else {
-        alert('Erro desconhecido: ', error);
+  /*   const handleSocialLogin = async (userEmail, userName) => {
+      try {
+        await axios.post(`http://${endpoint}:3333/users/register`, {
+          username: userName,
+          useremail: userEmail,
+          role: role
+        });
+        navigation.navigate('LoginScreen');
+        alert("Login social realizado com sucesso!");
+      } catch (err) {
+        console.log(err);
       }
-    }
-  }; */
+    }; */
+
+  /*   const promptAsync = async () => {
+      try {
+        await GoogleSignin.hasPlayServices();
+        const userInfo = await GoogleSignin.signIn();
+        handleSocialLogin(userInfo.user.email, userInfo.user.name);
+      } catch (error) {
+        if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+          alert('Usuário cancelou o login.');
+        } else if (error.code === statusCodes.IN_PROGRESS) {
+          alert('Operação de login em andamento.');
+        } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+          alert('Play Services não disponível ou desatualizado.');
+        } else {
+          alert('Erro desconhecido: ', error);
+        }
+      }
+    }; */
 
   const toggleRole = () => {
     setRole(prevRole => (prevRole === 'teacher' ? 'student' : 'teacher'));
@@ -168,6 +168,7 @@ export default function HomeScreen({ navigationA }) {
             value={role}
           />
         </View>
+        {isViewVisible && (
           <View style={stylesForm.opcoesEntrar}>
             <Pressable style={stylesForm.button_entrar} onPress={handleClick}>
               <Text style={stylesForm.textButton}>Criar conta</Text>
@@ -179,6 +180,7 @@ export default function HomeScreen({ navigationA }) {
               <Text style={stylesForm.textButton}>Entrar</Text>
             </Pressable>
           </View>
+        )}
       </View>
     </View>
   );

@@ -5,7 +5,7 @@ import Switch from '../../components/SwitchProfile';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useDispatch  } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setName, setProfileImageUrl } from '../store/userSlice';
 /* import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin'; */
 import endpoint from '../../config/endpoint';
@@ -20,7 +20,7 @@ const LoginScreen = ({ navigationA }) => {
     const [cpf, setCpf] = useState("");
 
 
-    const createProfile = (username,userpicture) => {
+    const createProfile = (username, userpicture) => {
         dispatch(setName(username));
         dispatch(setProfileImageUrl(userpicture));
     };
@@ -29,48 +29,48 @@ const LoginScreen = ({ navigationA }) => {
         try {
             await AsyncStorage.setItem('token', value);
         } catch (e) {
-          // saving error
+            // saving error
         }
-      };
+    };
 
-/*     GoogleSignin.configure({
-        androidClientId: '925583381049-703pdr2vo5nqsqk5gied874grf94t3jq.apps.googleusercontent.com',
-      });
-
-    const handleSocialLogin = async (userEmail, userName) => {
-        try {
-          await axios.post(`http://${endpoint}:3333/users/login`, {
-            username: userName,
-            useremail: userEmail,
-            role: role
+    /*     GoogleSignin.configure({
+            androidClientId: '925583381049-703pdr2vo5nqsqk5gied874grf94t3jq.apps.googleusercontent.com',
           });
-          navigation.navigate('StudentProfile');
-          alert("Login social realizado com sucesso!");
-        } catch (err) {
-          console.log(err);
-        }
-      };
     
-      const promptAsync = async () => {
-        try {
-          await GoogleSignin.hasPlayServices();
-          const userInfo = await GoogleSignin.signIn();
-          handleSocialLogin(userInfo.user.email, userInfo.user.name);
-        } catch (error) {
-          if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-            alert('Usuário cancelou o login.');
-          } else if (error.code === statusCodes.IN_PROGRESS) {
-            alert('Operação de login em andamento.');
-          } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-            alert('Play Services não disponível ou desatualizado.');
-          } else {
-            alert('Erro desconhecido: ', error);
-          }
-        }
-      }; */
+        const handleSocialLogin = async (userEmail, userName) => {
+            try {
+              await axios.post(`http://${endpoint}:3333/users/login`, {
+                username: userName,
+                useremail: userEmail,
+                role: role
+              });
+              navigation.navigate('StudentProfile');
+              alert("Login social realizado com sucesso!");
+            } catch (err) {
+              console.log(err);
+            }
+          };
+        
+          const promptAsync = async () => {
+            try {
+              await GoogleSignin.hasPlayServices();
+              const userInfo = await GoogleSignin.signIn();
+              handleSocialLogin(userInfo.user.email, userInfo.user.name);
+            } catch (error) {
+              if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+                alert('Usuário cancelou o login.');
+              } else if (error.code === statusCodes.IN_PROGRESS) {
+                alert('Operação de login em andamento.');
+              } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+                alert('Play Services não disponível ou desatualizado.');
+              } else {
+                alert('Erro desconhecido: ', error);
+              }
+            }
+          }; */
 
     const { width, height } = Dimensions.get('window');
-/*     const [isViewVisible, setIsViewVisible] = useState(true);
+    const [isViewVisible, setIsViewVisible] = useState(true);
 
     useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
@@ -84,7 +84,7 @@ const LoginScreen = ({ navigationA }) => {
             keyboardDidShowListener.remove();
             keyboardDidHideListener.remove();
         };
-    }, []); */
+    }, []);
 
 
 
@@ -110,8 +110,8 @@ const LoginScreen = ({ navigationA }) => {
             if (res.data.token && role === 'teacher') {
                 storeData(res.data.token);
                 navigation.navigate('HomeTeacher');
-            } 
-            
+            }
+
             if (res.data.token && role === 'student') {
                 storeData(res.data.token);
                 navigation.navigate('StudentProfile');
@@ -151,15 +151,16 @@ const LoginScreen = ({ navigationA }) => {
                         onChangeText={(texto) => setEmail(texto)}
                     />
 
-                    <TextInput
-                        id='cpf'
-                        style={stylesForm.input_cpf}
-                        placeholder='CPF'
-                        value={cpf}
-                        placeholderTextColor="#888888"
-                        onChangeText={(texto) => setCpf(texto)}
-                    />
-
+                    {role === 'teacher' && (
+                        <TextInput
+                            id='cpf'
+                            style={stylesForm.input_cpf}
+                            placeholder='CPF'
+                            value={cpf}
+                            placeholderTextColor="#888888"
+                            onChangeText={(texto) => setCpf(texto)}
+                        />
+                    )}
 
                     <TextInput
                         style={stylesForm.input_senha}
@@ -177,7 +178,8 @@ const LoginScreen = ({ navigationA }) => {
                         value={role}
                     />
 
-                </View>           
+                </View>
+                {isViewVisible && (
                     <View style={stylesForm.opcoesEntrar}>
                         <Pressable style={stylesForm.button_entrar} onPress={login}>
                             <Text style={stylesForm.textButton}>Entrar</Text>
@@ -192,6 +194,7 @@ const LoginScreen = ({ navigationA }) => {
                             <Text style={stylesForm.textButton}>Criar Conta</Text>
                         </Pressable>
                     </View>
+                )}
             </View>
         </View>
     );
