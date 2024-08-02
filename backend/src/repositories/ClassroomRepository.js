@@ -14,6 +14,19 @@ const getAllClassrooms = async () => {
     }
 };
 
+const getClassroomById = async (classroomid) => {
+    try{
+        const classrooms = await classroomModel.Classroom.findAll({where: {classroomid}});
+        if (!classrooms) {
+            throw new Error('Classroom not found');
+        }
+        return classrooms;
+    } catch (error) {
+        console.error(`Erro ao tentar trazer a sala com id ${classroomid}: `, error);
+        throw error;
+    }
+}
+
 const getAllClassroomByTeacherId = async (teacherid) => {
     try {
         const classrooms = await classroomModel.Classroom.findAll({ where: { teacherid } });
@@ -73,5 +86,6 @@ module.exports = {
     getAllClassrooms,
     getAllClassroomByTeacherId,
     createClassroom,
-    editClassroom
+    editClassroom,
+    getClassroomById
 };
