@@ -12,8 +12,12 @@ const StudentProfile = () => {
         <View style={styles.div_main}>
             <View style={styles.div_perfil}>
                 <View style={styles.defaultView}>
-                    <TouchableOpacity style={{ width: '70%', height: '70%' }} onPress={() => navigation.navigate('StudentEditProfile')}>
-                        <Image source={{ uri: profileImageUrl }} resizeMode="contain" style={{ width: '100%', height: '100%' }}></Image>
+                    <TouchableOpacity style={styles.profileImageContainer } onPress={() => navigation.navigate('StudentEditProfile')}>
+                        <Image
+                            source={profileImageUrl ? { uri: profileImageUrl } : require('../../assets/defaultProfileIcon.png')}
+                            style={styles.profileImage}
+                        />
+
                     </TouchableOpacity>
                 </View>
                 <View style={styles.defaultView}>
@@ -89,10 +93,12 @@ const styles = StyleSheet.create({
 
     div_perfil: {
         alignItems: 'center',
+        justifyContent: 'center',
         display: "flex",
         flexDirection: "row",
         height: '20%',
         width: '100%',
+        marginTop: "5%",
         gap: 10,
         paddingLeft: 30,
 
@@ -131,8 +137,27 @@ const styles = StyleSheet.create({
     defaultView: {
         flex: 1,
         justifyContent: "center",
+        height: '80%',
+    },
+    profileImageContainer: {
+        width: '70%',
+        height: '70%',
+        borderRadius: 50, // Deixe a imagem circular
+        overflow: 'hidden', // Garante que a sombra não se sobreponha à imagem
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5, // Sombra no Android
+    },
+    profileImage: {
+        width: '100%',
         height: '100%',
-    }
+        borderRadius: 50, // Deixe a imagem circular
+    },
 
 
 })
