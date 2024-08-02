@@ -14,9 +14,9 @@ router.put('/joinClassroom', passport.authenticate('jwt', { session: false }), a
             return response.status(400).json({ message: "É obrigatório inserir um token" });
         } 
 
-
         // Linka aluno e sala pela tabela de relacionamento
-        const result = await classroomStudentRepo.addStudentOnClassroom({ studentid, tokenclass });
+        const joinClassroom = await classroomStudentRepo.addStudentOnClassroom({ studentid, tokenclass });
+        const result = joinClassroom.classroomDetails;
         return response.status(201).json({ message: "Aluno associado à sala com sucesso", result });
 
     } catch (error) {
