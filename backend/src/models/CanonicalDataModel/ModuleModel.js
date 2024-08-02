@@ -1,6 +1,6 @@
 const { sequelize, Sequelize } = require('../../database/db');
 
-const Module = sequelize.define('Module', {
+const Module = sequelize.define('tbmodule', {
     moduleid: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -16,12 +16,11 @@ const Module = sequelize.define('Module', {
     },
     trackid: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'Track',
-            key: 'id'
-        }
+        allowNull: false
     }
+}, {
+    timestamps: false,
+    tableName: 'tbmodule'
 });
 
 module.exports = Module;
