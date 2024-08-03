@@ -1,0 +1,32 @@
+{
+  "cli": {
+    "version": ">= 10.2.1"
+  },
+  "build": {
+    "prod": {
+      "android": {
+        "buildType": "apk"
+      },
+      "channel": "prod",
+      "env": {
+        "EXPO_PUBLIC_AZURE_STORAGE_URL": "https://stnerafiles.blob.core.windows.net/images",
+        "EXPO_PUBLIC_SAS_TOKEN": "sp=rac&st=2024-07-27T20:59:06Z&se=2024-08-28T04:59:06Z&spr=https&sv=2022-11-02&sr=c&sig=Tlqh11IVb%2FcDLBwaodLHIFw9OiB89fZJUCOsFhMEQVU%3D",
+        "EXPO_PUBLIC_API_NERA_URL": "http://192.168.3.218:3333"
+      }
+    },
+    "dev": {
+      "android": {
+        "buildType": "apk"
+      },
+      "channel": "dev",
+      "env": {
+        "EXPO_PUBLIC_AZURE_STORAGE_URL": "https://stnerafiles.blob.core.windows.net/images",
+        "EXPO_PUBLIC_SAS_TOKEN": "sp=rac&st=2024-07-27T20:59:06Z&se=2024-08-28T04:59:06Z&spr=https&sv=2022-11-02&sr=c&sig=Tlqh11IVb%2FcDLBwaodLHIFw9OiB89fZJUCOsFhMEQVU%3D",
+        "EXPO_PUBLIC_API_NERA_URL": "http://192.168.3.218:3333"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}
