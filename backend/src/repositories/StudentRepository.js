@@ -64,7 +64,7 @@ const loginStudent = async ({ userid, useremail }) => {
     }
 };
 
-const loginStudentGoogle = async ({ userid }) => {
+const loginStudentGoogle = async ({ useremail, userid }) => {
     try {
         // Verificando se os user inputs estão corretos
         const user = await userModel.User.findOne({ where: { useremail, role: 'student' } });
@@ -73,14 +73,14 @@ const loginStudentGoogle = async ({ userid }) => {
             throw new Error('Invalid email or role');
         }
 
-        // Verificando se o user é professor
+        // Verificando se o user é aluno
         const student = await studentModel.Student.findOne({ where: { userid: user.userid } });
 
         if (!student) {
             throw new Error('User is not a student');
         }
 
-        // Gerando o token novo caso ele seja professor
+        // Gerando o token novo caso ele seja aluno
         const token = jwt.sign({ studentid: student.studentid, userid: student.userid, role: user.role }, jwtConfig.secret, {
             expiresIn: jwtConfig.expiresIn,
         });
@@ -109,5 +109,6 @@ module.exports = {
     registerUserAsAStudent,
     loginStudent,
     getStudentById,
-    registerUserAsAStudentViaGoogle
+    registerUserAsAStudentViaGoogle,
+    loginStudentGoogle
 };

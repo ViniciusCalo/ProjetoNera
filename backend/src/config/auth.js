@@ -1,3 +1,4 @@
+// Importando o passport
 const passport = require('passport');
 const Strategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
@@ -43,7 +44,7 @@ const applyPassportStrategy = passport => {
                 if (student) {
                   console.log('Student Found');
                   return done(null, {
-                    studentid: student.teacherid,
+                    studentid: student.studentid,
                     userid: student.userid,
                     role: user.role
                   });

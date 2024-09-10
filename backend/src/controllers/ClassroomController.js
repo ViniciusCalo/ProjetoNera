@@ -14,8 +14,9 @@ router.get('/', async (request, response) => {
     }
 });
 
-router.get('/:id', passport.authenticate('jwt', { session: false }), async (request, response) => {
+router.get('/teacher', passport.authenticate('jwt', { session: false }), async (request, response) => {
     try {
+        const {teacherid} = request.user;
         const classrooms = await classroomRepo.getAllClassroomByTeacherId(teacherid);
         
         if (!classrooms.length) {

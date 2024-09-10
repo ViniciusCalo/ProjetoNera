@@ -1,28 +1,42 @@
-const ClassroomStudent = require('../models/CanonicalDataModel/ClassroomStudentModel');
-const Classroom = require('../models/CanonicalDataModel/ClassroomModel');
+const express = require('express');
+const passport = require('passport');
+const classroomStudentRepo = require('../repositories/ClassroomStudentRepository');
+const teacherRepo = require('../repositories/TeacherRepository');
+const router = express.Router();
 
-const enrollStudent = async (req, res) => {
+router.put('/joinClassroom', passport.authenticate('jwt', { session: false }), async (request, response) => {
     try {
-        const { classroomcode, studentid } = req.body;
-        
-        const classroom = await Classroom.Classroom.findOne({ where: { classroomcode } });
+        const { tokenclass } = request.body;
+        const { studentid } = request.user;
 
-        if (!classroom) {
-            return res.status(404).json({ message: "Classroom not found" });
-        }
+        // Verifica se o tokenclass foi fornecido
+        if (!tokenclass || tokenclass.trim() === '') {
+            return response.status(400).json({ message: "É obrigatório inserir um token" });
+        } 
 
-        const newEnrollment = await ClassroomStudent.create({
-            classroomid: classroom.classroomid,
-            studentid
-        });
+        // Linka aluno e sala pela tabela de relacionamento
+        const joinClassroom = await classroomStudentRepo.addStudentOnClassroom({ studentid, tokenclass });
+        const result = joinClassroom.classroomDetails;
+        return response.status(201).json({ message: "Aluno associado à sala com sucesso", result });
 
-        return res.status(201).json({ message: "Student enrolled successfully", newEnrollment });
     } catch (error) {
         console.error('Error enrolling student:', error);
-        return res.status(500).json({ message: "Internal server error" });
+        return response.status(500).json({ message: "Internal server error" });
     }
-};
+});
+// Nova rota para obter todas as salas de aula de um aluno
+router.get('/classrooms', passport.authenticate('jwt', { session: false }), async (request, response) => {
+    try {
+        const { studentid } = request.user;
 
-module.exports = {
-    enrollStudent
-};
+        // Buscar todas as salas de aula do aluno
+        const classrooms = await classroomStudentRepo.getAllClassroomsByStudent({ studentid });
+        return response.status(200).json({ classrooms });
+
+    } catch (error) {
+        console.error('Error getting classrooms by student:', error);
+        return response.status(500).json({ message: "Internal server error" });
+    }
+});
+
+module.exports = router;

@@ -105,11 +105,33 @@ const loginUser = async ({ useremail, userpassword, role }) => {
     }
 };
 
+
+const loginUserGoogle = async ({ useremail, username, role}) => {
+    try {
+        const user = await userModel.User.findOne({ where: { useremail, username, role } });
+
+        if (!user) {
+            throw new Error('Invalid email, password or role provided');
+        }
+
+        const name = user.username;
+        const profilepic = user.profilepicture;
+        const token = jwt.sign({ userid: user.userid, role: user.role }, jwtConfig.secret, {
+            expiresIn: jwtConfig.expiresIn,
+        });
+
+        return { token, name, profilepic };
+    } catch (error) {
+        console.error('Error logging in user:', error);
+        throw error;
+    }
+}
 module.exports = {
     getAll,
     getUserById,
     createUser,
     loginUser,
     uploadProfilePic,
-    getProfilePicture
+    getProfilePicture,
+    loginUserGoogle
 };
