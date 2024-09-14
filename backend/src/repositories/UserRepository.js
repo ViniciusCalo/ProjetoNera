@@ -34,10 +34,8 @@ const getUserById = async (id) => {
     }
 };
 
-const createUser = async ({ username, useremail, userpassword, role}) => {
+const createUser = async ({ username, useremail, role}) => {
     try {
-
-        const hashedPassword = await bcrypt.hash(userpassword, 10);
         const userExists = await userModel.User.findOne({ where: { useremail } });
 
         if (userExists) {
@@ -47,9 +45,7 @@ const createUser = async ({ username, useremail, userpassword, role}) => {
         const newUser = await userModel.User.create({
             username,
             useremail,
-            userpassword: hashedPassword,
-            role,
-            teacherCpf: hashedTeacherCpf
+            role
         });
 
         return newUser;
@@ -59,20 +55,13 @@ const createUser = async ({ username, useremail, userpassword, role}) => {
     }
 };
 
-const loginUser = async ({ useremail, userpassword, role }) => {
+const loginUser = async ({ useremail, username, role }) => {
     try {
-        const user = await userModel.User.findOne({ where: { useremail, role } });
+        const user = await userModel.User.findOne({ where: { useremail, username, role } });
 
         if (!user) {
             throw new Error('Invalid email, password or role provided');
         }
-
-        const isPasswordValid = await bcrypt.compare(userpassword, user.userpassword);
-
-        if (!isPasswordValid) {
-            throw new Error('Invalid email or password');
-        }
-
         const token = jwt.sign({ userid: user.userid, role: user.role }, jwtConfig.secret, {
             expiresIn: jwtConfig.expiresIn,
         });

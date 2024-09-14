@@ -58,8 +58,8 @@ router.post('/register', async (request, response) => {
 
 router.post('/login', async (request, response) => {
     try {
-        const { useremail, userpassword, role } = request.body;
-        const { token } = await userRepo.loginUser({ useremail, userpassword, role});
+        const { useremail, username, role } = request.body;
+        const { token } = await userRepo.loginUser({ useremail, username, role});
         return response.status(200).json({ message: "Login successful", token });
     } catch (error) {
         console.error(error);

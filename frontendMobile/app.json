@@ -4,7 +4,6 @@
     "slug": "nera-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "src/assets/Icone.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "src/assets/Icone.png",
@@ -19,12 +18,17 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "src/assets/Icone.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.kedsson.neramobile"
     },
     "web": {
       "favicon": "src/assets/Icone.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "43f0f356-dbb8-47ba-82ee-d67965778dd6"
+      }
     }
   }
 }
