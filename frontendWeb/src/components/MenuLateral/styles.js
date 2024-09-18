@@ -18,7 +18,6 @@ export const Menu = styled.nav`
 
     &:hover {
         width: 15%;
-    }
     `;
 
 export const Lista = styled.ul`
@@ -45,7 +44,7 @@ export const Item = styled.li`
     }
     `;
 export const Item2 = styled.li`
-margin-left: 50%;
+    margin-left: 50%;
     list-style: none;
     width: 100%;
     margin-top: 60px;
@@ -71,10 +70,10 @@ export const Icone2 = styled.img`
 `;
 export const Texto = styled.p`
     color: #000;
-font-family: Inter;
-font-size: 20px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-text-transform: capitalize;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: capitalize;
 `;
