@@ -1,4 +1,4 @@
-const Module = require('../models/CanonicalDataModel/ModuleModel');
+const Module = require('../models/ModuleModel');
 
 class ModuleRepository {
     async getAllModules() {

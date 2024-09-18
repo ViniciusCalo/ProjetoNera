@@ -1,4 +1,4 @@
-const { sequelize, Sequelize } = require('../../database/db');
+const { sequelize, Sequelize } = require('../database/db');
 
 const ClassroomStudent = sequelize.define('ClassroomStudent', {
     classroomid: {

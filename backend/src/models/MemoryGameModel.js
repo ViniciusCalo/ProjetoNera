@@ -1,0 +1,1 @@
+const { sequelize, Sequelize } = require('../database/db');

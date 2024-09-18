@@ -1,5 +1,5 @@
 const teacherRepo = require('../repositories/TeacherRepository');
-const classroomModel = require('../models/CanonicalDataModel/ClassroomModel');
+const classroomModel = require('../models/ClassroomModel');
 const express = require('express');
 const passport = require('passport');
 

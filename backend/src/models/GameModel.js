@@ -1,4 +1,4 @@
-const { sequelize, Sequelize } = require('../../database/db');
+const { sequelize, Sequelize } = require('../database/db');
 
 const Game = sequelize.define('Game', {
     gameid: {

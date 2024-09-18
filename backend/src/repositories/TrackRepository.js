@@ -1,4 +1,4 @@
-const Track = require('../models/CanonicalDataModel/TrackModel');
+const Track = require('../models/TrackModel');
 
 class TrackRepository {
     async getAllTracks() {

@@ -1,7 +1,7 @@
-const userModel = require('../models/CanonicalDataModel/UserModel');
+const userModel = require('../models/UserModel');
 const jwt = require('jsonwebtoken');
 const jwtConfig = require('../config/jwtConfig');
-const studentModel = require('../models/CanonicalDataModel/StudentModel');
+const studentModel = require('../models/StudentModel');
 
 const registerUserAsAStudent = async ({ userid }) => {
     try {

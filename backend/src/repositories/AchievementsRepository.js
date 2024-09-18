@@ -1,4 +1,4 @@
-const { Achievement } = require('../models/CanonicalDataModel/AchievementModel');
+const { Achievement } = require('../models/AchievementModel');
 
 const createAchievement = async ({ achievementname, achievementdescription, criteria, imageurl }) => {
     return await Achievement.create({

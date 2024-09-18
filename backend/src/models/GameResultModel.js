@@ -1,5 +1,5 @@
 // define a estrutura da tabela tbgameresult no banco de dados. Ele utiliza o Sequelize para mapear a tabela e os campos.
-const { sequelize, Sequelize } = require('../../database/db');
+const { sequelize, Sequelize } = require('../database/db');
 
 const GameResult = sequelize.define('GameResult', {
     gameresultid: {

@@ -1,9 +1,9 @@
-const classroomModel = require('../models/CanonicalDataModel/ClassroomModel');
-const classroomStudentModel = require('../models/CanonicalDataModel/ClassroomStudentModel');
+const classroomModel = require('../models/ClassroomModel');
+const classroomStudentModel = require('../models/ClassroomStudentModel');
 const classroomRepo = require('../repositories/ClassroomRepository');
-const studentModel = require('../models/CanonicalDataModel/StudentModel');
-const userModel = require('../models/CanonicalDataModel/UserModel');
-const teacherModel = require('../models/CanonicalDataModel/TeacherModel');
+const studentModel = require('../models/StudentModel');
+const userModel = require('../models/UserModel');
+const teacherModel = require('../models/TeacherModel');
 
 const addStudentOnClassroom = async ({ studentid, tokenclass }) => {
     try {
