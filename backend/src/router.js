@@ -1,11 +1,20 @@
 const express = require('express');
-const userController = require('../src/controllers/UserController');
+const user = require('./controllers/UserController');
+const classroom = require('./controllers/ClassroomController');
+const achievement = require('./controllers/AchievementsController');
+const classroomController = require('./controllers/ClassroomStudentController');
+const memoryGame = require('./controllers/MemoryGameController');
+const track = require('./controllers/TrackController');
+const moduleController = require('./controllers/ModuleController');
 
 const router = express.Router();
 
-router.get('/user', userController.getAll);
-router.get('/user/:id', userController.getUserById);
-router.post('/user/register', userController.createUser)
-router.post('/user/login', userController.loginUser);
+router.use("/users", user);
+router.use("/classrooms", classroom);
+router.use("/api", achievement);
+router.use("/memory-game", memoryGame);
+router.use("/student", classroomController);
+router.use("/tracks", track); 
+router.use("/modules", moduleController);
 
 module.exports = router;
