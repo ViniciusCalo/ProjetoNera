@@ -2,8 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     top: 30px;
-    width: 90%;
-    left: 6%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     `;
@@ -11,187 +10,120 @@ export const Infos = styled.div`
     display: flex;
     position: relative;
     align-items: center;
-    top: 30px;
-    min-width: 100vh;
+    margin-top: 5%;
+    margin-bottom: 2%;
+    width: 100%;
 `;
 export const imgPerfil = styled.img`
-    width: 150px;
-    height: 150px;
+    width: 10%;
+    height: auto;
     border-radius: 50%;
     margin-left: 10%;
     margin-right: 10%;
+    @media (max-width: 768px) {
+        width:15% /* Para tablets */
+    }
+
+    @media (max-width: 480px) {
+        width: 20% /* Para celulares */
+    }
     `;
-export const User = styled.p`
+export const User = styled.h1`
     color: #000;
     font-family: Roboto;
-    font-size: 36px;
     font-style: normal;
-    font-weight: 500;
     line-height: normal;
+    font-size: 36px; /* Tamanho padrão */
+
+    @media (max-width: 768px) {
+        font-size: 24px; /* Para tablets */
+    }
+
+     @media (max-width: 480px) {
+        font-size: 20px; /* Para celulares */
+    }
     `;
 export const Name = styled.p`
-    position: absolute;
-    top: 60%;
     color: #000;
     font-family: Roboto;
-    font-size: 16px;
     font-style: normal;
-    font-weight: 500;
-    line-height: normal;
+    font-size: 24px; /* Tamanho padrão */
+
+    @media (max-width: 768px) {
+        font-size: 16px; /* Para tablets */
+    }
+
+    @media (max-width: 480px) {
+        font-size: 12px; /* Para celulares */
+    }
     `;
 export const ButtonEditar = styled.button`
     background-color: #135794;
     border: none;
     border-radius: 10px;
-    width: 200px;
-    height: 50px;
+    width: 150px;
+    height: 40px;
     margin-left: 10%;
-    margin-right: 10%;
     color: white;
     font-size: 20px;
+
+    @media (max-width: 768px) {
+        width: 20%;
+        height: 30px;
+        font-size: 16px; /* Para tablets */
+    }
+
+    @media (max-width: 480px) {
+        width: 30%;
+        height: 30px;
+        font-size: 12px; /* Para celulares */
+    }
     `;
 
 export const ContainerC = styled.div`
-    position: absolute;
     display: flex;
     flex-direction: column;
-    width: 90%;
-    top: 30%;
-    left: 10%;
+    width: 100%;
     `;
 export const Title = styled.h1`
     color: #000;
     font-family: Roboto;
-    font-size: 70px;
+    font-size: 56px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
     margin-left: 20%;
     margin-bottom: 2%;
+
+    @media (max-width: 768px) {
+        font-size: 42px; /* Para tablets */
+    }
+
+    @media (max-width: 480px) {
+        font-size: 36px; /* Para celulares */
+    }
     `;
 export const Carrousel = styled.div`
     display: grid;
     grid-auto-flow: column;
-    grid-auto-columns: 150px;
+    grid-auto-columns: 10%;
     overflow-y: hidden;
     overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
+    gap: 3%;
+    padding: 5px;
+    margin-left: 7%;
 
     &::-webkit-scrollbar {
         display: none; 
     }
     `;
-export const DivConquista = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    `;
-
-export const Card = styled.article`
-    scroll-snap-align: start;
-    border-radius: 100%;
-    width: 100px;
-    height: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #F29F05;
-    `;
-export const Card1 = styled.article`
-scroll-snap-align: start;
-border-radius: 100%;
-width: 100px;
-height: 100px;
-display: flex;
-align-items: center;
-justify-content: center;
-background-color: #F20574;
-`;
-
-
-export const textConquistado = styled.p`
-    color: #888585;
-    margin-top: 5%;
-    font-family: Roboto;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    text-align: center;
-    width: 50%;
-    `;
-
-export const ContainerE = styled.div`
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    width: 90%;
-    top: 65%;
-    left: 10%;
-    `;
-export const TitleE = styled.h1`
-    color: #000;
-    font-family: Roboto;
-    font-size: 60px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    margin-left: 20%;
-    margin-bottom: 5%;
-    `;
-export const InfoE = styled.div`
-    position: absolute;
-    min-height: 40vh;
-    display: flex;
-    width: 100%;
-`;
-
-export const ContainerSalas = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: left;
-    align-items: center;
-    width: 100%;
-    `;
-export const Div = styled.div`
-    width: 30%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    `;
-export const Sala = styled.div`
-    width: 50%;
-    height: 200px;
-    flex-shrink: 0;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 100px;
-    `;
-export const S1 = styled(Sala)`
-    border: 7px solid #F20574;
-    `;
-export const S2 = styled(Sala)`
-border: 7px solid #135794;
-`;
-export const S4 = styled(Sala)`
-    border: 7px solid #F29F05;
-    `;
-
-export const SalaImg = styled.img`
-    width: 50%;
-    `;
-
-export const SalaName = styled.p`
-    color: #F20574;
-    font-family: Roboto;
-    font-size: 28px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
+export const Trilhas = styled.div`
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 15%;
+    padding: 5px;
+    gap: 3%;
+    margin-left: 7%;
     `;
