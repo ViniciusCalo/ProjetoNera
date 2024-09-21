@@ -2,16 +2,33 @@ const userModel = require('../models/UserModel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const jwtConfig = require('../config/jwtConfig');
+const joi = require('joi');
 
-const getAll = async () => {
+const teacherSchemaHome = joi.object ({
+    teacherName: joi.string().required(),
+    teacherPicture: joi.string().required(),
+    teacherClassrooms: joi.array().items(joi.object({
+        classroomName: joi.string().required(),
+        classroomid: joi.number().integer().required()
+    })),
+    tracks: joi.array().items(joi.object({
+        trackname: joi.string().required, 
+        trackdescription: joi.string().required
+    }))
+});
+
+const getClassroomAndTeacher = async () => {
     try {
-        const users = await userModel.User.findAll();
-        return users;
+        const homeClass = teacherSchemaHome.allow(await userModel.User.findAll);
+        const homeTeacher = teacherSchemaHome.allow( await classroomModel.Classroom.findAll);
+        return homeClass + homeTeacher; 
     } catch (error) {
-        console.error('Error fetching users:', error);
+        console.error(error);
         throw error;
     }
-};
+}
+
+
 
 const getUserById = async (id) => {
     try {
@@ -127,7 +144,8 @@ const loginUserGoogle = async ({ useremail, username, role}) => {
     }
 }
 module.exports = {
-    getAll,
+    getClassroomAndTeacher,
+    teacherSchemaHome,
     getUserById,
     createUser,
     loginUser,

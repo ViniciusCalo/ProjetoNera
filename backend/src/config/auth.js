@@ -3,9 +3,9 @@ const passport = require('passport');
 const Strategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const jwtConfig = require('./jwtConfig');
-const userModel = require('../models/CanonicalDataModel/UserModel');
-const teacherModel = require('../models/CanonicalDataModel/TeacherModel');
-const studentModel = require('../models/CanonicalDataModel/StudentModel');
+const userModel = require('../models/UserModel');
+const teacherModel = require('../models/TeacherModel');
+const studentModel = require('../models/StudentModel');
 require('dotenv').config();
 
 const applyPassportStrategy = passport => {

@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/', async (request, response) => {
     try {
-        const users = await userRepo.getAll();
+        const users = await userRepo.getClassroomAndTeacher;
         return response.status(200).json(users);
     } catch (error) {
         console.error(error);
@@ -80,8 +80,7 @@ router.post('/register', async (request, response) => {
 
 // Nova rota para atualizar a profilepicture
 router.put('/uploadpic', passport.authenticate('jwt', { session: false }), async (request, response) => {
-    try {
-        const { userid } = request.user;
+    try {const { userid } = request.user;
         const { profilepicture } = request.body;
 
         // Verifica se a URL da foto de perfil foi fornecida
