@@ -5,15 +5,6 @@ const teacherController = require('../controllers/TeacherController');
 const studentController = require('../controllers/StudentController');
 const router = express.Router();
 
-router.get('/', async (request, response) => {
-    try {
-        const users = await userRepo.getClassroomAndTeacher;
-        return response.status(200).json(users);
-    } catch (error) {
-        console.error(error);
-        return response.status(500).json({ message: error.message || "Internal server error" });
-    }
-});
 
 router.post('/googleRegister', async (request, response) => {
     try{
