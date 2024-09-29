@@ -38,16 +38,6 @@ const getClassroomAndTeacher = async() => {
         const homeTeacherData = await userModel.User.findOne ({
             where: { role: 'teacher' },
             include: [{
-                model: userModel.User,
-                attributes: ['username', 'profilepicture', 'userid']
-            }]
-        })
-
-        const teacher = new Teacher(homeTeacherData.username, homeTeacherData.profilepicture, homeTeacherData.userid)
-
-        const homeClassData = await classroomModel.Classroom.findOne({
-            where: { teacherid: homeTeacherData.userid },
-            include: [{
                 model: classroomModel.Classroom,
                 attributes: ['classroomname', 'classroomid']
             }]
