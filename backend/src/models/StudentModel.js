@@ -1,6 +1,6 @@
 const { sequelize, Sequelize } = require('../database/db');
 
-const Student = sequelize.define('Student', {
+const student = sequelize.define('student', {
     studentid: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -9,7 +9,7 @@ const Student = sequelize.define('Student', {
     userid: {
         type: Sequelize.INTEGER,
         references: {
-            model: 'User', //referenciando o userId como FK na tbstudent
+            model: 'user', //referenciando o userId como FK na tbstudent
             key: 'userid'
         },
         unique: true
@@ -19,4 +19,4 @@ const Student = sequelize.define('Student', {
     timestamps: false
 });
 
-module.exports = {Student};
+module.exports = student;

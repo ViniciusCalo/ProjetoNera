@@ -2,7 +2,7 @@
 
 const { sequelize, Sequelize } = require('../database/db');
 
-const GameImage = sequelize.define('GameImage', {
+const gameImage = sequelize.define('gameImage', {
     imagesid: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -19,7 +19,7 @@ const GameImage = sequelize.define('GameImage', {
     gameid: {
         type: Sequelize.INTEGER,
         references: {
-            model: 'Game', //referenciando o gameid como FK na tbgameimages
+            model: 'game', //referenciando o gameid como FK na tbgameimages
             key: 'gameid'
         }
     }
@@ -28,4 +28,4 @@ const GameImage = sequelize.define('GameImage', {
     timestamps: false
 });
 
-module.exports = { GameImage };
+module.exports = gameImage;

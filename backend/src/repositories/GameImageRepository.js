@@ -1,7 +1,7 @@
-const { GameImage } = require('../models/GameImageModel');
+const gameImage = require('../models/GameImageModel');
 
 const getImagesByGameId = async (gameId) => {
-    return await GameImage.findAll({ where: { gameId } });
+    return await gameImage.findAll({ where: { gameId } });
 };
 
 module.exports = {

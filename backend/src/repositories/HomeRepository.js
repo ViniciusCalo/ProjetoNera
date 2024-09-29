@@ -1,64 +1,92 @@
-const userModel = require('../models/UserModel');
-const classroomModel = require('../models/ClassroomModel');
-const trackModel = require('../models/TrackModel'); 
-
+const user = require('../models/UserModel');
+const classroom = require('../models/ClassroomModel');
+const trackModel = require('../models/TrackModel');
 
 class Teacher {
-    constructor(username, profilepicture, userid) {
+    constructor(username, profilePicture) {
         this.teacherName = username;
-        this.teacherPicture = profilepicture;
-        this.teacherid = userid
+        this.teacherPicture = profilePicture;
     }
 }
 
 class Classroom {
-    constructor( classroomName, classroomId){
-        this.classroomName = classroomName;
+    constructor(classroomId, classroomName, trackName, trackDescription) {
         this.classroomId = classroomId;
-    }
-}
-
-class Track {
-    constructor ( trackName, trackDescription) {
+        this.classroomName = classroomName;
         this.trackName = trackName;
         this.trackDescription = trackDescription;
     }
 }
 
-class HomeData {
-    constructor (teacher, classrooms, tracks){
-        this.teacher = teacher;
-        this.classrooms = classrooms;
-        this.tracks = tracks;
+class Track {
+    constructor(trackId, trackName, moduleid) {
+        this.trackId = trackId;
+        this.trackName = trackName;
     }
 }
 
-const getClassroomAndTeacher = async() => {
+class HomeData {
+    constructor(teacher, classrooms, track) {
+        this.teacher = teacher;
+        this.classrooms = classrooms;
+        this.track = track;
+    }
+}
+
+const getClassroomAndTeacher = async (userid, teacherid) => {
     try {
-        const homeTeacherData = await userModel.User.findOne ({
-            where: { role: 'teacher' },
+        // Buscar dados do professor usando o userid
+        const homeTeacherData = await user.findOne({
+            where: { 
+                userid: userid,
+                role: 'teacher' 
+            },
+            attributes: ['username', 'profilepicture']
+        });
+
+        if (!homeTeacherData) {
+            throw new Error('Professor não encontrado.');
+        }
+
+        // Criar objeto Teacher
+        const teacher = new Teacher(homeTeacherData.username, homeTeacherData.profilepicture);
+
+        // Buscar dados das salas de aula associadas ao teacherid
+        const homeClassData = await classroom.findAll({
+            where: {
+                teacherid: teacherid // Filtrando pelo userid do professor
+            },
             include: [{
-                model: classroomModel.Classroom,
-                attributes: ['classroomname', 'classroomid']
-            }]
-        })
+                model: trackModel, 
+                as: 'track',
+                attributes: ['trackname', 'trackdescription']
+            }],
+            attributes: ['classroomid', 'classroomname']
+        });
 
-        const classroom = new Classroom(homeClassData.classroomname, homeClassData.classroomid);
+        // Criar objetos Classroom com dados de trilha
+        const classrooms = homeClassData.map(classroom => 
+            new Classroom(
+                classroom.classroomid,
+                classroom.classroomname,
+                classroom.track.trackname,
+                classroom.track.trackdescription
+            )
+        );
 
-        const trackData = await trackModel.findAll({
-            attributes: ['trackname', 'trackdescription']
-        })
+        // Buscar dados das trilhas e contar o número de módulos em cada trilha (se necessário)
+        // const trackData = ...
 
-        const tracks = trackData.map(track => new Track(track.trackname, track.trackdescription));
-
-        return new HomeData(teacher, classroom, tracks)
+        // Retornar o modelo canônico
+        return new HomeData(teacher, classrooms, []); // Passando trilhas se necessário
 
     } catch (error) {
         console.error(error);
         throw error;
     }
-}
+};
+
 
 module.exports = {
     getClassroomAndTeacher
-}
+};

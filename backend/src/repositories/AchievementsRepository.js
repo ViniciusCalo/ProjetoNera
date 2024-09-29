@@ -1,7 +1,7 @@
-const { Achievement } = require('../models/AchievementModel');
+const achievement = require('../models/AchievementModel');
 
 const createAchievement = async ({ achievementname, achievementdescription, criteria, imageurl }) => {
-    return await Achievement.create({
+    return await achievement.create({
         achievementname,
         achievementdescription,
         criteria,
@@ -10,15 +10,15 @@ const createAchievement = async ({ achievementname, achievementdescription, crit
 };
 
 const getAllAchievements = async () => {
-    return await Achievement.findAll();
+    return await achievement.findAll();
 };
 
 const getAchievementById = async (id) => {
-    return await Achievement.findByPk(id);
+    return await achievement.findByPk(id);
 };
 
 const updateAchievement = async (id, { achievementname, achievementdescription, criteria, imageurl }) => {
-    const achievement = await Achievement.findByPk(id);
+    const achievement = await achievement.findByPk(id);
     if (!achievement) return null;
 
     achievement.achievementname = achievementname;
@@ -31,7 +31,7 @@ const updateAchievement = async (id, { achievementname, achievementdescription, 
 };
 
 const deleteAchievement = async (id) => {
-    const achievement = await Achievement.findByPk(id);
+    const achievement = await achievement.findByPk(id);
     if (!achievement) return null;
 
     await achievement.destroy();

@@ -145,7 +145,7 @@ router.post('/googleLogin', async (request, response) => {
 router.post('/login', async (request, response) => {
     try {
         const { useremail, userpassword, role, teachercpf } = request.body;
-        const userLoginResult = await userRepo.loginUser({ useremail, userpassword, role });
+        const userLoginResult =  await userRepo.loginUser({ useremail, userpassword, role });
 
         if (role === 'teacher') {
             if (!teachercpf) {

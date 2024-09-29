@@ -1,6 +1,6 @@
 const { sequelize, Sequelize } = require('../database/db');
 
-const Teacher = sequelize.define('Teacher', {
+const teacher = sequelize.define('teacher', {
     teacherid: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -9,7 +9,7 @@ const Teacher = sequelize.define('Teacher', {
     userid: {
         type: Sequelize.INTEGER,
         references: {
-            model: 'User', //referenciando o userId como FK na tbteacher
+            model: 'user', //referenciando o userId como FK na tbteacher
             key: 'userid'
         },
         unique: true
@@ -24,4 +24,4 @@ const Teacher = sequelize.define('Teacher', {
     timestamps: false
 });
 
-module.exports = { Teacher }
+module.exports = teacher;

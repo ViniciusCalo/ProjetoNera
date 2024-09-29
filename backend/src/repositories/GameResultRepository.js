@@ -1,7 +1,7 @@
-const { GameResult } = require('../models/GameResultModel');
+const gameResult = require('../models/GameResultModel');
 
 const createGameResult = async ({ score, timeSpent, resultDate, studentId, gameId }) => {
-    return await GameResult.create({
+    return await gameResult.create({
         score,
         timeSpent,
         resultDate,

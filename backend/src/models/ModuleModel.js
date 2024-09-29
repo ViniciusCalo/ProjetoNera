@@ -1,6 +1,6 @@
 const { sequelize, Sequelize } = require('../database/db');
 
-const Module = sequelize.define('tbmodule', {
+const Module = sequelize.define('module', {
     moduleid: {
         type: Sequelize.INTEGER,
         primaryKey: true,

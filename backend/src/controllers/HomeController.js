@@ -1,23 +1,27 @@
 const express = require('express');
 const passport = require('passport');
-const userRepo = require('../repositories/UserRepository');
 const router = express.Router();
 const homeRepo = require('../repositories/HomeRepository');
 
-router.get('/', async (request, response) => {
+router.get('/', passport.authenticate('jwt', {session:false }), async (request, response) => {
     try {
-        const homeData = await homeRepository.getClassroomAndTeachr();
+        console.log('Usuário logado:', request.user);
 
-        return response.status(200).json(homeData);
+        const {userid, role} = request.user;
 
-        // TODO: Implement the logic to get the classroom and teachers data
-        // and return it as a JSON response.
-        // Example:
-        // return response.status(200).json({ classrooms: classrooms, teachers: teachers });
+        if (role != 'teacher') {
+            return response.status(403).json({ message: "Você não é um professor, não deve acessar essa tela" });
+
+        } else {
+            const {teacherid} = request.user;
+            const homeData = await homeRepo.getClassroomAndTeacher(userid, teacherid);
+            return response.status(200).json(homeData);
+        }
+
     } catch (error) {
         console.error(error);
         return response.status(500).json({ message: error.message || "Internal server error"});
     }
 });
 
-
+module.exports = router;

@@ -1,6 +1,6 @@
 const { sequelize, Sequelize } = require('../database/db');
 
-const Game = sequelize.define('Game', {
+const game = sequelize.define('game', {
     gameid: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -17,10 +17,12 @@ const Game = sequelize.define('Game', {
     moduleid:{
         type: Sequelize.INTEGER,
         references: {
-            model: 'Module', //referenciando o moduleid como FK na tbgame
+            model: 'module', //referenciando o moduleid como FK na tbgame
             key:'moduleid' 
         }
     }
 
 
 });
+
+module.exports = game;

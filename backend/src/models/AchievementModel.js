@@ -1,6 +1,6 @@
 const { sequelize, Sequelize } = require('../database/db');
 
-const Achievement = sequelize.define('Achievement', {
+const achievement = sequelize.define('achievement', {
     achievementid: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -28,4 +28,4 @@ const Achievement = sequelize.define('Achievement', {
     timestamps: false
 });
 
-module.exports = { Achievement };
+module.exports = achievement;

@@ -1,11 +1,11 @@
 const { sequelize, Sequelize } = require('../database/db');
 
-const ClassroomStudent = sequelize.define('ClassroomStudent', {
+const classroomStudent = sequelize.define('classroomStudent', {
     classroomid: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         references: {
-            model: 'Classrooms',
+            model: 'classroom',
             key: 'classroomid'
         }
     },
@@ -13,7 +13,7 @@ const ClassroomStudent = sequelize.define('ClassroomStudent', {
         type: Sequelize.INTEGER,
         primaryKey: true,
         references: {
-            model: 'Student',
+            model: 'student',
             key: 'studentid'
         }
     }
@@ -22,4 +22,4 @@ const ClassroomStudent = sequelize.define('ClassroomStudent', {
     timestamps: false
 });
 
-module.exports = {ClassroomStudent};
+module.exports = classroomStudent;

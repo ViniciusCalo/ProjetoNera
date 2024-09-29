@@ -1,5 +1,4 @@
 const teacherRepo = require('../repositories/TeacherRepository');
-const teacherModel = require('../models/TeacherModel');
 const passport = require('passport');
 const express = require('express');
 const router = express.Router();
