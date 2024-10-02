@@ -1,7 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const router = express.Router();
-const homeRepo = require('../repositories/HomeRepository');
+const homeRepo = require('../repositories/HomeTeacherRepository');
 
 router.get('/', passport.authenticate('jwt', {session:false }), async (request, response) => {
     try {

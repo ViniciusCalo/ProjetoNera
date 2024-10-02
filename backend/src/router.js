@@ -6,7 +6,7 @@ const classroomController = require('./controllers/ClassroomStudentController');
 const memoryGame = require('./controllers/MemoryGameController');
 const track = require('./controllers/TrackController');
 const moduleController = require('./controllers/ModuleController');
-const home = require('./controllers/HomeController');
+const home = require('./controllers/HomeTeacherController');
 const router = express.Router();
 
 router.use('/home', home)
