@@ -23,9 +23,8 @@ const getUserById = async (id) => {
     }
 };
 
-const createUser = async ({ username, useremail, userpassword, role, profilepicture }) => {
+const createUser = async ({ username, useremail, role}) => {
     try {
-        const hashedPassword = await bcrypt.hash(userpassword, 10);
         const userExists = await userModel.User.findOne({ where: { useremail } });
         if (userExists) {
             throw new Error('User already exists');
@@ -37,9 +36,7 @@ const createUser = async ({ username, useremail, userpassword, role, profilepict
         const newUser = await userModel.User.create({
             username,
             useremail,
-            userpassword: hashedPassword,
-            role,
-            profilepicture
+            role
         });
         return newUser;
     } catch (error) {
@@ -48,52 +45,13 @@ const createUser = async ({ username, useremail, userpassword, role, profilepict
     }
 };
 
-const uploadProfilePic = async (id, profilepicture) => {
+const loginUser = async ({ useremail, username, role }) => {
     try {
-        const user = await userModel.User.findByPk(id);
-        if (!user) {
-            throw new Error('User not found');
-        }
-
-        user.profilepicture = profilepicture;
-        await user.save();
-
-        return user;
-    } catch (error) {
-        console.error('Error uploading profile picture:', error);
-        throw error;
-    }
-};
-
-const getProfilePicture = async (id) => {
-    try {
-        const user = await userModel.User.findByPk(id);
-        if (!user) {
-            throw new Error('User not found');
-        }
-        return user.profilepicture;
-    } catch (error) {
-        console.error('Error fetching profile picture:', error);
-        throw error;
-    }
-};
-
-const loginUser = async ({ useremail, userpassword, role }) => {
-    try {
-        const user = await userModel.User.findOne({ where: { useremail, role } });
+        const user = await userModel.User.findOne({ where: { useremail, username, role } });
 
         if (!user) {
             throw new Error('Invalid email, password or role provided');
         }
-
-        const isPasswordValid = await bcrypt.compare(userpassword, user.userpassword);
-
-        if (!isPasswordValid || isPasswordValid.length === 0) {
-            throw new Error('Invalid email or password');
-        }
-
-        const name = user.username;
-        const profilepic = user.profilepicture;
         const token = jwt.sign({ userid: user.userid, role: user.role }, jwtConfig.secret, {
             expiresIn: jwtConfig.expiresIn,
         });

@@ -109,8 +109,8 @@ const LoginScreen = ({ navigation }) => {
                 <View
                     style={stylesForm.formulario}>
                     <Text
-                        style={{ fontWeight: 'bold', color: 'white', fontSize: 25, marginTop: "5%" }}>
-                        Crie seu Perfil
+                        style={{ fontWeight: 'bold', color: 'white', fontSize: 25 }}>
+                        Login
                     </Text>
 
                     <TextInput

@@ -154,36 +154,9 @@ router.post('/googleLogin', async (request, response) => {
 
 router.post('/login', async (request, response) => {
     try {
-        const { useremail, userpassword, role, teachercpf } = request.body;
-        const userLoginResult = await userRepo.loginUser({ useremail, userpassword, role });
-
-        if (role === 'teacher') {
-            if (!teachercpf) {
-                return response.status(400).json({ message: "CPF is required for teachers" });
-            }
-            const teacherLoginResult = await teacherController.teacherLogin({ useremail, teachercpf });
-            return response.status(200).json({
-                message: "Teacher logged successfully",
-                token: teacherLoginResult.token,
-                username: teacherLoginResult.name,
-                profilepic: userLoginResult.profilepic
-            });
-        }
-        if (role === 'student') {
-            const studentLoginResult = await studentController.studentLogin({ useremail, userpassword });
-            return response.status(200).json({
-                message: "Student logged successfully",
-                token: studentLoginResult.token,
-                username: studentLoginResult.name,
-                profilepic: userLoginResult.profilepic
-            });
-        }
-        return response.status(200).json({
-            message: "Login successful",
-            token,
-            username: username,
-            profilepic: profilepic
-        });
+        const { useremail, username, role } = request.body;
+        const { token } = await userRepo.loginUser({ useremail, username, role});
+        return response.status(200).json({ message: "Login successful", token });
     } catch (error) {
         console.error(error);
         return response.status(401).json({ message: error.message || "Internal server error" });
