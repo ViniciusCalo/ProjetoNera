@@ -1,26 +1,29 @@
-const { sequelize, Sequelize } = require('../../database/db');
+const { sequelize, DataTypes } = require('../../database/db'); // Importação corrigida
 
 const Game = sequelize.define('Game', {
     gameid: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER, 
         primaryKey: true,
         autoIncrement: true
     }, 
     gamename: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: true
     },
     gamedescription: {
-        type: Sequelize.TEXT,
+        type: DataTypes.TEXT,
         allowNull: true
     },
-    moduleid:{
-        type: Sequelize.INTEGER,
+    moduleid: {
+        type: DataTypes.INTEGER,
         references: {
-            model: 'Module', //referenciando o moduleid como FK na tbgame
-            key:'moduleid' 
+            model: 'Modules', 
+            key: 'moduleid'
         }
     }
-
-
+}, {
+    tableName: 'tbgame', 
+    timestamps: false 
 });
+
+module.exports = { Game };

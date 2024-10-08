@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const { sequelize, Sequelize } = require('../../database/db');
+const { sequelize} = require('../../database/db');
 
 // Modelo da VIEW vw_memorygame_pairs
 const VwMemoryGamePairs = sequelize.define('VwMemoryGamePairs', {
