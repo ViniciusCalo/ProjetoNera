@@ -5,7 +5,6 @@ const student = require('./StudentModel');
 const track = require('./TrackModel');
 const Module = require('./ModuleModel');
 const achievement = require('./AchievementModel');
-const student = require('./StudentModel');
 const studentAchievement = require('./StudentAchievementModel');
 
 // Definindo as associações

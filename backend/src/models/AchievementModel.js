@@ -22,6 +22,13 @@ const achievement = sequelize.define('achievement', {
         type: Sequelize.STRING,
         allowNull: false
     },
+    trackid: {
+        type: Sequelize.INTEGER,
+        references: {
+            model: 'track',
+            key: 'trackid'
+        }
+    }
 
 }, {
     tableName: 'tbachievement',

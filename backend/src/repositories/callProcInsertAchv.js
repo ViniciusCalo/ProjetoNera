@@ -1,11 +1,10 @@
 const callProcModel = require('../models/CallProcedureModel');
-
 class CallProcedureRepo extends callProcModel {
 
-    static async callProcInsertNewAchievement(idstudent, idachievement){
+    static async callProcInsertNewAchievement(studentid, achievementid) {
         try {
-            const queryResult = await sequelize.query('CALL inserir_conquista_desbloqueada(:idstudent, :idachievement)', {
-                replacements: { idstudent, idachievement },
+            const queryResult = await sequelize.query('CALL inserir_conquista_desbloqueada(:studentid, :achievementid)', {
+                replacements: { studentid, achievementid },
                 type: sequelize.QueryTypes.RAW
             });
             return queryResult;
