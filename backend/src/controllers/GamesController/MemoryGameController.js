@@ -18,7 +18,7 @@ router.get('/asa', passport.authenticate('jwt', { session: false }), async (requ
 
 
 // Método para obter todos os pares de imagens
-router.get('/', async (request, response) => {
+router.get('/', passport.authenticate('jwt', { session: false }), async (request, response) => {
     try {
         const pairs = await VwMemoryGamePairsRepository.findAll();
         return response.status(200).json(pairs);
