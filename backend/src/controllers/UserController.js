@@ -154,7 +154,7 @@ router.post('/googleLogin', async (request, response) => {
 
 router.post('/login', async (request, response) => {
     try {
-        const { useremail, userpassword, role, teachercpf } = request.body;
+        const { useremail, username, role, teachercpf } = request.body;
         const userLoginResult = await userRepo.loginUser({ useremail, userpassword, role });
 
         if (role === 'teacher') {
@@ -170,7 +170,7 @@ router.post('/login', async (request, response) => {
             });
         }
         if (role === 'student') {
-            const studentLoginResult = await studentController.studentLogin({ useremail, userpassword });
+            const studentLoginResult = await studentController.studentLogin({ useremail, username });
             return response.status(200).json({
                 message: "Student logged successfully",
                 token: studentLoginResult.token,

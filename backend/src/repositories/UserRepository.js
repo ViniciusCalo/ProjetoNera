@@ -80,7 +80,7 @@ const getProfilePicture = async (id) => {
 
 const loginUser = async ({ useremail, userpassword, role }) => {
     try {
-        const user = await userModel.User.findOne({ where: { useremail, role } });
+        const user = await userModel.User.findOne({ where: { useremail, username, role } });
 
         if (!user) {
             throw new Error('Invalid email, password or role provided');
