@@ -25,14 +25,8 @@ const checkGameResult = async ({ gameresultid, studentid, gameid, score }) => {
         if (!gameScore) {
             throw new Error('Resultado do jogo não encontrado.');
         }
-
-        // Verificar se a pontuação é maior ou igual a 70
-        if (gameScore.score < 70) {
-            throw new Error('Não foi atingida a pontuação mínima.');
-        }
-
         // Se todas as verificações passarem, retornar true
-        return true;
+        return gameScore.score;
 
     } catch (error) {
         throw new Error('Erro ao verificar pontuação: ' + error.message);

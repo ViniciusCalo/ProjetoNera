@@ -4,7 +4,8 @@ const student = sequelize.define('student', {
     studentid: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        unique: true
     },
     userid: {
         type: Sequelize.INTEGER,

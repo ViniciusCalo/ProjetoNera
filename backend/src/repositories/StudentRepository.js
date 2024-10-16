@@ -6,7 +6,8 @@ const student = require('../models/StudentModel');
 const registerUserAsAStudent = async ({ userid }) => {
     try {
         // verificando se aluno ja existe, pelo id de usuario dele
-        const studentExists = await student.findOne({where: {userid}});
+        const studentExists = await student.findOne({ where: { userid } });
+
         if (studentExists) {
             throw new Error('Student already exists');
         }
@@ -36,26 +37,37 @@ const registerUserAsAStudentViaGoogle = async ({ userid }) => {
 }
 
 
-const loginStudent = async ({ userid, useremail }) => {
+const loginStudent = async ({ useremail }) => {
     try {
-        //verificando se os user inputs estão corretos
-        const rightUser = await user.findOne({ where: { useremail, role: 'student'} });
+        // Verificando se o usuário existe e é um estudante
+        const rightUser = await user.findOne({ where: { useremail, role: 'student' } });
 
-        if(!rightUser){
+        if (!rightUser) {
             throw new Error('Invalid email or role');
         }
 
-        //Verificando se o user é aluno
-        const userIsStudent = await student.findOne({ where: { userid: user.userid } });
-        if(!userIsStudent){
+        // Usando o userid correto retornado de rightUser
+        const userIsStudent = await student.findOne({ where: { userid: rightUser.userid } });
+
+        if (!userIsStudent) {
             throw new Error('User is not a student');
         }
 
-        //gerando o token JWT
-        const token = jwt.sign({studentid: userIsStudent.studentid, userid: userIsStudent.userid, role: rightUser.role}, 
-            jwtConfig.secret, {expiresIn: jwtConfig.expiresIn});
+        console.log('User is Student:', userIsStudent);
+
+        // Gerando o token JWT
+        const token = jwt.sign(
+            {
+                studentid: userIsStudent.studentid,
+                userid: rightUser.userid,
+                role: rightUser.role,
+            },
+            jwtConfig.secret,
+            { expiresIn: jwtConfig.expiresIn }
+        );
+
         const name = rightUser.username;
-        const profilepic = rightUser.profilePicture;
+        const profilepic = rightUser.profilepicture || null; // Garantindo consistência
 
         return { token, name, profilepic };
     } catch (error) {
@@ -63,6 +75,7 @@ const loginStudent = async ({ userid, useremail }) => {
         throw error;
     }
 };
+
 
 const loginStudentGoogle = async ({ useremail, userid }) => {
     try {

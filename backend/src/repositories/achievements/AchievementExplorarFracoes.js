@@ -4,59 +4,6 @@ const studentAchievement = require('../../models/StudentAchievementModel');
 const gameResultRepo = require('../GameResultRepository');
 const modelModule = require('../../models/ModuleModel');
 
-// Verificar se o critério para desbloquear a conquista foi atingido
-const checkAchievementCriteria = async ({ trackid, criteria, achievementid, studentid }) => {
-    try {
-        // Chamando método de verificação da pontuação de cada jogo
-        const gameResult = await gameResultRepo.checkGameResult();
-
-        if (!gameResult) {
-            throw new Error('Usuário não concluiu todos os jogos necessários');
-        }
-
-        // Verificar se todos os módulos da trilha foram concluídos
-        const modules = await modelModule.findAll({ where: { trackid: trackid } });
-
-        for (const module of modules) {
-            const isModuleComplete = await checkIfModuleIsComplete(module.moduleid);
-
-            if (!isModuleComplete) {
-                throw new Error('Módulo não está completo');
-            }
-        }
-
-        // Se todos os critérios estiverem satisfeitos, verifica se o aluno pode desbloquear a conquista
-        await verifyIfStudentUnlockAchievement(studentid, achievementid);
-
-        // Pesquisando a conquista pelo critério
-        const getAchievement = await achievement.findOne({
-            where: {
-                criteria: 'Completar todos os módulos de frações.'
-            }
-        });
-
-        if (!getAchievement) {
-            throw new Error('Critério não existe');
-        }
-    } catch (error) {
-        console.error('Error checking achievement criteria:', error);
-        throw error;
-    }
-};
-
-// Função para verificar se um módulo está completo
-const checkIfModuleIsComplete = async (moduleid) => {
-    // Buscando jogos relacionados ao módulo
-    const games = await gameResultRepo.findAll({ where: { moduleid: moduleid } });
-
-    // Verificando se todos os jogos foram concluídos
-    for (const game of games) {
-        if (!game.isComplete) { // Supondo que cada jogo tenha um campo isComplete ou similar
-            return false;
-        }
-    }
-    return true;
-};
 
 const verifyIfStudentUnlockAchievement = async (studentid, achievementid) => {
     try {
@@ -104,6 +51,6 @@ const unlockAchievementForStudent = async (studentid, achievementid) => {
 };
 
 module.exports = {
-    checkAchievementCriteria,
-    verifyIfStudentUnlockAchievement
+    verifyIfStudentUnlockAchievement,
+    unlockAchievementForStudent
 };

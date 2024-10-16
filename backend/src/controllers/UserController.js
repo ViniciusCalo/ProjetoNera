@@ -57,9 +57,7 @@ router.post('/register', async (request, response) => {
         } 
         // Se a role do user for igual a student, então registra como student na tbstudent
         if (role === 'student') {
-            const newStudent = await studentController.registerUserStudent({
-                userid: newUser.userid
-            });
+            const newStudent = await studentController.registerUserStudent({userid: newUser.userid});
             return response.status(201).json({ message: "Student created successfully", newUser, newStudent });
         }
         return response.status(201).json({ message: "User created successfully", newUser });
@@ -71,7 +69,8 @@ router.post('/register', async (request, response) => {
 
 // Nova rota para atualizar a profilepicture
 router.put('/uploadpic', passport.authenticate('jwt', { session: false }), async (request, response) => {
-    try {const { userid } = request.user;
+    try {
+        const { userid } = request.user;
         const { profilepicture } = request.body;
 
         // Verifica se a URL da foto de perfil foi fornecida

@@ -64,7 +64,7 @@ const getAchievementAndStudent = async (userid, studentid) => {
         //criar objetos Conquista com dados 
         const achievements = homeAchievementData.map(achievement =>
             new Achievement(
-                achievement.achievementid, achievement.achievementname, achievement.imageurl
+                achievement.achievementname, achievement.imageurl
             )
         );
         return new HomeData(student, achievements);

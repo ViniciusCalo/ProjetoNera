@@ -24,13 +24,26 @@ const getAchievementsByCriteria = async (criteria) => {
 
 const getAchievementById = async (achievementid) => {
     try {
-        const achievements = await achievement.findAll({where: {achievementid}});
-        if(!achievements){
-            throw new Error('Achievement não encontrado');
+        const achievements = await achievement.findOne({
+            where: { achievementid },
+            attributes: [
+                'achievementid',
+                'achievementname',
+                'achievementdescription',
+                'criteria',
+                'imageurl',
+                'trackid',
+            ], // Liste apenas as colunas existentes
+        });
+
+        if (!achievements) {
+            throw new Error(`Achievement com ID ${achievementid} não encontrado.`);
         }
+
         return achievements;
     } catch (error) {
-        console.log(`erro ao tentar trazer a conquista com o id ${achievementid}: `, error);
+        console.error(`Erro ao tentar trazer a conquista com o ID ${achievementid}:`, error);
+        throw error;
     }
 };
 

@@ -1,14 +1,22 @@
-const { sequelize, Sequelize } = require('../database/db');
+const {sequelize, Sequelize} = require('../database/db'); 
+const { QueryTypes } = Sequelize;
 
-const procedureInsertNewAchievement = sequelize.define('insertNewAchievement',{
-    idstudent: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-    },
-    idachievement: {
-        type: Sequelize.INTEGER,
-        allowNull: false
+class CallProcedureModel {
+    static async callProcInsertNewAchievement(studentid, achievementid) {
+        try {
+            const queryResult = await sequelize.query(
+                'CALL inserir_conquista_desbloqueada(:studentid, :achievementid)', 
+                {
+                    replacements: { studentid, achievementid },
+                    type: sequelize.QueryTypes.RAW
+                }
+            );
+            return queryResult;
+        } catch (error) {
+            console.error('Erro ao chamar procedure: ', error);
+            throw error;
+        }
     }
-});
+}
 
-module.exports = procedureInsertNewAchievement;
+module.exports = CallProcedureModel;

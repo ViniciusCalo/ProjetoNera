@@ -76,6 +76,7 @@ const loginUser = async ({ useremail, userpassword, role }) => {
         if (!users) {
             throw new Error('Invalid email, password or role provided');
         }
+        console.log('User fetched:', users);
 
         const isPasswordValid = await bcrypt.compare(userpassword, users.userpassword);
 
@@ -97,7 +98,7 @@ const loginUser = async ({ useremail, userpassword, role }) => {
 };
 
 
-const loginUserGoogle = async ({ useremail, username, role}) => {
+const loginUserGoogle = async ({ useremail, username, role }) => {
     try {
         const users = await user.findOne({ where: { useremail, username, role } });
 
