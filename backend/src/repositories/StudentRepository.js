@@ -36,7 +36,6 @@ const registerUserAsAStudentViaGoogle = async ({ userid }) => {
     }
 }
 
-
 const loginStudent = async ({ useremail }) => {
     try {
         // Verificando se o usuário existe e é um estudante
@@ -75,7 +74,6 @@ const loginStudent = async ({ useremail }) => {
         throw error;
     }
 };
-
 
 const loginStudentGoogle = async ({ useremail, userid }) => {
     try {

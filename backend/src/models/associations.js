@@ -11,7 +11,7 @@ const studentAchievement = require('./StudentAchievementModel');
 user.hasOne(teacher, { foreignKey: 'userid', as: 'teacherDetails' });
 teacher.hasMany(classroom, { foreignKey: 'teacherid', as: 'classrooms' });
 classroom.belongsTo(teacher, { foreignKey: 'teacherid', as: 'teacher' });
-classroom.hasMany(student, { foreignKey: 'classroomid', as: 'students' });
+//classroom.hasMany(student, { foreignKey: 'classroomid', as: 'students' });
 classroom.belongsTo(track, { foreignKey: 'trackid', as: 'track' });
 track.hasMany(Module, { foreignKey: 'trackid', as: 'modules' });
 Module.belongsTo(track, { foreignKey: 'trackid', as: 'track' });
