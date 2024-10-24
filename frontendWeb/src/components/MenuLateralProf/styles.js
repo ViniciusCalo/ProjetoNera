@@ -5,13 +5,23 @@ export const Menu = styled.nav`
     height: 100%;
     background: #ffffff;
     border-radius: 0 20px 20px 0;
-    width: 5%;
+    width: 6%;
     box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.25);
     overflow-x: hidden;
     transition: 0.5s;
     z-index: 1;
+
     &:hover {
         width: 20%;
+    }
+
+    @media (max-width: 480px) {
+        height: 5%;
+        width: 100%;
+        bottom: 0;
+    }
+    @media (min-width: 1200px) {
+     width: 5%
     }
     `;
 
@@ -23,12 +33,19 @@ export const Lista = styled.ul`
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+      
+    @media (max-width: 480px) {
+        flex-direction: row;
+        top: 0;
+        align-items: start;
+        justify-content: space-between;
+    }
 `;
 
 export const Item = styled.li`
     list-style: none;
     width: 100%;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     margin-left: 20px;
 
     &:hover {
@@ -63,6 +80,9 @@ export const Icone = styled.img`
 export const Icone2 = styled.img`
     width: 35px;
     height: 35px;
+    @media (max-width: 480px) {
+        display: none:
+    }
 `;
 export const Texto = styled.p`
     color: #000;
@@ -72,4 +92,8 @@ export const Texto = styled.p`
     font-weight: 400;
     line-height: normal;
     text-transform: capitalize;
+
+    @media (max-width: 480px) {
+        display: none:
+    }
 `;
