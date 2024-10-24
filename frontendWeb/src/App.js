@@ -9,6 +9,7 @@ import Questao from './pages/Questao'
 import Questao2 from './pages/Questao2';
 import LoginAluno from './pages/LoginAluno';
 import LoginProf from './pages/LoginProf';
+import TeacherClass from './pages/TeacherClass';
 import CreateClass from './pages/CreateClass';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -28,6 +29,7 @@ function App() {
         <Route path="loginAluno" element={<LoginAluno/>}/>
         <Route path="loginProfessor" element={<LoginProf/>}/>
         <Route path="cadastro" element={<Cadastro/>}/>
+        <Route path="teacherClass" element={<TeacherClass/>}/>
         <Route path='createClass' element={<CreateClass/>}/>
       </Route>
     </Routes>

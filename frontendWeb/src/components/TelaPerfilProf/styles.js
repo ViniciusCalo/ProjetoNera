@@ -1,129 +1,108 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-    top: 30px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    `;
-export const Infos = styled.div`
-    display: flex;
-    position: relative;
-    align-items: center;
-    margin-top: 5%;
-    margin-bottom: 2%;
-    width: 100%;
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
+
+export const Infos = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+`;
+
 export const imgPerfil = styled.img`
-    width: 10%;
-    height: auto;
-    border-radius: 50%;
-    margin-left: 10%;
-    margin-right: 10%;
-    @media (max-width: 768px) {
-        width:15% /* Para tablets */
-    }
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+`;
 
-    @media (max-width: 480px) {
-        width: 20% /* Para celulares */
-    }
-    `;
-export const User = styled.h1`
-    color: #000;
-    font-family: Roboto;
-    font-style: normal;
-    line-height: normal;
-    font-size: 36px; /* Tamanho padrão */
+export const User = styled.p`
+  font-family: 'Roboto', sans-serif;
+  font-size: 22px;
+  font-weight: bold;
+  color: #000;
+`;
 
-    @media (max-width: 768px) {
-        font-size: 24px; /* Para tablets */
-    }
-
-     @media (max-width: 480px) {
-        font-size: 20px; /* Para celulares */
-    }
-    `;
 export const Name = styled.p`
-    color: #000;
-    font-family: Roboto;
-    font-style: normal;
-    font-size: 24px; /* Tamanho padrão */
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  color: #555;
+`;
 
-    @media (max-width: 768px) {
-        font-size: 16px; /* Para tablets */
-    }
-
-    @media (max-width: 480px) {
-        font-size: 12px; /* Para celulares */
-    }
-    `;
 export const ButtonEditar = styled.button`
-    background-color: #135794;
-    border: none;
-    border-radius: 10px;
-    width: 150px;
-    height: 40px;
-    margin-left: 10%;
-    color: white;
-    font-size: 20px;
-
-    @media (max-width: 768px) {
-        width: 20%;
-        height: 30px;
-        font-size: 16px; /* Para tablets */
-    }
-
-    @media (max-width: 480px) {
-        width: 30%;
-        height: 30px;
-        font-size: 12px; /* Para celulares */
-    }
-    `;
+  margin-top: 10px;
+  background-color: #135794;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-family: 'Roboto', sans-serif;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+`;
 
 export const ContainerC = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    `;
-export const Title = styled.h1`
-    color: #000;
-    font-family: Roboto;
-    font-size: 56px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    margin-left: 20%;
-    margin-bottom: 1%;
+  width: 100%;
+  margin: 30px 0;
+`;
 
-    @media (max-width: 768px) {
-        font-size: 42px; /* Para tablets */
-    }
+export const Title = styled.h2`
+  font-family: 'Roboto', sans-serif;
+  font-size: 28px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #f29f05;
+  padding-bottom: 10px;
+`;
 
-    @media (max-width: 480px) {
-        font-size: 36px; /* Para celulares */
-    }
-    `;
+export const CarrouselContainer = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+`;
+
+export const CarrouselButton = styled.button`
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 1;
+`;
+
+export const IconSeta = styled.img`
+  width: 24px;
+  height: 24px;
+`;
+
 export const Carrousel = styled.div`
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: 10%;
-    overflow-y: hidden;
-    overscroll-behavior-x: contain;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    gap: 3%;
-    padding: 5px;
-    margin-left: 7%;
+  display: flex;
+  overflow-x: auto;
+  gap: 15px;
+  padding: 10px;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
 
-    &::-webkit-scrollbar {
-        display: none; 
-    }
-    `;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  & > div {
+    flex: 0 0 auto;
+  }
+`;
+
 export const Trilhas = styled.div`
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: 15%;
-    padding: 5px;
-    gap: 5%;
-    margin-left: 7%;
-    `;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  width: 100%;
+`;
