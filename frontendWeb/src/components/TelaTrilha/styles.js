@@ -1,73 +1,84 @@
-import styled from "styled-components";
+import styled from 'styled-components';
+
+export const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 130px;
+`;
 
 export const Header = styled.header`
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
 `;
+
 export const IconHeader = styled.img`
-    width: 5%;
-    margin-right: 5%;
+  width: 50px;
+  margin-right: 10px;
 `;
 
 export const TitleHeader = styled.h1`
-    color: #135794;
-    text-align: center;
-    font-family: Roboto;
-    font-size: 64px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
+  color: #135794;
+  font-family: 'Roboto', sans-serif;
+  font-size: 32px;
 `;
 
-export const Container = styled.div`
-    position: relative;
-    display: flex;
-    justify-content: center;
-    left: 5%;
+export const Carousel = styled.div`
+  display: flex;
+  overflow: hidden;
+  width: 80%;
+  justify-content: center;
+  gap: 30px;
 `;
 
-export const DivTrilha = styled.div`
-    display: flex;
-    flex-direction: column;
-    position: absolute;
+export const CarouselItem = styled.a`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  min-width: ${({ size }) => (size === 'large' ? '200px' : '150px')};
+  transition: min-width 0.3s ease, opacity 0.3s ease;
+  opacity: ${({ active }) => (active ? 1 : 0.5)};
 `;
 
-export const DivTrilha1 = styled(DivTrilha)`
-    top: 80px;
-    left: 15%;
-`;
-export const DivTrilha2 = styled(DivTrilha)`
-    top: 150px;
-    left: 40%;
-`;
-export const DivTrilha3 = styled(DivTrilha)`
-    top: 80px;
-    left: 65%;
-`;
-export const DivTrilha4 = styled(DivTrilha)`
-    top: 300px;
-    left: 55%;
-`;
-export const DivTrilha5 = styled(DivTrilha)`
-    top: 300px;
-    left: 25%;
-`;
-
-export const TitleTrilha = styled.h1`
-    color: #888585;
-    text-align: center;
-    font-family: Roboto;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
+export const TitleTrilha = styled.h2`
+  color: #888585;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  text-align: center;
 `;
 
 export const ImgTrilha = styled.img`
-    width: 120px;
-    height: 120px;
-    right: 0%;
-    top: 0%;
-    border-radius: 10px;
+  width: ${({ size }) => (size === 'large' ? '210px' : '170px')};
+  height: ${({ size }) => (size === 'large' ? '210px' : '170px')};
+  margin-bottom: 10px;
+  transition: width 0.3s ease, height 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
+export const ArrowButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  img {
+    width: 40px; /* Ajuste o tamanho da seta */
+    height: 40px;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
