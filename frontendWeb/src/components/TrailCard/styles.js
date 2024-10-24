@@ -5,8 +5,8 @@ export const Card = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 200px;
-    height: 130px;
+    width: 180px;
+    height: 100px;
     position: relative;
     background-color: #fff;
     border-radius: 8px;
