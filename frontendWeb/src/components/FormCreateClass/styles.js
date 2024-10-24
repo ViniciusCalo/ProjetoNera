@@ -100,11 +100,12 @@ export const Label2 = styled.label`
 `;
 
 export const Select = styled.select`
-  width: 100%;
+  width: 50%;
   padding: 10px;
   font-size: 16px;
   border: 1px solid #ddd;
   border-radius: 8px;
+  color: #6296C4; /* Cor padrão dos itens */
 
   /* Estilo para os itens dentro do select */
   option {
