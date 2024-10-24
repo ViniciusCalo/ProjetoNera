@@ -93,7 +93,7 @@ export const Title = styled.h1`
     font-weight: 500;
     line-height: normal;
     margin-left: 20%;
-    margin-bottom: 2%;
+    margin-bottom: 1%;
 
     @media (max-width: 768px) {
         font-size: 42px; /* Para tablets */
@@ -124,6 +124,6 @@ export const Trilhas = styled.div`
     grid-auto-flow: column;
     grid-auto-columns: 15%;
     padding: 5px;
-    gap: 3%;
+    gap: 5%;
     margin-left: 7%;
     `;

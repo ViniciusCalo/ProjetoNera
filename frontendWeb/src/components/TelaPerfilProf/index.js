@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react';
 import * as C from './styles'
 import { AiTwotoneEdit } from "react-icons/ai";
 //mport MenuLateral from '../MenuLateral'
@@ -7,6 +7,7 @@ import ClassroomCard from '../ClassroomCard';
 import TrailCard from '../TrailCard';
 
 const TelaPerfil = () => {
+
 
     const data = [
         { id: '1', title: 'Item 1' },
@@ -22,7 +23,6 @@ const TelaPerfil = () => {
         { id: '3', title: 'Item 3' },
     ];
 
-
     return (
         <>
             <C.Container>
@@ -36,14 +36,13 @@ const TelaPerfil = () => {
                 </C.Infos>
                 <C.ContainerC>
                     <C.Title>Salas de Aula</C.Title>
-                    <C.Carrousel>
-                        {data.map(item => (
-                            <ClassroomCard
-                                titulo={item.title}
-                            />
-                        ))}
-
-                    </C.Carrousel>
+                        <C.Carrousel>
+                            {data.map(item => (
+                                <ClassroomCard
+                                    titulo={item.title}
+                                />
+                            ))}
+                        </C.Carrousel>
                 </C.ContainerC>
                 <C.ContainerC>
                     <C.Title>Trilhas</C.Title>
