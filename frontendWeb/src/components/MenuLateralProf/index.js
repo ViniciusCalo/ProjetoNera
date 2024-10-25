@@ -14,7 +14,7 @@ import seta from './img/seta.svg'
 
 
 const MenuLateral = () => {
-  function limparLocal(){
+  function limparLocal() {
     localStorage.clear();
   }
 
@@ -22,10 +22,9 @@ const MenuLateral = () => {
     <C.Menu >
       <C.Lista>
         <C.Item><C.Link ><C.Icone src={logo} /></C.Link></C.Item>
-        <C.Item><C.Link href="/perfil"><C.Icone src={home} /><C.Texto>Home</C.Texto></C.Link></C.Item>
-        <C.Item><C.Link href="/trilha"><C.Icone src={trilha} /><C.Texto>Criar</C.Texto></C.Link></C.Item>
-        <C.Item><C.Link href="#"><C.Icone src={salas} /><C.Texto>Salas</C.Texto></C.Link></C.Item>
-        <C.Item><C.Link href="#"><C.Icone src={trilhas} /><C.Texto>Trilhas</C.Texto></C.Link></C.Item>
+        <C.Item><C.Link href="/perfilProf"><C.Icone src={home} /><C.Texto>Home</C.Texto></C.Link></C.Item>
+        <C.Item><C.Link href="/createClass"><C.Icone src={trilha} /><C.Texto>Criar</C.Texto></C.Link></C.Item>
+        <C.Item><C.Link href="/teacherClass"><C.Icone src={salas} /><C.Texto>Salas</C.Texto></C.Link></C.Item>
         <C.Item2><C.Link href="#"><C.Icone2 src={seta} /></C.Link></C.Item2>
         <C.Item><C.Link href="#"><C.Icone src={noti} /><C.Texto>Notificacao</C.Texto></C.Link></C.Item>
         <C.Item><C.Link href="#"><C.Icone src={conf} /><C.Texto>Configuração</C.Texto></C.Link></C.Item>

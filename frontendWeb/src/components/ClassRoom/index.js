@@ -50,7 +50,7 @@ const TelaClasses = () => {
         </C.ContainerC>
         <ModalInfoClass
           isOpen={!!selectedClass}
-          onClose={closeModal}
+          onRequestClose={closeModal}
           title={selectedClass?.title}
           alunos={selectedClass?.alunos}
         />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Modal from 'react-modal';
 import * as C from './styles';
 import seta from './img/set.svg';
@@ -12,6 +12,7 @@ import ClassPink from './img/classPink.png';
 Modal.setAppElement('#root');
 
 const ModalInfoClass = ({ isOpen, onRequestClose }) => {
+
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText("54637");
@@ -54,7 +55,7 @@ const ModalInfoClass = ({ isOpen, onRequestClose }) => {
     >
       <div style={{ display: 'flex', alignItems: 'center', padding: '15px' }}>
         <button 
-          onClick={onRequestClose} 
+          onClick={onRequestClose}
           style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
         >
           <img src={seta} alt="Voltar" style={{ width: '20px', height: '20px' }} />
