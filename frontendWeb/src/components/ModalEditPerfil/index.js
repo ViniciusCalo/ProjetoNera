@@ -1,4 +1,3 @@
-// src/components/ModalEditPerfil.js
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import * as C from './styles';
