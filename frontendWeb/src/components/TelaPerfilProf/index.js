@@ -91,17 +91,17 @@ const TelaPerfil = () => {
       <C.ContainerC>
         <C.Title>Trilhas</C.Title>
         <C.CarrouselContainer>
-          <C.CarrouselButton onClick={scrollLeft2}>
+          <C.CarrouselButton2 onClick={scrollLeft2}>
             <C.IconSeta src={setaEsquerda} alt="Seta Esquerda" />
-          </C.CarrouselButton>
-          <C.Carrousel ref={carrouselRef2}>
+          </C.CarrouselButton2>
+          <C.Carrousel2 ref={carrouselRef2}>
             {trails.map(item => (
               <TrailCard key={item.id} titulo={item.name} image={item.image} color={item.color}/>
             ))}
-          </C.Carrousel>
-          <C.CarrouselButton onClick={scrollRight2}>
+          </C.Carrousel2>
+          <C.CarrouselButton2 onClick={scrollRight2}>
             <C.IconSeta src={setaDireita} alt="Seta Direita" />
-          </C.CarrouselButton>
+          </C.CarrouselButton2>
         </C.CarrouselContainer>
       </C.ContainerC>
 

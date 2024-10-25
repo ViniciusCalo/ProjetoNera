@@ -77,6 +77,11 @@ export const CarrouselContainer = styled.div`
   align-items: center;
   width: 100%;
   position: relative;
+
+       @media (min-width: 480px) {
+ align-items: center;
+    justify-content: center;
+    }
 `;
 
 export const CarrouselButton = styled.button`
@@ -85,6 +90,16 @@ export const CarrouselButton = styled.button`
   cursor: pointer;
   z-index: 1;
   
+`;
+export const CarrouselButton2 = styled.button`
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 1;
+
+     @media (min-width: 480px) {
+display: none;
+    }
 `;
 
 export const IconSeta = styled.img`
@@ -106,6 +121,24 @@ export const Carrousel = styled.div`
 
   & > div {
     flex: 0 0 auto;
+  }
+`;
+
+export const Carrousel2 = styled.div`
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
+  padding: 10px;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  & > div {
+    flex: 0 0 auto;
+
   }
 `;
 
