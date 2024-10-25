@@ -7,6 +7,11 @@ import setaDireita from './img/setaDireita.svg';
 import ModalEditPerfil from '../ModalEditPerfil'; // Importar o modal
 import ClassroomCard from '../ClassroomCard';
 import TrailCard from '../TrailCard';
+import fracaoicon from './img/fracao.svg';
+import porcentagemicon from './img/porcentagem.svg';
+import geometriaicon from './img/geometria.svg';
+import matrizesicon from './img/matrizes.svg';
+import expressaoicon from './img/expressao.svg';
 
 const TelaPerfil = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -25,6 +30,14 @@ const TelaPerfil = () => {
     { id: '10', title: 'Item 10' },
     { id: '11', title: 'Item 11' },
   ];
+
+  const trails = [
+    { id: 1, name: 'Fração', image: fracaoicon, color: "#F20574" },
+    { id: 2, name: 'Porcentagem', image: porcentagemicon, color: "#88A9FD" },
+    { id: 3, name: 'Geometria', image:geometriaicon, color: "#FBBC05"  },
+    { id: 4, name: 'Matrizes', image: matrizesicon, color: "#4ED9D9" },
+    { id: 5, name: 'Expressão', image: expressaoicon, color: "#F29F05"},
+];
 
   const abrirModal = () => setIsOpen(true);
   const fecharModal = () => setIsOpen(false);
@@ -69,14 +82,19 @@ const TelaPerfil = () => {
 
       <C.ContainerC>
         <C.Title>Trilhas</C.Title>
-        <C.Trilhas>
-          {/* Exemplo de cartões de trilhas */}
-          <TrailCard />
-          <TrailCard />
-          <TrailCard />
-          <TrailCard />
-          <TrailCard />
-        </C.Trilhas>
+        <C.CarrouselContainer>
+          <C.CarrouselButton onClick={scrollLeft}>
+            <C.IconSeta src={setaEsquerda} alt="Seta Esquerda" />
+          </C.CarrouselButton>
+          <C.Carrousel ref={carrouselRef}>
+            {trails.map(item => (
+              <TrailCard key={item.id} titulo={item.name} image={item.image} color={item.color}/>
+            ))}
+          </C.Carrousel>
+          <C.CarrouselButton onClick={scrollRight}>
+            <C.IconSeta src={setaDireita} alt="Seta Direita" />
+          </C.CarrouselButton>
+        </C.CarrouselContainer>
       </C.ContainerC>
 
       {/* Modal para edição de perfil */}

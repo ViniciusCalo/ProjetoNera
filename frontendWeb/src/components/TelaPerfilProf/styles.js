@@ -52,6 +52,14 @@ export const ButtonEditar = styled.button`
 export const ContainerC = styled.div`
   width: 100%;
   margin: 30px 0;
+      @media (max-width: 1200px) {
+        width: 80%;
+    }
+    @media (max-width: 480px) {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
 `;
 
 export const Title = styled.h2`

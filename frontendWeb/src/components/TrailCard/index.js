@@ -1,12 +1,21 @@
 import React from 'react';
-import icon1 from './img/icon1.svg'
-import fracaoIcon from './img/fracao.png';
-import studentIcon from './img/studentIcon.png';
 import * as C from './styles' // Importando o arquivo CSS
 
-const TrailCard = ({ titulo }) => {
+const TrailCard = ({ titulo, image, color }) => {
   return (
-    <C.Card>
+    <C.Card color={color}>
+        <C.img style={{
+          position: 'absolute',
+          background: '#FFF',
+          width: '20%',
+          height: '30%',
+          padding: 5,
+          borderRadius: 8,
+          marginBottom: 8,
+          right: 0,
+          top: 0
+        }} src={image} alt={titulo} />
+        <C.title>{titulo}</C.title>
     </C.Card>
   );
 };
