@@ -84,6 +84,7 @@ export const CarrouselButton = styled.button`
   border: none;
   cursor: pointer;
   z-index: 1;
+  
 `;
 
 export const IconSeta = styled.img`

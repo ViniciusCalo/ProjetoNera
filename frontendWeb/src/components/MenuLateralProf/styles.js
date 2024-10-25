@@ -7,7 +7,6 @@ export const Menu = styled.nav`
     border-radius: 0 20px 20px 0;
     width: 6%;
     box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.25);
-    overflow-x: hidden;
     transition: 0.5s;
     z-index: 1;
 
@@ -16,9 +15,14 @@ export const Menu = styled.nav`
     }
 
     @media (max-width: 480px) {
-        height: 5%;
         width: 100%;
-        bottom: 0;
+        height: 6%;
+        bottom:0;
+        overflow-y: hidden;
+        
+        &:hover {
+        width: 100%;
+    }
     }
     @media (min-width: 1200px) {
      width: 5%
@@ -36,9 +40,8 @@ export const Lista = styled.ul`
       
     @media (max-width: 480px) {
         flex-direction: row;
-        top: 0;
-        align-items: start;
-        justify-content: space-between;
+        justify-content: center;
+        align-items: center;
     }
 `;
 
@@ -55,6 +58,10 @@ export const Item = styled.li`
         border-bottom-right-radius: 20px;
         background: rgba(3, 76, 140, 0.24);
     }
+
+    @media (max-width: 480px) {
+     width: 100%;
+    }
     `;
 export const Item2 = styled.li`
     margin-left: 50%;
@@ -62,6 +69,10 @@ export const Item2 = styled.li`
     width: 100%;
     margin-top: 60px;
     margin-bottom: 60px;
+
+    @media (max-width: 480px) {
+        display: none
+    }
     `;
 
 
@@ -81,7 +92,7 @@ export const Icone2 = styled.img`
     width: 35px;
     height: 35px;
     @media (max-width: 480px) {
-        display: none:
+        display: none
     }
 `;
 export const Texto = styled.p`
@@ -94,6 +105,7 @@ export const Texto = styled.p`
     text-transform: capitalize;
 
     @media (max-width: 480px) {
-        display: none:
+        display: none
     }
 `;
+

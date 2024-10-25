@@ -16,6 +16,7 @@ import expressaoicon from './img/expressao.svg';
 const TelaPerfil = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const carrouselRef = useRef(null);
+  const carrouselRef2 = useRef(null);
 
   const data = [
     { id: '1', title: 'Item 1' },
@@ -48,6 +49,13 @@ const TelaPerfil = () => {
 
   const scrollRight = () => {
     carrouselRef.current.scrollBy({ left: 200, behavior: 'smooth' });
+  };
+  const scrollLeft2 = () => {
+    carrouselRef2.current.scrollBy({ left: -200, behavior: 'smooth' });
+  };
+
+  const scrollRight2 = () => {
+    carrouselRef2.current.scrollBy({ left: 200, behavior: 'smooth' });
   };
 
   return (
@@ -83,15 +91,15 @@ const TelaPerfil = () => {
       <C.ContainerC>
         <C.Title>Trilhas</C.Title>
         <C.CarrouselContainer>
-          <C.CarrouselButton onClick={scrollLeft}>
+          <C.CarrouselButton onClick={scrollLeft2}>
             <C.IconSeta src={setaEsquerda} alt="Seta Esquerda" />
           </C.CarrouselButton>
-          <C.Carrousel ref={carrouselRef}>
+          <C.Carrousel ref={carrouselRef2}>
             {trails.map(item => (
               <TrailCard key={item.id} titulo={item.name} image={item.image} color={item.color}/>
             ))}
           </C.Carrousel>
-          <C.CarrouselButton onClick={scrollRight}>
+          <C.CarrouselButton onClick={scrollRight2}>
             <C.IconSeta src={setaDireita} alt="Seta Direita" />
           </C.CarrouselButton>
         </C.CarrouselContainer>
