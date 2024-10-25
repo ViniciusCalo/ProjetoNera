@@ -9,7 +9,7 @@ export const Menu = styled.nav`
     box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.25);
     transition: 0.5s;
     z-index: 1;
-
+    overflow-y: hidden;
     &:hover {
         width: 20%;
     }
@@ -18,7 +18,7 @@ export const Menu = styled.nav`
         width: 100%;
         height: 6%;
         bottom:0;
-        overflow-y: hidden;
+
         
         &:hover {
         width: 100%;
@@ -108,4 +108,3 @@ export const Texto = styled.p`
         display: none
     }
 `;
-
