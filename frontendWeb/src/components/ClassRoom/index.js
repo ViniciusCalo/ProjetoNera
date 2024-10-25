@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as C from './styles';
-import ClassroomCard from './ClassroomCard'; 
+import ClassroomCard from './ClassroomCard';
+import ModalInfoClass from '../ModalInfoClass/index';
+
 
 const aulas = [
   { id: 1, title: '6° Ano A', alunos: 40 },
@@ -16,6 +18,16 @@ const aulas = [
 ];
 
 const TelaClasses = () => {
+  const [selectedClass, setSelectedClass] = useState(null);
+
+  const openModal = (aula) => {
+    setSelectedClass(aula);
+  };
+
+  const closeModal = () => {
+    setSelectedClass(null);
+  };
+
   return (
     <>
       <C.GlobalStyle /> {/* Garante que o fundo azul cubra todo o body */}
@@ -26,11 +38,22 @@ const TelaClasses = () => {
             <C.Line />
           </C.TitleContainer>
           <C.GridContainer>
-            {aulas.map(aula => (
-              <ClassroomCard key={aula.id} titulo={aula.title} alunos={aula.alunos} />
+            {aulas.map((aula) => (
+              <ClassroomCard
+                key={aula.id}
+                titulo={aula.title}
+                alunos={aula.alunos}
+                onClick={() => openModal(aula)}
+              />
             ))}
           </C.GridContainer>
         </C.ContainerC>
+        <ModalInfoClass
+          isOpen={!!selectedClass}
+          onClose={closeModal}
+          title={selectedClass?.title}
+          alunos={selectedClass?.alunos}
+        />
       </C.Container>
     </>
   );

@@ -1,11 +1,10 @@
 import React from 'react';
 import * as C from './styles';
 
-const ClassroomCard = ({ titulo, alunos }) => {
+const ClassroomCard = ({ titulo, alunos, onClick }) => {
   return (
-    <C.Card>
+    <C.Card onClick={onClick}>
       <C.IconeSala>
-        {/* Substitua por um ícone real ou componente de ícone */}
         <C.IconImage src="/path-to-icon.png" alt="Ícone da sala" />
       </C.IconeSala>
       <C.Title>{titulo}</C.Title>
