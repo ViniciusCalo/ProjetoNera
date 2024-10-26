@@ -70,6 +70,7 @@ const TelaCadastro = () => {
   }
 
   return (
+    <body>
     <C.Box>
       <C.Div>
         <C.Logo src={Logo} />
@@ -95,6 +96,7 @@ const TelaCadastro = () => {
         </C.FormLogin>
       </C.Container>
     </C.Box>
+    </body>
   );
 };
 
