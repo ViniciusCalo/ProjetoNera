@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Modal from 'react-modal';
 import * as C from './styles';
 import seta from './img/set.svg';

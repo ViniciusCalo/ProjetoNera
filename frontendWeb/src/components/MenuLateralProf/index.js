@@ -6,7 +6,6 @@ import trilha from './img/Vector_Trilha.svg'
 import salas from './img/Vector_Historico.svg'
 import noti from './img/Vector_Notificacao.svg'
 import conf from './img/Vector_Configuracoes.svg'
-import trilhas from './img/Vector_Trilhas.svg'
 import sair from './img/Vector_Logout.svg'
 import seta from './img/seta.svg'
 
