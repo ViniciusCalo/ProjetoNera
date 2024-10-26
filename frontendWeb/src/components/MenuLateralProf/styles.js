@@ -75,6 +75,26 @@ export const Item = styled.li`
         }
     }
     `;
+    export const Item1 = styled.li`
+    list-style: none;
+    width: 100%;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    display: flex;
+
+    &:hover {
+        padding: 5%;
+        margin-left: 10px;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+        background: rgba(3, 76, 140, 0.24);
+    }
+
+    @media (max-width: 480px) {
+        display: none;
+    }
+    `;
+    
 export const Item2 = styled.li`
     margin-left: 50%;
     list-style: none;
