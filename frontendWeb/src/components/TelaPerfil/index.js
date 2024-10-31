@@ -3,8 +3,6 @@ import React, { useState, useRef } from 'react';
 import * as C from './styles';
 import { AiTwotoneEdit } from "react-icons/ai";
 import imgPerfil from './img/user.svg';
-import icon1 from './img/icon1.svg';
-import icon2 from './img/icon2.svg';
 import ClassroomCard from '../ClassroomCard';
 import setaEsquerda from './img/setaEsquerda.svg'; // Imagem da seta para a esquerda
 import setaDireita from './img/setaDireita.svg'; // Imagem da seta para a direita
@@ -20,13 +18,6 @@ const conquistas = [
   { id: 7, tipo: 'Card1', titulo: 'Explorador de frações' },
   { id: 8, tipo: 'Card', titulo: 'Explorador de frações' },
   { id: 9, tipo: 'Card1', titulo: 'Explorador de frações' },
-];
-
-const experiencias = [
-  { id: 1, icon: icon1, titulo: 'Nivel Básico', pontos: '500 pontos' },
-  { id: 2, icon: icon2, titulo: 'Erros Simples', pontos: '-30 pontos' },
-  { id: 3, icon: icon1, titulo: 'Nivel Avançado', pontos: '500 pontos' },
-  { id: 4, icon: icon2, titulo: 'Erros Duplos', pontos: '-30 pontos' },
 ];
 
 const data = [
