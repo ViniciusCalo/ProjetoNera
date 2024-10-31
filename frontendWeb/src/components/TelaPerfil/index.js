@@ -5,6 +5,7 @@ import { AiTwotoneEdit } from "react-icons/ai";
 import imgPerfil from './img/user.svg';
 import icon1 from './img/icon1.svg';
 import icon2 from './img/icon2.svg';
+import ClassroomCard from '../ClassroomCard';
 import setaEsquerda from './img/setaEsquerda.svg'; // Imagem da seta para a esquerda
 import setaDireita from './img/setaDireita.svg'; // Imagem da seta para a direita
 import ModalEditPerfil from '../ModalEditPerfil/index';
@@ -28,6 +29,14 @@ const experiencias = [
   { id: 4, icon: icon2, titulo: 'Erros Duplos', pontos: '-30 pontos' },
 ];
 
+const data = [
+  { id: '1', title: 'Item 1' },
+  { id: '2', title: 'Item 2' },
+  { id: '3', title: 'Item 3' },
+  { id: '4', title: 'Item 4' },
+  { id: '5', title: 'Item 5' }
+];
+
 const componentMapping = {
   Card1: C.Card1,
   Card: C.Card,
@@ -36,6 +45,7 @@ const componentMapping = {
 const TelaPerfil = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const carrouselRef = useRef(null);
+  const carrouselRef2 = useRef(null);
 
   const abrirModal = () => setIsOpen(true);
   const fecharModal = () => setIsOpen(false);
@@ -46,6 +56,13 @@ const TelaPerfil = () => {
 
   const scrollRight = () => {
     carrouselRef.current.scrollBy({ left: 200, behavior: 'smooth' });
+  };
+  const scrollLeft2 = () => {
+    carrouselRef2.current.scrollBy({ left: -200, behavior: 'smooth' });
+  };
+
+  const scrollRight2 = () => {
+    carrouselRef2.current.scrollBy({ left: 200, behavior: 'smooth' });
   };
 
   return (
@@ -84,20 +101,22 @@ const TelaPerfil = () => {
         </C.CarrouselContainer>
       </C.ContainerC>
 
-      <C.ContainerE>
-        <C.TitleE>Experiência</C.TitleE>
-        <C.InfoE>
-          {experiencias.map((exp) => (
-            <C.CardE key={exp.id}>
-              <C.DivIcon><C.icon src={exp.icon} alt="Ícone" /></C.DivIcon>
-              <C.DivText>
-                <C.Text>{exp.titulo}</C.Text>
-                <C.Text2>{exp.pontos}</C.Text2>
-              </C.DivText>
-            </C.CardE>
-          ))}
-        </C.InfoE>
-      </C.ContainerE>
+      <C.ContainerC>
+        <C.Title>Minhas salas</C.Title>
+        <C.CarrouselContainer>
+          <C.CarrouselButton2 onClick={scrollLeft2}>
+            <C.IconSeta src={setaEsquerda} alt="Seta Esquerda" />
+          </C.CarrouselButton2>
+          <C.Carrousel2 ref={carrouselRef2}>
+          {data.map(item => (
+              <ClassroomCard key={item.id} titulo={item.title} />
+            ))}
+          </C.Carrousel2>
+          <C.CarrouselButton2 onClick={scrollRight2}>
+            <C.IconSeta src={setaDireita} alt="Seta Direita" />
+          </C.CarrouselButton2>
+        </C.CarrouselContainer>
+      </C.ContainerC>
 
       <ModalEditPerfil isOpen={modalIsOpen} onRequestClose={fecharModal} />
     </C.Container>
