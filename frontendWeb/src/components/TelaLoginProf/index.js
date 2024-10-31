@@ -43,6 +43,7 @@ try {
 }
 
   return (
+    <body>
     <C.Box>
         <C.Logo src={Logo}/>
         <C.Container>
@@ -67,6 +68,7 @@ try {
         </C.FormLogin>
         </C.Container>
     </C.Box>
+    </body>
   );
 };
 
