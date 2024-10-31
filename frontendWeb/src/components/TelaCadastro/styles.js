@@ -27,6 +27,7 @@ display: flex;
 flex-direction: column;
 align-items: center;
 width: 100%;
+
 `
 
 export const Div = styled.div`
@@ -35,6 +36,7 @@ justify-content: center;
 flex-direction: column;
 align-items: center;
 width: 80%;
+
 `
 export const textEntrar = styled.p`
 color: #888585;
@@ -103,13 +105,14 @@ export const DivButton = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 85%;
+    width: 80%;
     `;
 
 export const InputS = styled.input`
+width: 45%;
 height: 30px;
 padding: 2%;
-margin: 2%;
+margin: 2% 0 2% 0;
 border-radius: 15px;
 border: none;
 font-size: 10px;
@@ -172,6 +175,10 @@ font-size: 14px;
 font-style: normal;
 font-weight: 300;
 line-height: normal;
+
+@media (max-width: 480px) {
+        width: 90%;
+    }
 `
 export const Link = styled.a`
 color: #000;
