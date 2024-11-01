@@ -49,6 +49,7 @@ export const Title = styled.h2`
   color: #333;
   text-align: center;
   margin-bottom: 5px;
+  
 `;
 
 export const Line = styled.div`
@@ -64,7 +65,7 @@ export const GridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr); /* 5 colunas fixas */
   gap: 20px;
-  width: 100%;
+  width: 90%;
 
   @media (max-width: 1200px) {
     grid-template-columns: repeat(4, 1fr); /* 4 colunas para telas menores */
@@ -79,7 +80,7 @@ export const GridContainer = styled.div`
   }
 
   @media (max-width: 576px) {
-    grid-template-columns: repeat(1, 1fr); /* 1 coluna para celulares */
+    grid-template-columns: repeat(2, 1fr); /* 1 coluna para celulares */
   }
 `;
 
@@ -96,6 +97,10 @@ export const Card = styled.div`
   padding: 20px;
   text-align: center;
   cursor: pointer;
+
+     @media (max-width: 480px) {
+     
+    }
 `;
 
 export const IconeSala = styled.div`
