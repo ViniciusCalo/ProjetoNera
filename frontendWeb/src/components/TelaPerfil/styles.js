@@ -101,7 +101,6 @@ export const CarrouselButton2 = styled.button`
   border: none;
   cursor: pointer;
   z-index: 1;
-
      @media (min-width: 480px) {
 display: none;
     }
