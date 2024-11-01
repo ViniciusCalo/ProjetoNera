@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import * as C from './styles';
-import Global from '../../styles/global'
 import fracaoicon from './img/fracao.svg';
 import porcentagemicon from './img/porcentagem.svg';
 import geometriaicon from './img/geometria.svg';
@@ -24,7 +23,6 @@ const FormCreateClass = () => {
     };
     return (
         <>
-            <Global />
             <C.Container>
                 <C.Form>
                     <C.Title>Criar Sala de Aula</C.Title>
