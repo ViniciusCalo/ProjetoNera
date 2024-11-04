@@ -18,3 +18,19 @@ export const Card = styled.div`
   font-weight: bold;
   `
 
+  export const IconeSala = styled.div`
+  width: 80px;
+  height: 80px;
+  background: #ff007f; /* Cor de fundo do ícone */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+`;
+
+export const IconImage = styled.img`
+  width: 50%;
+  height: 50%;
+`;
+

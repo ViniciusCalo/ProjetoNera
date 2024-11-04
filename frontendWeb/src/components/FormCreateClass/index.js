@@ -1,22 +1,13 @@
 import React, { useState } from 'react';
 import * as C from './styles';
-import fracaoicon from './img/fracao.svg';
-import porcentagemicon from './img/porcentagem.svg';
-import geometriaicon from './img/geometria.svg';
-import matrizesicon from './img/matrizes.svg';
-import expressaoicon from './img/expressao.svg';
+//Redux
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const FormCreateClass = () => {
     const [selectedTrail, setSelectedTrail] = useState('');
+    const trails = useSelector((state) => state.trails);
 
-    const trails = [
-        { id: 1, name: 'Fração', image: fracaoicon, color: "F20574" },
-        { id: 2, name: 'Porcentagem', image: porcentagemicon },
-        { id: 3, name: 'Geometria', image:geometriaicon  },
-        { id: 4, name: 'Matrizes', image: matrizesicon  },
-        { id: 5, name: 'Expressão', image: expressaoicon },
-    ];
 
     const handleTrailSelect = (trail) => {
         setSelectedTrail(trail);

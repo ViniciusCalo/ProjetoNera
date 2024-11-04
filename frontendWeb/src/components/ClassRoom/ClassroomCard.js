@@ -2,6 +2,8 @@ import React from 'react';
 import * as C from './styles';
 
 const ClassroomCard = ({ titulo, alunos, onClick }) => {
+
+  
   return (
     <C.Card onClick={onClick}>
       <C.IconeSala>
