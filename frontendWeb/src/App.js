@@ -1,7 +1,7 @@
 import React from 'react';
 //import GlobalStyle from './styles/global'
 import { Provider} from "react-redux"
-import store from "./store/index"
+import store from "./store"
 import Perfil from './pages/Perfil'
 import PerfilProf from './pages/PerfilProf';
 import Trilha from './pages/Trilha'

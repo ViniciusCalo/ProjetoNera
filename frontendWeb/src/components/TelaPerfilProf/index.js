@@ -17,7 +17,6 @@ const TelaPerfil = () => {
   const dispatch = useDispatch();
   const [token, setToken] = useState(localStorage.getItem('token'));
   const { name } = useSelector((state) => state.user);
-  const { items } = useSelector((state) => state.classrooms);
   const trails = useSelector((state) => state.trails);
 
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -44,9 +43,9 @@ const TelaPerfil = () => {
     };
 
     getItems();
-  }, [token, dispatch]);
+  }, [dispatch, token]);
 
-
+  const items = useSelector((state) => state.classrooms.items || []);
 
 
   const abrirModal = () => setIsOpen(true);
