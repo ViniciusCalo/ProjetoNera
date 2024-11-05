@@ -91,7 +91,7 @@ const TelaPerfil = () => {
           <C.Carrousel ref={carrouselRef}>
             {items.length > 0 ? (
               items.map(item => (
-                <ClassroomCard key={item.id} titulo={item.title} />
+                <ClassroomCard key={item.classroomid} titulo={item.classroomname} trailId={item.trackid} />
               ))
             ) : (
               <div className="empty-message">

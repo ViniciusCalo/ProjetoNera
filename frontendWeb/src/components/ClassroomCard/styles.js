@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { FaUserAlt } from "react-icons/fa";
 
 export const Card = styled.div`
     display: flex;
@@ -16,12 +17,13 @@ export const Card = styled.div`
   export const Title = styled.h1`
   font-size: 16px;
   font-weight: bold;
+  margin-bottom: 10px;
   `
 
   export const IconeSala = styled.div`
-  width: 80px;
-  height: 80px;
-  background: #ff007f; /* Cor de fundo do ícone */
+  width: 60px;
+  height: 60px;
+  border: 2px solid ${({ color }) => color};
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -32,5 +34,27 @@ export const Card = styled.div`
 export const IconImage = styled.img`
   width: 50%;
   height: 50%;
+`;
+
+export const Info = styled.div`
+  display: flex;
+  align-items: center;
+  background: #f5f5f5;
+  border-radius: 12px;
+  padding: 5px 10px;
+  width: 90%;
+  justify-content: center;
+`;
+
+export const UserIcon = styled(FaUserAlt)`
+  color: #135794;
+  margin-right: 8px;
+`;
+
+export const TextoInfo = styled.p`
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
 `;
 

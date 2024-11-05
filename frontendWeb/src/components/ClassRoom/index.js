@@ -18,15 +18,8 @@ const aulas = [
 ];
 
 const TelaClasses = () => {
-  const [selectedClass, setSelectedClass] = useState(null);
-
-  const openModal = (aula) => {
-    setSelectedClass(aula);
-  };
-
-  const closeModal = () => {
-    setSelectedClass(null);
-  };
+  const [modalVisible, setModalVisible] = useState(false);
+  const [classroom, setClassroom] = useState('')
 
   return (
     <>
@@ -43,16 +36,14 @@ const TelaClasses = () => {
                 key={aula.id}
                 titulo={aula.title}
                 alunos={aula.alunos}
-                onClick={() => openModal(aula)}
               />
             ))}
           </C.GridContainer>
         </C.ContainerC>
         <ModalInfoClass
-          isOpen={!!selectedClass}
-          onRequestClose={closeModal}
-          title={selectedClass?.title}
-          alunos={selectedClass?.alunos}
+          isOpen={modalVisible}
+          setModalVisible={setModalVisible}
+          classroom={classroom}
         />
       </C.Container>
     </>

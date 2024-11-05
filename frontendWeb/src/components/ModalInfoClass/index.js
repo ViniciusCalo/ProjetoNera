@@ -5,14 +5,20 @@ import seta from './img/set.svg';
 import imgPerfil from './img/user.svg';
 import iconCompartilhar from './img/share.png';
 import iconCopiar from './img/copy.png';
-import TrailCard from '../TrailCard'; 
+import TrailCard from '../TrailCard';
 import fracaoicon from './img/fracao.svg';
 import ClassPink from './img/classPink.png';
+//Redux
+import { useSelector } from 'react-redux';
+
 
 Modal.setAppElement('#root');
 
-const ModalInfoClass = ({ isOpen, onRequestClose }) => {
+const ModalInfoClass = ({ idTrail, classroom, isOpen, setModalVisible }) => {
 
+  const trail = useSelector((state) =>
+    state.trails.find((t) => t.id === idTrail)
+  );
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText("54637");
@@ -33,7 +39,7 @@ const ModalInfoClass = ({ isOpen, onRequestClose }) => {
   return (
     <Modal
       isOpen={isOpen}
-      onRequestClose={onRequestClose}
+      setModalVisible={setModalVisible}
       contentLabel="Informações da Sala"
       style={{
         overlay: {
@@ -54,33 +60,38 @@ const ModalInfoClass = ({ isOpen, onRequestClose }) => {
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center', padding: '15px' }}>
-        <button 
-          onClick={onRequestClose}
+        <button
+          onClick={setModalVisible}
           style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
         >
           <img src={seta} alt="Voltar" style={{ width: '20px', height: '20px' }} />
         </button>
       </div>
-      
+
       <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%' }}>
           <div style={{ position: 'relative', marginRight: '20px' }}>
-            <img
-              src={ClassPink}
-              alt="Imagem da sala"
-              style={{
-                width: '100px',
-                height: '100px',
-                borderRadius: '50%',
-                border: '2px solid #ddd',
-              }}
-            />
+          {trail ? (
+                          <img
+                          src={trail.image}
+                          alt="Imagem da sala"
+                          style={{
+                            width: '100px',
+                            height: '100px',
+                            borderRadius: '50%',
+                            border: '2px solid #ddd',
+                          }}
+                        />
+            ) : (
+                <p>Trilha não encontrada</p>
+            )}
+  
           </div>
 
           <div style={{ textAlign: 'left', display: 'flex', flexDirection: 'column' }}>
-            <h3 style={{ fontSize: '22px', color: '#F29F05', margin: '0', fontWeight: 'bold' }}>6° Ano A</h3>
+            <h3 style={{ fontSize: '22px', color: '#F29F05', margin: '0', fontWeight: 'bold' }}>{classroom.classroomname}</h3>
             <div style={{ display: 'flex', alignItems: 'center', marginTop: '8px' }}>
-              <p style={{ fontSize: '16px', color: '#007bff', margin: '0 10px' }}>54637</p>
+              <p style={{ fontSize: '16px', color: '#007bff', margin: '0 10px' }}>{classroom.tokenclass}</p>
               <img
                 src={iconCopiar}
                 alt="Copiar código"
@@ -99,7 +110,7 @@ const ModalInfoClass = ({ isOpen, onRequestClose }) => {
 
         <div style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
           <p style={{ fontSize: '14px', color: '#555', fontFamily: 'Roboto, sans-serif' }}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            {classroom.classroomdescription}
           </p>
         </div>
 
@@ -107,7 +118,11 @@ const ModalInfoClass = ({ isOpen, onRequestClose }) => {
           <C.SectionTitle>Trilha da Sala</C.SectionTitle>
           {/* Centralizando o card */}
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <TrailCard titulo="Fração" image={fracaoicon} color="#F20574" />
+            {trail ? (
+              <TrailCard titulo={trail.name} image={trail.image} color={trail.color} />
+            ) : (
+              <p>Trilha não encontrada.</p>
+            )}
           </div>
         </div>
 
