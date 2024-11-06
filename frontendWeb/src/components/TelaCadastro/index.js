@@ -8,7 +8,6 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import ToggleSwitch from '../ToggleSwitch';
 import { setName } from '../../store/userSlice';
-
 const TelaCadastro = () => {
   const navigate = useNavigate()
   const [toogle, setToogle] = React.useState(true);
@@ -82,11 +81,11 @@ const TelaCadastro = () => {
           teachercpf: cpf
 
         });
-        if (role === 'teacher') {
+        if (role === 'student') {
           navigate('/loginAluno');
       }
 
-      if (role === 'student') {
+      if (role === 'teacher') {
           navigate('/loginProfessor')
       }
         clearForm();
