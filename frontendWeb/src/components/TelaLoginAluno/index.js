@@ -5,15 +5,31 @@ import google from './img/google.svg'
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setName, setProfileImageUrl } from '../../store/userSlice';
 
 
 
 const TelaLoginAluno = () => {
-  const nav = useNavigate()
-  const [sessao, setSesao] = useState([])
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const apiUrl = process.env.REACT_APP_API_URL;
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
+  const role = "student"
 
+  const createProfile = (username, userpicture) => {
+    dispatch(setName(username));
+    dispatch(setProfileImageUrl(userpicture));
+};
+
+const storeData = async (value) => {
+  try {
+      localStorage.setItem('token', value);
+  } catch (e) {
+      // saving error
+  }
+};
 
 const handleEmail = (e) => {
   setEmail(e.target.value)
@@ -23,24 +39,39 @@ const handleSenha = (e) => {
   setSenha(e.target.value)
 }
 
+    // Clear form function
+    const clearForm = () => {
+      setEmail('');
+      setSenha('');
+  };
 
-const handleVerificarUsuario = async () => {
-  var body = {
-    "email": email,
-    "senha": senha
-}
-try {
-    const uri = process.env.REACT_APP_API_URL || "http://localhost:3001";
-    const response = await axios.post(`${uri}/usuario/login`, body)
-    setSesao(response.data.message);
-    console.log(sessao)
-    localStorage.setItem('usuario', email);
-    nav('/perfil')
-} catch (err) {
-    console.log(err);
-    alert("senha e/ou email incorreto")
-}
-}
+  const login = async (e) => {
+    e.preventDefault();
+    console.log(apiUrl);
+    console.log(role);
+    try {
+        const res = await axios.post(`${apiUrl}/users/login`, {
+            useremail: email,
+            userpassword: senha,
+            role: role,
+        });
+        console.log(res.data.token)
+        createProfile(res.data.username, res.data.profilepic);
+        if (res.data.token && role === 'teacher') {
+            storeData(res.data.token);
+            navigate('/perfilProf');
+        }
+  
+        if (res.data.token && role === 'student') {
+            storeData(res.data.token);
+            navigate('/perfil')
+        }
+        clearForm();
+    } catch (err) {
+        console.log(err);
+    }
+  };
+
 
   return (
     <body>
@@ -57,7 +88,7 @@ try {
         <C.div>
             <C.Link>Esqueci minha senha?</C.Link>
         </C.div>
-        <C.Button type='button' onClick={handleVerificarUsuario}>Entrar</C.Button>
+        <C.Button type='button' onClick={login}>Entrar</C.Button>
         <C.DivLinha>
             <C.linha1></C.linha1>
             ou
