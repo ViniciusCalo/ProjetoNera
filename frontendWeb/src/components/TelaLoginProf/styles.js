@@ -47,8 +47,8 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
-margin-top: -12%;
-width: 60%;
+margin-top: -5%;
+width: 70%;
 height: 450px;
 z-index: 0;
 border-radius: 15px;
@@ -177,7 +177,7 @@ export const DivButton = styled.div`
     display: flex;
     flex-direction: row;
     background-color: #F29F05;
-    width: 60%;
+    width: 70%;
     border-radius: 30px 30px 30px 0px;
            @media (max-width: 480px) {
         width: 80%;

@@ -6,13 +6,21 @@ import createClass from './img/Vector_CreateClass.svg'
 import salas from './img/Vector_ClassRoom.svg'
 import sair from './img/Vector_Logout.svg'
 import seta from './img/seta.svg'
+import { useDispatch, useSelector } from 'react-redux';
+import { setItems } from '../../store/classroomSlice';
+import { setName, setProfileImageUrl } from '../../store/userSlice';
 
 
 
 
 const MenuLateral = () => {
+  const dispatch = useDispatch();
+
   function limparLocal() {
     localStorage.clear();
+    dispatch(setItems([]));
+    dispatch(setName(""))
+    dispatch(setProfileImageUrl(""))
   }
 
   return (
