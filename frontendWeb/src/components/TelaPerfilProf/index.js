@@ -71,7 +71,7 @@ const TelaPerfil = () => {
       <C.Infos>
         <C.imgPerfil src={imgPerfil} alt="Imagem de perfil" />
         <div>
-          <C.User>@{localStorage.getItem("usuario")}</C.User>
+          <C.User>@{name}</C.User>
           <C.Name>{name}</C.Name>
         </div>
         <C.ButtonEditar onClick={abrirModal}>

@@ -1,26 +1,16 @@
-import styled, { createGlobalStyle } from "styled-components";
+import styled from "styled-components";
 import { FaUserAlt } from "react-icons/fa";
 
-// Global Style para garantir que o fundo cubra todo o body
-export const GlobalStyle = createGlobalStyle`
-  body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    background-color: #f0f4ff; /* Fundo azul claro aplicado no body */
-  }
-`;
 
 // Container principal
 export const Container = styled.div`
-  width: 100vw; /* Ocupa toda a largura da viewport */
+  width: 90vw; /* Ocupa toda a largura da viewport */
   min-height: 100vh; /* Ocupa toda a altura da viewport */
   margin: 0 auto; /* Centraliza o conteúdo */
   padding: 20px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f0f4ff; /* Fundo azul claro */
   box-sizing: border-box; /* Garante que o padding seja incluído no cálculo da largura */
 `;
 

@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
+import user from '../assets/user.png'
 
 const initialState = {
   name: 'Teste',
-  profileImageUrl: '',
+  profileImageUrl: user,
 };
 
 const userSlice = createSlice({

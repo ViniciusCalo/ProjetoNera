@@ -39,8 +39,6 @@ const TelaClasses = () => {
 
 
   return (
-    <>
-      <C.GlobalStyle /> {/* Garante que o fundo azul cubra todo o body */}
       <C.Container>
         <C.ContainerC>
           <C.TitleContainer>
@@ -65,7 +63,6 @@ const TelaClasses = () => {
           classroom={classroom}
         />
       </C.Container>
-    </>
   );
 };
 
