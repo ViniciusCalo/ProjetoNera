@@ -93,7 +93,10 @@ font-style: normal;
 font-weight: 700;
 line-height: normal;
 position: absolute;
-top: 10%;
+top: 3%;
+      @media (max-width: 480px) {
+        top: 5%;
+    }
 
 `
 export const vetor = styled.img`
@@ -167,7 +170,7 @@ width: 70%;
 `
 export const Text = styled.p`
 position: absolute;
-bottom: 10%;
+bottom: 5%;
 color: #000000B2;
 text-align: center;
 font-family: Roboto;
@@ -178,6 +181,7 @@ line-height: normal;
 
 @media (max-width: 480px) {
         width: 90%;
+        bottom: 3%;
     }
 `
 export const Link = styled.a`
