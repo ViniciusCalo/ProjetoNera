@@ -15,11 +15,13 @@ Modal.setAppElement('#root');
 const ModalEditPerfil = ({ isOpen, onRequestClose }) => {
   //Redux
   const dispatch = useDispatch();
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  const token = useState(localStorage.getItem('token'));
   const { name, profileImageUrl } = useSelector((state) => state.user);
   const [userName, setUserName] = useState(name);
   const [isEditingName, setIsEditingName] = useState(false);
   const [profileImage, setProfileImage] = useState(profileImageUrl);
+
+  console.log(token)
 
   const handleNameChange = (e) => {
     setUserName(e.target.value);

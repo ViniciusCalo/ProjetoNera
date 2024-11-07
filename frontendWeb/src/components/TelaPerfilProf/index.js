@@ -15,7 +15,7 @@ import { setItems } from '../../store/classroomSlice';
 const TelaPerfil = () => {
   //Redux
   const dispatch = useDispatch();
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  const token = useState(localStorage.getItem('token'));
   const { name } = useSelector((state) => state.user);
   const trails = useSelector((state) => state.trails);
 

@@ -15,7 +15,7 @@ const FormCreateClass = () => {
     const [description, setDescription] = useState('');
     const [module, selectedModule] = useState('');
     const [trail, selectedTrail] = useState('');
-    const [token, setToken] = useState(localStorage.getItem('token'));
+    const token  = useState(localStorage.getItem('token'));
     const [Trail, setSelectedTrail] = useState('')
     const trails = useSelector((state) => state.trails);
 
