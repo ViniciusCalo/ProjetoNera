@@ -33,7 +33,7 @@ const componentMapping = {
 const TelaPerfil = () => {
   //Redux
   const dispatch = useDispatch();
-  const token = useState(localStorage.getItem('token'));
+  const [token] = useState(localStorage.getItem('token'));
   const { name, profileImageUrl } = useSelector((state) => state.user);
 
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -127,7 +127,7 @@ const TelaPerfil = () => {
               <C.IconSeta src={setaEsquerda} alt="Seta Esquerda" />
             </C.CarrouselButton>
           )}
-          <C.Carrousel ref={carrouselRef}>
+          <C.Carrousel ref={carrouselRef2}>
             {items.length > 0 ? (
               items.map(item => (
                 <ClassroomCard key={item.classroomid} titulo={item.classroomname} trailId={item.trackid} />

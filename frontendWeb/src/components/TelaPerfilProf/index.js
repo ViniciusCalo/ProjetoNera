@@ -15,7 +15,7 @@ import { setItems } from '../../store/classroomSlice';
 const TelaPerfil = () => {
   //Redux
   const dispatch = useDispatch();
-  const token = useState(localStorage.getItem('token'));
+  const [token] = useState(localStorage.getItem('token'));
   const { name } = useSelector((state) => state.user);
   const trails = useSelector((state) => state.trails);
 
@@ -46,6 +46,7 @@ const TelaPerfil = () => {
   }, [dispatch, token]);
 
   const items = useSelector((state) => state.classrooms.items || []);
+  console.log(items)
 
 
   const abrirModal = () => setIsOpen(true);
