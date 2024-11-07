@@ -29,7 +29,8 @@
       "adaptiveIcon": {
         "foregroundImage": "src/assets/icone.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.kedsson.neramobile"
     },
     "web": {
       "favicon": "src/assets/icone.png"
