@@ -1,22 +1,13 @@
-const userModel = require('../models/CanonicalDataModel/UserModel');
+const user = require('../models/UserModel');
+const classroom = require('../models/ClassroomModel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const jwtConfig = require('../config/jwtConfig');
 
-const getAll = async () => {
-    try {
-        const users = await userModel.User.findAll();
-        return users;
-    } catch (error) {
-        console.error('Error fetching users:', error);
-        throw error;
-    }
-};
-
 const getUserById = async (id) => {
     try {
-        const user = await userModel.User.findByPk(id);
-        return user;
+        const users = await user.findByPk(id);
+        return users;
     } catch (error) {
         console.error('Error fetching user:', error);
         throw error;
@@ -26,7 +17,7 @@ const getUserById = async (id) => {
 const createUser = async ({ username, useremail, userpassword, role, profilepicture }) => {
     try {
         const hashedPassword = await bcrypt.hash(userpassword, 10);
-        const userExists = await userModel.User.findOne({ where: { useremail } });
+        const userExists = await user.findOne({ where: { useremail } });
         if (userExists) {
             throw new Error('User already exists');
         }
@@ -34,7 +25,7 @@ const createUser = async ({ username, useremail, userpassword, role, profilepict
             throw new Error('Password cannot be empty');
         }
 
-        const newUser = await userModel.User.create({
+        const newUser = await user.create({
             username,
             useremail,
             userpassword: hashedPassword,
@@ -50,15 +41,15 @@ const createUser = async ({ username, useremail, userpassword, role, profilepict
 
 const uploadProfilePic = async (id, profilepicture) => {
     try {
-        const user = await userModel.User.findByPk(id);
-        if (!user) {
+        const users = await user.findByPk(id);
+        if (!users) {
             throw new Error('User not found');
         }
 
-        user.profilepicture = profilepicture;
-        await user.save();
+        users.profilepicture = profilepicture;
+        await users.save();
 
-        return user;
+        return users;
     } catch (error) {
         console.error('Error uploading profile picture:', error);
         throw error;
@@ -67,11 +58,11 @@ const uploadProfilePic = async (id, profilepicture) => {
 
 const getProfilePicture = async (id) => {
     try {
-        const user = await userModel.User.findByPk(id);
-        if (!user) {
+        const users = await user.findByPk(id);
+        if (!users) {
             throw new Error('User not found');
         }
-        return user.profilepicture;
+        return users.profilepicture;
     } catch (error) {
         console.error('Error fetching profile picture:', error);
         throw error;
@@ -80,21 +71,22 @@ const getProfilePicture = async (id) => {
 
 const loginUser = async ({ useremail, userpassword, role }) => {
     try {
-        const user = await userModel.User.findOne({ where: { useremail, role } });
+        const users = await user.findOne({ where: { useremail, role } });
 
-        if (!user) {
+        if (!users) {
             throw new Error('Invalid email, password or role provided');
         }
+        console.log('User fetched:', users);
 
-        const isPasswordValid = await bcrypt.compare(userpassword, user.userpassword);
+        const isPasswordValid = await bcrypt.compare(userpassword, users.userpassword);
 
         if (!isPasswordValid || isPasswordValid.length === 0) {
             throw new Error('Invalid email or password');
         }
 
-        const name = user.username;
-        const profilepic = user.profilepicture;
-        const token = jwt.sign({ userid: user.userid, role: user.role }, jwtConfig.secret, {
+        const name = users.username;
+        const profilepic = users.profilepicture;
+        const token = jwt.sign({ userid: users.userid, role: users.role }, jwtConfig.secret, {
             expiresIn: jwtConfig.expiresIn,
         });
 
@@ -106,17 +98,17 @@ const loginUser = async ({ useremail, userpassword, role }) => {
 };
 
 
-const loginUserGoogle = async ({ useremail, username, role}) => {
+const loginUserGoogle = async ({ useremail, username, role }) => {
     try {
-        const user = await userModel.User.findOne({ where: { useremail, username, role } });
+        const users = await user.findOne({ where: { useremail, username, role } });
 
-        if (!user) {
+        if (!users) {
             throw new Error('Invalid email, password or role provided');
         }
 
-        const name = user.username;
-        const profilepic = user.profilepicture;
-        const token = jwt.sign({ userid: user.userid, role: user.role }, jwtConfig.secret, {
+        const name = users.username;
+        const profilepic = users.profilepicture;
+        const token = jwt.sign({ userid: users.userid, role: users.role }, jwtConfig.secret, {
             expiresIn: jwtConfig.expiresIn,
         });
 
@@ -127,7 +119,6 @@ const loginUserGoogle = async ({ useremail, username, role}) => {
     }
 }
 module.exports = {
-    getAll,
     getUserById,
     createUser,
     loginUser,

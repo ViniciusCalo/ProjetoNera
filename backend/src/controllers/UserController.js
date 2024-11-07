@@ -5,15 +5,6 @@ const teacherController = require('../controllers/TeacherController');
 const studentController = require('../controllers/StudentController');
 const router = express.Router();
 
-router.get('/', async (request, response) => {
-    try {
-        const users = await userRepo.getAll();
-        return response.status(200).json(users);
-    } catch (error) {
-        console.error(error);
-        return response.status(500).json({ message: error.message || "Internal server error" });
-    }
-});
 
 router.post('/googleRegister', async (request, response) => {
     try{
@@ -66,9 +57,7 @@ router.post('/register', async (request, response) => {
         } 
         // Se a role do user for igual a student, então registra como student na tbstudent
         if (role === 'student') {
-            const newStudent = await studentController.registerUserStudent({
-                userid: newUser.userid
-            });
+            const newStudent = await studentController.registerUserStudent({userid: newUser.userid});
             return response.status(201).json({ message: "Student created successfully", newUser, newStudent });
         }
         return response.status(201).json({ message: "User created successfully", newUser });
@@ -155,7 +144,7 @@ router.post('/googleLogin', async (request, response) => {
 router.post('/login', async (request, response) => {
     try {
         const { useremail, userpassword, role, teachercpf } = request.body;
-        const userLoginResult = await userRepo.loginUser({ useremail, userpassword, role });
+        const userLoginResult =  await userRepo.loginUser({ useremail, userpassword, role });
 
         if (role === 'teacher') {
             if (!teachercpf) {

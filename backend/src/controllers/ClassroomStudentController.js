@@ -1,6 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const classroomStudentRepo = require('../repositories/ClassroomStudentRepository');
+const achvExploreFrac = require('../controllers/explorarFracoesController');
 const teacherRepo = require('../repositories/TeacherRepository');
 const router = express.Router();
 
@@ -16,8 +17,13 @@ router.put('/joinClassroom', passport.authenticate('jwt', { session: false }), a
 
         // Linka aluno e sala pela tabela de relacionamento
         const joinClassroom = await classroomStudentRepo.addStudentOnClassroom({ studentid, tokenclass });
+
+        const unlockAchievements = await achvExploreFrac.unlockAchievement(studentid);
+
         const result = joinClassroom.classroomDetails;
-        return response.status(201).json({ message: "Aluno associado à sala com sucesso", result });
+        
+        return response.status(201).json({ message: "Aluno associado à sala com sucesso", result, 
+             "e conquista desbloqueada": unlockAchievements});
 
     } catch (error) {
         console.error('Error enrolling student:', error);
@@ -25,7 +31,7 @@ router.put('/joinClassroom', passport.authenticate('jwt', { session: false }), a
     }
 });
 // Nova rota para obter todas as salas de aula de um aluno
-router.get('/classrooms', passport.authenticate('jwt', { session: false }), async (request, response) => {
+router.get('/classroom', passport.authenticate('jwt', { session: false }), async (request, response) => {
     try {
         const { studentid } = request.user;
 

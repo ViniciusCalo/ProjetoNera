@@ -4,6 +4,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const passport = require('passport')
 require('./config/auth'); 
+require('./models/associations');
 
 const app = express();
 

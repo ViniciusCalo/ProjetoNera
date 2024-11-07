@@ -3,9 +3,9 @@ const passport = require('passport');
 const Strategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const jwtConfig = require('./jwtConfig');
-const userModel = require('../models/CanonicalDataModel/UserModel');
-const teacherModel = require('../models/CanonicalDataModel/TeacherModel');
-const studentModel = require('../models/CanonicalDataModel/StudentModel');
+const user = require('../models/UserModel');
+const teacher = require('../models/TeacherModel');
+const student = require('../models/StudentModel');
 require('dotenv').config();
 
 const applyPassportStrategy = passport => {
@@ -15,19 +15,19 @@ const applyPassportStrategy = passport => {
   passport.use(
     new Strategy(options, (payload, done) => {
       console.log('JWT Payload:', payload);
-      userModel.User.findOne({ where: { userid: payload.userid, role: payload.role } })
-        .then(user => {
-          if (user) {
+      user.findOne({ where: { userid: payload.userid, role: payload.role } })
+        .then(User => {
+          if (User) {
             console.log('User found');
-            if (user.role === 'teacher') {
-              teacherModel.Teacher.findOne({ where: { userid: user.userid } })
-                .then(teacher => {
-                  if (teacher) {
+            if (User.role === 'teacher') {
+              teacher.findOne({ where: { userid: User.userid } })
+                .then(Teacher => {
+                  if (Teacher) {
                     console.log('Teacher Found');
                     return done(null, {
-                      teacherid: teacher.teacherid,
-                      userid: teacher.userid,
-                      role: user.role
+                      teacherid: Teacher.teacherid,
+                      userid: Teacher.userid,
+                      role: User.role
                     });
                   } else {
                     console.log('User is not a teacher');
@@ -38,15 +38,15 @@ const applyPassportStrategy = passport => {
                   console.log('Error finding teacher:', err);
                   return done(err, false);
                 });
-            } else if(user.role === 'student'){
-              studentModel.Student.findOne({ where: { userid: user.userid } })
-              .then(student => {
-                if (student) {
+            } else if(User.role === 'student'){
+              student.findOne({ where: { userid: User.userid } })
+              .then(Student => {
+                if (Student) {
                   console.log('Student Found');
                   return done(null, {
-                    studentid: student.studentid,
-                    userid: student.userid,
-                    role: user.role
+                    studentid: Student.studentid,
+                    userid: Student.userid,
+                    role: User.role
                   });
                 } else {
                   console.log('User is not a Student');
@@ -59,8 +59,8 @@ const applyPassportStrategy = passport => {
               });
             } else {
               return done(null, {
-                userid: user.userid,
-                role: user.role
+                userid: User.userid,
+                role: User.role
               });
             }
           } else {

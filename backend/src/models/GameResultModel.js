@@ -1,7 +1,7 @@
 // define a estrutura da tabela tbgameresult no banco de dados. Ele utiliza o Sequelize para mapear a tabela e os campos.
-const { sequelize, Sequelize } = require('../../database/db');
+const { sequelize, Sequelize } = require('../database/db');
 
-const GameResult = sequelize.define('GameResult', {
+const gameResult = sequelize.define('gameResult', {
     gameresultid: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -22,7 +22,7 @@ const GameResult = sequelize.define('GameResult', {
     studentid: {
         type: Sequelize.INTEGER,
         references: {
-            model: 'Student', //referenciando o studentid como FK na tbgameresult
+            model: 'student', //referenciando o studentid como FK na tbgameresult
             key: 'studentid'
         },
         unique: true
@@ -30,7 +30,7 @@ const GameResult = sequelize.define('GameResult', {
     gameid: {
         type: Sequelize.INTEGER,
         references: {
-            model: 'Game', //referenciando o gameid como FK na tbgameresult
+            model: 'game', //referenciando o gameid como FK na tbgameresult
             key: 'gameid'
         },
         unique: true
@@ -40,4 +40,4 @@ const GameResult = sequelize.define('GameResult', {
     timestamps: false
 });
 
-module.exports = { GameResult };
+module.exports = gameResult;
