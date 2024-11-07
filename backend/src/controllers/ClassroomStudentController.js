@@ -31,7 +31,7 @@ router.put('/joinClassroom', passport.authenticate('jwt', { session: false }), a
     }
 });
 // Nova rota para obter todas as salas de aula de um aluno
-router.get('/classrooms', passport.authenticate('jwt', { session: false }), async (request, response) => {
+router.get('/classroom', passport.authenticate('jwt', { session: false }), async (request, response) => {
     try {
         const { studentid } = request.user;
 

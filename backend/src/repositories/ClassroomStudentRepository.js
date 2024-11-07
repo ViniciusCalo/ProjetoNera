@@ -63,20 +63,26 @@ const getAllClassroomsByStudent = async ({ studentid }) => {
         if (!studentExists) {
             throw new Error('Aluno não encontrado');
         }
-
+        
         // Buscar todas as associações aluno-sala
         const classroomStudents = await classroomStudent.findAll({ where: { studentid } });
 
         // Buscar detalhes das salas de aula e nomes de usuários dos professores
         const classrooms = await Promise.all(classroomStudents.map(async (enrollment) => {
             const findclassroom = await classroom.findByPk(enrollment.classroomid);
-            const findTeacher = await user.findOne({ where: { userid: classroom.teacherid, role: 'teacher' } });
+            
+            // Verifique se findclassroom existe e pegue o teacherid corretamente
+            if (!findclassroom) {
+                throw new Error(`Sala de aula com id ${enrollment.classroomid} não encontrada`);
+            }
+            
+            const findStudent = await user.findOne({ where: { userid: studentExists.studentid, role: 'student' } });
             return {
                 classroomname: findclassroom.classroomname,
                 classroomdescription: findclassroom.classroomdescription,
                 moduleid: findclassroom.moduleid,
                 trackid: findclassroom.trackid,
-                teacherUsername: findTeacher ? findTeacher.username : null
+                teacherUsername: findStudent ? findStudent.username : null
             };
         }));
         return classrooms;
@@ -84,7 +90,8 @@ const getAllClassroomsByStudent = async ({ studentid }) => {
         console.error('Error getting classrooms by student: ', error);
         throw error;
     }
-}
+};
+
 
 module.exports = {
     addStudentOnClassroom,

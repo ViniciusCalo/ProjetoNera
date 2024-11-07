@@ -1,18 +1,19 @@
 const user = require('../models/UserModel');
 const studentAchievement = require('../models/StudentAchievementModel');
 const achievement = require('../models/AchievementModel');
+const classroom = require('../models/ClassroomModel');
+const classroomStudent = require('../models/ClassroomStudentModel');
 
 class Student {
-    constructor(userid, username, profilepicture) {
+    constructor(username, profilepicture) {
         this.username = username;
         this.profilePicture = profilepicture;
     }
 }
 
 class Achievement {
-    constructor(achievementname, criteria, imageurl) {
+    constructor(achievementname, imageurl) {
         this.achievementname = achievementname;
-        this.criteria = criteria;
         this.imageurl = imageurl;
     }
 }
@@ -24,10 +25,24 @@ class StudentAchievement {
     }
 };
 
+class Classroom {
+    constructor(classroomname) {
+        this.classroomname = classroomname;
+    }
+}
+
+class ClassroomStudent {
+    constructor(classroomid, studentid) {
+        this.classroomid = classroomid;
+        this.studentid = studentid;
+    }
+}
+
 class HomeData {
-    constructor(student, achievements) {
+    constructor(student, achievements, classroom) {
         this.student = student;
         this.achievements = achievements;
+        this.classroom = classroom;
     }
 }
 
@@ -43,19 +58,18 @@ const getAchievementAndStudent = async (userid, studentid) => {
             attributes: ['username', 'profilepicture']
         });
 
+
         if (!homeStudentData) {
             throw new Error('Aluno não encontrado.');
         }
         //Cria objeto aluno
-        const student = new Student(homeStudentData.username, homeStudentData.profilePicture);
+        const student = new Student(homeStudentData.username, homeStudentData.profilepicture);
 
         const homeAchievementData = await achievement.findAll({
-            where: {
-                studentid: studentid
-            },
             include: [{
                 model: studentAchievement,
-                as: 'achievements',
+                as: 'studentAchievement', // use o alias definido na associação
+                where: { studentid: studentid },
                 attributes: ['studentid', 'achievementid']
             }],
             attributes: ['achievementname', 'imageurl']
@@ -64,14 +78,34 @@ const getAchievementAndStudent = async (userid, studentid) => {
         //criar objetos Conquista com dados 
         const achievements = homeAchievementData.map(achievement =>
             new Achievement(
-                achievement.achievementname, achievement.imageurl
+                achievement.achievementname,
+                achievement.imageurl
             )
         );
-        return new HomeData(student, achievements);
+
+        // Buscar dados das salas de aula associadas ao teacherid
+        const homeClassData = await classroom.findAll({
+            include: [{
+                model: classroomStudent,
+                as: 'classroomStudents', // use o alias definido na associação
+                where: { studentid: studentid },
+                attributes: ['classroomid', 'studentid']
+            }],
+            attributes: ['classroomname']
+        });
+
+        //criar objetos Conquista com dados 
+        const classrooms = homeClassData.map(classroom =>
+            new Classroom(
+                classroom.classroomname
+            )
+        );
+
+        return new HomeData(student, achievements, classrooms);
     } catch (error) {
         console.error(error);
         throw error;
     }
 };
 
-module.exports = {getAchievementAndStudent};
+module.exports = { getAchievementAndStudent };
