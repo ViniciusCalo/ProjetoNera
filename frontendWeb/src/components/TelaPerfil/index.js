@@ -34,7 +34,7 @@ const TelaPerfil = () => {
   //Redux
   const dispatch = useDispatch();
   const [token, setToken] = useState(localStorage.getItem('token'));
-  const { name } = useSelector((state) => state.user);
+  const { name, profileImageUrl } = useSelector((state) => state.user);
 
   const [modalIsOpen, setIsOpen] = useState(false);
   const carrouselRef = useRef(null);
@@ -86,7 +86,7 @@ const TelaPerfil = () => {
   return (
     <C.Container>
       <C.Infos>
-        <C.imgPerfil src={imgPerfil} alt="Imagem de perfil" />
+        <C.imgPerfil src={profileImageUrl ? profileImageUrl : imgPerfil} alt="Imagem de perfil" />
         <div>
           <C.User>@{name}</C.User>
           <C.Name>{name}</C.Name>
