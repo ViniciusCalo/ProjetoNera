@@ -18,6 +18,7 @@ export const Menu = styled.nav`
         width: 100%;
         height: 6%;
         bottom:0;
+        border-radius: 0 0 0 0;
 
         
         &:hover {
@@ -33,15 +34,17 @@ export const Lista = styled.ul`
     position: absolute;
     top: 5%;
     width: 100%;
+    height: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
       
     @media (max-width: 480px) {
+        width: 90%;
         flex-direction: row;
-        justify-content: center;
-        align-items: center;
+        justify-content: space-around;
+        align-items: baseline;
     }
 `;
 
@@ -50,6 +53,7 @@ export const Item = styled.li`
     width: 100%;
     margin-bottom: 10px;
     margin-left: 20px;
+    display: flex;
 
     &:hover {
         padding: 5%;
@@ -60,9 +64,37 @@ export const Item = styled.li`
     }
 
     @media (max-width: 480px) {
-     width: 100%;
+        width: 18%;
+            &:hover {
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            margin-left: 0;
+            margin-radius: 0;
+            border-radius: 0;
+        }
     }
     `;
+    export const Item1 = styled.li`
+    list-style: none;
+    width: 100%;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    display: flex;
+
+    &:hover {
+        padding: 5%;
+        margin-left: 10px;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+        background: rgba(3, 76, 140, 0.24);
+    }
+
+    @media (max-width: 480px) {
+        display: none;
+    }
+    `;
+    
 export const Item2 = styled.li`
     margin-left: 50%;
     list-style: none;
@@ -75,11 +107,38 @@ export const Item2 = styled.li`
     }
     `;
 
+export const Item3 = styled.li`
+    list-style: none;
+    width: 100%;
+    margin-left: 20px;
+    display: flex;
+    &:hover {
+        padding: 5%;
+        margin-left: 10px;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+        background: rgba(3, 76, 140, 0.24);
+    }
+
+    @media (max-width: 480px) {
+        width: 0%;
+        margin-bottom: 0;
+        margin-left: 0;
+            &:hover {
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            margin-left: 0;
+            margin-radius: 0;
+            border-radius: 0;
+        }
+    }
+    `;
 
 export const Link = styled.a`
     display: flex;
     align-items: center;
-    width: 100%;
+    width: 50%;
     text-decoration: none;
     color: #000000;
 `;

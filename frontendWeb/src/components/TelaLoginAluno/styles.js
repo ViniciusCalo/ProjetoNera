@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 
 export const Box = styled.div`
-margin-top: 10%;
-width: 1100px;
-height: 600px;
+margin-top: 5%;
+ width: 80%;
+height: 80vh;
 flex-shrink: 0;
 display: flex;
  justify-content: center;
@@ -12,6 +12,14 @@ display: flex;
   background: white;
   bottom: 0;
   border-radius: 15px;
+
+        @media (max-width: 480px) {
+        margin-top: 10%;
+        width: 80%;
+        height: 90vh;
+        display: flex;
+        flex-direction: column;
+    }
 `;
 
 export const Container = styled.div`
@@ -19,12 +27,19 @@ display: flex;
 flex-direction: column;
 align-items: center;
 width: 100%;
+height: 70vh;
+        @media (max-width: 480px) {
+        height: 50vh;
+    }
 `
 
 export const Logo = styled.img`
 margin: 5%;
 flex-shrink: 0;
 width: 40%;
+        @media (max-width: 480px) {
+        width: 100%;
+    }
 `
 
 export const FormLogin = styled.form`
@@ -33,11 +48,14 @@ flex-direction: column;
 justify-content: center;
 align-items: center;
 margin-top: -12%;
-width: 60%;
+width: 70%;
 height: 450px;
 z-index: 0;
 border-radius: 15px;
 background-color: #F2B705;
+        @media (max-width: 480px) {
+        width: 80%;
+    }
 `
 export const vetor = styled.img`
 margin: 5%;
@@ -159,14 +177,18 @@ export const DivButton = styled.div`
     display: flex;
     flex-direction: row;
     background-color: #F2B705;
-    width: 60%;
+    width: 70%;
     border-radius: 30px 30px 0px 30px;
+        @media (max-width: 480px) {
+        width: 80%;
+    }
+
     `;
 
 export const ButtonProf = styled.a`
   color: #FFF;
   font-family: Roboto;
-  font-size: 27px;
+  font-size: 150%;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -186,7 +208,8 @@ export const ButtonAlu = styled.a`
   text-decoration: none;
   color: #FFF;
   font-family: Roboto;
-  font-size: 27px;
+  font-size: 150% ;
+  font-style:;
   font-style: normal;
   font-weight: 700;
   line-height: normal;

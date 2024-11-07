@@ -1,5 +1,5 @@
 import React from 'react';
-import * as C from './styles' // Importando o arquivo CSS
+import * as C from './styles' 
 
 const TrailCard = ({ titulo, image, color }) => {
   return (

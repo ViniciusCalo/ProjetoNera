@@ -13,12 +13,16 @@ export const Form = styled.form`
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  border: 5px solid #135794;
+  border: 2px solid #f29f05;
   border-radius: 10px;
   height: 90vh;
-display: flex;
+  display: flex;
   align-items: center;
-  flex-direction: column
+  flex-direction: column;
+        @media (max-width: 480px) {
+         width: 90%;
+         height: 80vh;
+    }
 `;
 
 export const Title = styled.h2`
@@ -26,6 +30,10 @@ export const Title = styled.h2`
   font-size: 32px;
   color: #333;
   margin-bottom: 20px;
+      @media (max-width: 480px) {
+      font-size: 24px;
+      width: 100%;
+    }
 
 `;
 
@@ -34,6 +42,10 @@ export const DivInputs = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+    @media (max-width: 480px) {
+    flex-direction: column;
+         width: 100%;
+    }
 `;
 export const DivInput = styled.div`
   width: 100%;
@@ -59,6 +71,9 @@ export const Input = styled.input`
     color: #135794; 
     opacity: 0.5; 
   }
+       @media (max-width: 480px) {
+         width: 100%;
+    }
 `;
 
 export const TrackContainer = styled.div`
@@ -68,12 +83,15 @@ export const TrackContainer = styled.div`
   margin-bottom: 20px;
   gap: 5px;
   width: 80%;
+        @media (max-width: 480px) {
+      width: 100%;
+    }
 `;
 
 export const TrackCard = styled.div`
   flex: 1 1 calc(33.33% - 20px); /* Largura para ter três itens por linha */
   max-width: calc(33.33% - 20px); /* Limita a largura máxima */
-    height: 80%;
+  height: 80%;
   padding: 10px;
   display: flex;
   align-items: center;
@@ -90,6 +108,18 @@ export const TrackCard = styled.div`
     height: 24px;
     margin-right: 8px;
   }
+
+        @media (max-width: 480px) {
+        max-width: calc(33.33% - 1px); /* Limita a largura máxima */
+        height: 50%;
+        font-size: 12px;
+
+          img {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+  }
+    }
 `;
 export const Label2 = styled.label`
   font-size: 18px;
@@ -119,6 +149,10 @@ export const Select = styled.select`
     outline: none;
     border-color: #6296C4;
   }
+
+     @media (max-width: 480px) {
+      width: 100%;
+    }
 `;
 
 export const ButtonGroup = styled.div`
@@ -142,4 +176,7 @@ export const Button = styled.button`
   &:hover {
     background-color: ${({ cancel }) => (cancel ? '#555' : '#003c8a')};
   }
+         @media (max-width: 480px) {
+      width: 40%;
+    }
 `;

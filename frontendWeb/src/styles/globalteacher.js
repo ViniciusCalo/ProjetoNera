@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
-const Global = createGlobalStyle`
+const Globalteacher = createGlobalStyle`
     *{
     margin: 0;
     padding: 0;
@@ -8,8 +8,9 @@ const Global = createGlobalStyle`
     }
     body {
     font-family: 'Roboto', Sans-Serif;
+       background-color: #f6f7ff;
     } 
     `
     
 
-export default Global;
+export default Globalteacher;

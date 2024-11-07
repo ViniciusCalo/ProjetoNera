@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 
 export const Box = styled.div`
-margin-top: 10%;
-width: 1100px;
-height: 600px;
+margin-top: 5%;
+width: 80%;
+height: 80vh;
 flex-shrink: 0;
 display: flex;
  justify-content: center;
@@ -12,6 +12,14 @@ display: flex;
   background: white;
   bottom: 0;
   border-radius: 15px;
+
+      @media (max-width: 480px) {
+        margin-top: 10%;
+        width: 80%;
+        height: 90vh;
+        display: flex;
+        flex-direction: column;
+    }
 `;
 
 export const Container = styled.div`
@@ -19,6 +27,7 @@ display: flex;
 flex-direction: column;
 align-items: center;
 width: 100%;
+
 `
 
 export const Div = styled.div`
@@ -26,7 +35,8 @@ display: flex;
 justify-content: center;
 flex-direction: column;
 align-items: center;
-width: 100%;
+width: 80%;
+
 `
 export const textEntrar = styled.p`
 color: #888585;
@@ -70,6 +80,9 @@ width: 60%;
 height: 450px;
 border-radius: 15px;
 background-color: #F2B705;
+      @media (max-width: 480px) {
+        width: 80%;
+    }
 `
 export const Tituloform = styled.h1`
 color: #FFF;
@@ -80,7 +93,10 @@ font-style: normal;
 font-weight: 700;
 line-height: normal;
 position: absolute;
-top: 10%;
+top: 3%;
+      @media (max-width: 480px) {
+        top: 5%;
+    }
 
 `
 export const vetor = styled.img`
@@ -92,13 +108,14 @@ export const DivButton = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 85%;
+    width: 80%;
     `;
 
 export const InputS = styled.input`
+width: 45%;
 height: 30px;
 padding: 2%;
-margin: 2%;
+margin: 2% 0 2% 0;
 border-radius: 15px;
 border: none;
 font-size: 10px;
@@ -153,7 +170,7 @@ width: 70%;
 `
 export const Text = styled.p`
 position: absolute;
-bottom: 10%;
+bottom: 5%;
 color: #000000B2;
 text-align: center;
 font-family: Roboto;
@@ -161,6 +178,11 @@ font-size: 14px;
 font-style: normal;
 font-weight: 300;
 line-height: normal;
+
+@media (max-width: 480px) {
+        width: 90%;
+        bottom: 3%;
+    }
 `
 export const Link = styled.a`
 color: #000;
