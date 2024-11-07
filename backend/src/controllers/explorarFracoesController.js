@@ -1,26 +1,27 @@
 const explorarFracRepo = require('../repositories/achievements/AchievementExplorarFracoes');
 const express = require('express');
-const passport = require('passport');
-const router = express.Router();
+require('dotenv').config();
+const ModuleRepo = require('../repositories/ModuleRepository');
+const studentRepo = require('../repositories/StudentRepository');
 
-router.put('/unlock-achievement', passport.authenticate('jwt', { session: false }), async (request, response) => {
+const unlockAchievement = async (studentid) => {
     try {
-        const { achievementid } = request.body;
-        const { studentid } = request.user;
+        const achievementid = parseInt(process.env.IDACHIEVEMENT_EXPFRACOES, 10);
 
-        // Verificar se os parâmetros estão presentes
-        if (!achievementid || !studentid) {
-            return response.status(400).json({ message: "Parâmetros 'achievementId' e 'studentid' são obrigatórios" });
+        //verifica se os paramentros estão presentes
+
+        if(!achievementid || !studentid){
+            throw new Error("Parâmentros 'achievementid' e 'studentid' são obrigatórios");
         }
 
         const resultAchievement = await explorarFracRepo.unlockAchievementForStudent(studentid, achievementid);
-        
-        return response.status(200).json(resultAchievement);
+
+        return (resultAchievement)
     } catch (error) {
         console.error('Error unlocking achievement:', error);
-        return response.status(500).json({ message: error.message || "Internal server error" });
+        //return response.status(500).json({ message: error.message || "Internal server error" });
     }
-});
+}
 
-module.exports = router;
+module.exports = {unlockAchievement};
 

@@ -1,29 +1,17 @@
-const Module = require('../models/ModuleModel');
+const classStudentModule = require('../models/ClassroomStudentModel');
+const classroomModule =  require('../models/ClassroomModel')
+const express = require('express');
 
-class ModuleRepository {
-    async getAllModules() {
-        try {
-            return await Module.module.findAll();
-        } catch (error) {
-            throw new Error('Erro ao buscar módulos: ' + error.message);
+const getModuleByStudentId = async (studentid, moduleid) => {
+    try {
+        const idstudent = await classStudentModule.findOne({where: studentid});
+        const idmodule = await classroomModule.findOne({where: moduleid});
+
+        if(idmodule === 1) {
+            
         }
-    }
 
-    async getModuleById(id) {
-        try {
-            return await Module.module.findByPk(id);
-        } catch (error) {
-            throw new Error('Erro ao buscar módulo: ' + error.message);
-        }
+    } catch (error) {
+        throw new Error('Erro ao buscar módulos do aluno: '+ error.message);
     }
-
-    async getModulesByTrackId(trackid) {
-        try {
-            return await Module.module.findAll({ where: { trackid } });
-        } catch (error) {
-            throw new Error('Erro ao buscar módulos pela trilha: ' + error.message);
-        }
-    }
-}
-
-module.exports = ModuleRepository;
+};

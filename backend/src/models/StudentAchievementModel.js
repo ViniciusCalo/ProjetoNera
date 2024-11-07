@@ -17,8 +17,10 @@ const studentAchievement = sequelize.define('studentAchievement', {
             key: 'achievementid'
         }
     },
+},   {
         timestamps: false,
         tableName: 'tbstudentachievement',
-});
+    }
+);
 
 module.exports = studentAchievement;

@@ -20,32 +20,33 @@ const addStudentOnClassroom = async ({ studentid, tokenclass }) => {
         }
 
         //Verificando se o tokenclass do body é o mesmo do que esta salvo na tbclassroom
-        if (tokenclass != classroom.tokenclass) {
+        if (tokenclass != classroomExist.tokenclass) {
             throw new Error('Token inválido');
         }
 
         //se token for valido
         const newEnrollment = await classroomStudent.create({
-            classroomid: classroom.classroomid,
+            classroomid: classroomExist.classroomid,
             studentid
         });
+
         // Buscar o nome de usuário do professor
-        const searchTeacherName = await teacher.findOne({ where: { teacherid: classroom.teacherid } });
+        const searchTeacherName = await teacher.findOne({ where: { teacherid: classroomExist.teacherid } });
         if (!searchTeacherName) {
             throw new Error('Professor não encontrado');
         }
         console.log(searchTeacherName);
 
-        const users = await user.findOne({ where: { userid: teacher.userid}});
+        const teacherName = await user.findOne({ where: { userid: searchTeacherName.teacherid}});
         // Buscar detalhes da sala de aula
         const classroomDetails = {
-            classroomid: classroom.classroomid,
+            classroomid: classroomExist.classroomid,
             studentid,
-            classroomname: classroom.classroomname,
-            classroomdescription: classroom.classroomdescription,
-            moduleid: classroom.moduleid,
-            trackid: classroom.trackid,
-            teacherUsername: users.username
+            classroomname: classroomExist.classroomname,
+            classroomdescription: classroomExist.classroomdescription,
+            moduleid: classroomExist.moduleid,
+            trackid: classroomExist.trackid,
+            teacherUsername: teacherName.username
         };
         
         return { classroomDetails };

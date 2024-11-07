@@ -15,10 +15,10 @@ classroom.belongsTo(teacher, { foreignKey: 'teacherid', as: 'teacher' });
 classroom.belongsTo(track, { foreignKey: 'trackid', as: 'track' });
 track.hasMany(Module, { foreignKey: 'trackid', as: 'modules' });
 Module.belongsTo(track, { foreignKey: 'trackid', as: 'track' });
-student.hasMany(achievement, { foreignKey: 'achievementsid', as: 'achievement' });
+student.hasMany(achievement, { foreignKey: 'achievementid', as: 'achievement' });
 user.hasOne(student, { foreignKey: 'userid', as: 'studentDetails' });
-achievement.belongsTo(student, { foreignKey: 'achievementsid', as: 'students' });
-studentAchievement.hasMany(achievement, { foreignKey: 'achievementsid'});
+achievement.belongsTo(student, { foreignKey: 'achievementid', as: 'students' });
+studentAchievement.hasMany(achievement, { foreignKey: 'achievementid'});
 studentAchievement.hasMany(student, { foreignKey: 'studentid'});
 
 module.exports = {
