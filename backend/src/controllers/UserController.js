@@ -159,7 +159,7 @@ router.post('/login', async (request, response) => {
             });
         }
         if (role === 'student') {
-            const studentLoginResult = await studentController.studentLogin({ useremail, userpassword });
+            const studentLoginResult = await studentController.studentLogin({ useremail, userpassword});
             return response.status(200).json({
                 message: "Student logged successfully",
                 token: studentLoginResult.token,
