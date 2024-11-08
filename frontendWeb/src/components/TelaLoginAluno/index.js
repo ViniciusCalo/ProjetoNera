@@ -76,6 +76,7 @@ const TelaLoginAluno = () => {
   };
 
   return (
+    <body>
     <C.Box>
       <C.Logo src={Logo} />
       <C.Container>
@@ -121,6 +122,7 @@ const TelaLoginAluno = () => {
         </C.FormLogin>
       </C.Container>
     </C.Box>
+    </body>
   );
 };
 
