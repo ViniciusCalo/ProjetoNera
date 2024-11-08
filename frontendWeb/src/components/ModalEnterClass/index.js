@@ -2,37 +2,61 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 import * as C from './styles';
 import ModalRoomDetails from '../ModalRoomDetails';
+import { useDispatch } from 'react-redux';
+import { addItem } from '../../store/classroomSlice';
+import axios from 'axios';
 
 Modal.setAppElement('#root');
 
 const ModalEnterClass = ({ isOpen, onRequestClose }) => {
+  const dispatch = useDispatch();
+  const token = localStorage.getItem('token'); // Correção aqui
+  const [tokenclassr, setTokenClass] = useState('');
   const [roomCode, setRoomCode] = useState("");
   const [showRoomDetails, setShowRoomDetails] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(""); 
+  const [errorMessage, setErrorMessage] = useState("");
+  const [classroom, setClassroom] = useState({});
 
   const handleRoomCodeChange = (e) => {
     setRoomCode(e.target.value);
     setErrorMessage("");
   };
 
-  const handleEnter = () => {
+  const closeRoomDetails = () => {
+    setShowRoomDetails(false);
+    onRequestClose();
+  };
+
+  // Função para entrar na sala utilizando API método PUT /student/joinClassroom
+  const joinClass = async (e) => {
+    e.preventDefault();
     if (!roomCode) {
       setErrorMessage("Por favor, insira o código da sala.");
       return;
     }
 
-    const validCode = "12345"; 
-    if (roomCode !== validCode) {
-      setErrorMessage("O código digitado está incorreto.");
-      return;
+    try {
+      const res = await axios.put(`${process.env.REACT_APP_API_URL}/student/joinClassroom`, {
+        tokenclass: roomCode,
+      }, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+      });
+      setClassroom(res.data.result);
+      dispatch(addItem(res.data.result));
+      setShowRoomDetails(true);
+      clearForm();
+    } catch (error) {
+      setErrorMessage("Não foi possível entrar na sala. Verifique o código e tente novamente.");
+      console.error(error.response?.data || error.message);
     }
-
-    setShowRoomDetails(true);
   };
 
-  const closeRoomDetails = () => {
-    setShowRoomDetails(false);
-    onRequestClose();
+  // Clear form function
+  const clearForm = () => {
+    setTokenClass('');
+    setRoomCode('');
   };
 
   return (
@@ -41,6 +65,8 @@ const ModalEnterClass = ({ isOpen, onRequestClose }) => {
         isOpen={isOpen}
         onRequestClose={onRequestClose}
         contentLabel="Entrar na Sala"
+        classroom={classroom}
+        idtrail={classroom.trackid}
         style={{
           overlay: {
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -69,11 +95,15 @@ const ModalEnterClass = ({ isOpen, onRequestClose }) => {
           value={roomCode}
           onChange={handleRoomCodeChange}
         />
-        {errorMessage && <C.ErrorMessage>{errorMessage}</C.ErrorMessage>} {/* Exibe a mensagem de erro */}
-        <C.Button onClick={handleEnter}>Entrar</C.Button>
+        {errorMessage && <C.ErrorMessage>{errorMessage}</C.ErrorMessage>}
+        <C.Button onClick={joinClass}>Entrar</C.Button>
       </Modal>
 
-      <ModalRoomDetails isOpen={showRoomDetails} onRequestClose={closeRoomDetails} />
+      <ModalRoomDetails 
+        isOpen={showRoomDetails} 
+        onRequestClose={closeRoomDetails} 
+        classroom={classroom} // Adicionando a prop classroom
+      />
     </>
   );
 };

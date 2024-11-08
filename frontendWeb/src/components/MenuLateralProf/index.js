@@ -6,7 +6,7 @@ import createClass from './img/Vector_CreateClass.svg'
 import salas from './img/Vector_ClassRoom.svg'
 import sair from './img/Vector_Logout.svg'
 import seta from './img/seta.svg'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setItems } from '../../store/classroomSlice';
 import { setName, setProfileImageUrl } from '../../store/userSlice';
 

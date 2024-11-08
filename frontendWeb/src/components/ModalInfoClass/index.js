@@ -6,8 +6,6 @@ import imgPerfil from './img/user.svg';
 import iconCompartilhar from './img/share.png';
 import iconCopiar from './img/copy.png';
 import TrailCard from '../TrailCard';
-import fracaoicon from './img/fracao.svg';
-import ClassPink from './img/classPink.png';
 //Redux
 import { useSelector } from 'react-redux';
 
