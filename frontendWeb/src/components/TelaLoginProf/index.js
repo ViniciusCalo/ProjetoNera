@@ -93,6 +93,7 @@ const TelaLoginProf = () => {
   };
 
   return (
+    <body>
     <C.Box>
       <C.Logo src={Logo} />
       <C.Container>
@@ -146,6 +147,7 @@ const TelaLoginProf = () => {
         </C.FormLogin>
       </C.Container>
     </C.Box>
+    </body>
   );
 };
 

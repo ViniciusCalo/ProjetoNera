@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import './styles.css';
+import * as C from './styles';
+import cardFront from '../../assets/CardFront.png'
+import reload from '../../assets/reload.png'
+import tip from '../../assets/tip.png'
+import next from '../../assets/next.png'
 
 const MemoryGame = () => {
   const [cards, setCards] = useState([]);
@@ -9,45 +13,42 @@ const MemoryGame = () => {
   const [lockBoard, setLockBoard] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Fetch para obter as cartas ao carregar o componente
+  // Função para buscar as cartas
+  const fetchCards = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/memorygame/`);
+      const data = await response.json();
+
+      const duplicatedCards = data.flatMap(card => [
+        { idmatch: card.idmatch, imageUrl: card.image1_url, uniqueId: `${card.idmatch}-1` },
+        { idmatch: card.idmatch, imageUrl: card.image2_url, uniqueId: `${card.idmatch}-2` }
+      ]);
+
+      setCards(duplicatedCards.sort(() => 0.5 - Math.random()));
+      setIsLoading(false);
+    } catch (error) {
+      console.error('Erro ao buscar as cartas:', error);
+    }
+  };
+
+  // Carrega as cartas ao montar o componente
   useEffect(() => {
-    const fetchCards = async () => {
-      try {
-        const response = await fetch('http://localhost:3333/memorygame/');
-        const data = await response.json();
-
-        // Para cada objeto, criar duas cartas com image1_url e image2_url como pares
-        const duplicatedCards = data.flatMap(card => [
-          { idmatch: card.idmatch, imageUrl: card.image1_url, uniqueId: `${card.idmatch}-1` }, // Primeira imagem do par
-          { idmatch: card.idmatch, imageUrl: card.image2_url, uniqueId: `${card.idmatch}-2` }  // Segunda imagem do par
-        ]);
-
-        // Embaralha as cartas para o jogo
-        setCards(duplicatedCards.sort(() => 0.5 - Math.random()));
-        setIsLoading(false);
-      } catch (error) {
-        console.error('Erro ao buscar as cartas:', error);
-      }
-    };
-
     fetchCards();
   }, []);
 
-  // Quando `secondCard` é definido, verifica se as duas cartas formam um par
+  // Verifica se as cartas combinam
   useEffect(() => {
     if (secondCard) {
       checkForMatch();
     }
   }, [secondCard]);
 
-  // Função para resetar o turno
   const resetTurn = () => {
     setFirstCard(null);
     setSecondCard(null);
     setLockBoard(false);
   };
 
-  // Verificar se as duas cartas formam um par
   const checkForMatch = () => {
     setLockBoard(true);
     const isMatch = firstCard.idmatch === secondCard.idmatch;
@@ -62,7 +63,6 @@ const MemoryGame = () => {
     }
   };
 
-  // Lógica para manipular o clique nas cartas
   const handleCardClick = (card) => {
     if (lockBoard || card === firstCard || matchedPairs.includes(card.idmatch)) return;
 
@@ -73,40 +73,85 @@ const MemoryGame = () => {
     }
   };
 
-  // Verifica se o jogo foi vencido
   const isGameWon = matchedPairs.length === cards.length / 2;
 
-  // Exibe uma mensagem de carregamento enquanto os dados ainda estão sendo buscados
+  // Função para reiniciar o jogo
+  const handleReload = () => {
+    setMatchedPairs([]);
+    setFirstCard(null);
+    setSecondCard(null);
+    setLockBoard(false);
+    fetchCards(); // Recarrega e embaralha as cartas
+  };
+
+  // Função para mostrar uma dica (exemplo: revelar temporariamente um par de cartas)
+  const handleTip = () => {
+    alert("Implementar dica!");
+  };
+
+  // Função para avançar para o próximo nível (pode ser customizado)
+  const handleNext = () => {
+    alert("Próximo nível não implementado ainda!");
+  };
+
   if (isLoading) {
     return <p>Carregando o jogo...</p>;
   }
 
+
   return (
-    <div>
-      <h1>Jogo da Memória de Frações</h1>
-      {isGameWon ? (
-        <h2>Parabéns! Você encontrou todos os pares!</h2>
-      ) : (
-        <div className="game-board">
-          {cards.map((card) => {
-            const isFlipped = card === firstCard || card === secondCard || matchedPairs.includes(card.idmatch);
-            return (
-              <div
-                key={card.uniqueId}
-                className={`card ${isFlipped ? 'flipped' : ''}`}
-                onClick={() => handleCardClick(card)}
-              >
-                <img
-                  src={isFlipped ? card.imageUrl : 'https://via.placeholder.com/100'} // Imagem de verso da carta
-                  alt="Card"
-                />
-              </div>
-            );
-          })}
-        </div>
-      )}
-    </div>
+    <>
+      <C.Header>
+        <C.Titulo>MODULO I - Frações</C.Titulo>
+      </C.Header>
+      <C.Game>
+        <C.GameContainer>
+          <C.Title>Jogo da Memória de Frações</C.Title>
+          {isGameWon ? (
+            <C.Message>Parabéns! Você encontrou todos os pares!</C.Message>
+          ) : (
+            <C.GameBoard>
+              {cards.map((card) => {
+                const isFlipped = card === firstCard || card === secondCard || matchedPairs.includes(card.idmatch);
+                return (
+                  <C.Card
+                    key={card.uniqueId}
+                    className={isFlipped ? 'flipped' : ''}
+                    onClick={() => handleCardClick(card)}
+                  >
+                    <C.CardImage
+                      src={isFlipped ? card.imageUrl : cardFront}
+                      alt="Card"
+                    />
+                  </C.Card>
+                );
+              })}
+            </C.GameBoard>
+          )}
+
+          <C.ContainerMenu>
+            <C.BtnReload onClick={handleReload}>
+              <C.iconButton src={reload} alt='Refazer' />
+              <span>Refazer</span>
+            </C.BtnReload>
+
+            <C.BtnTip onClick={handleTip}>
+              <C.IconTip src={tip} alt='Dica' />
+              <span>Dica</span>
+            </C.BtnTip>
+
+            <C.BtnNext onClick={handleNext} disabled={null}>
+              <C.iconButton src={next} alt='Próximo' />
+              <span>Próximo</span>
+            </C.BtnNext>
+          </C.ContainerMenu>
+        </C.GameContainer>
+      </C.Game>
+
+    </>
   );
+
 };
+
 
 export default MemoryGame;
