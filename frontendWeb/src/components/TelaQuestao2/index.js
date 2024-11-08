@@ -14,12 +14,10 @@ const uri = process.env.REACT_APP_API_URL || "http://localhost:3001";
 
 const TelaQuestao = () => {
     const [modalIsOpen, setIsOpen] = React.useState(false);
-    // Função que abre a modal
  function abrirModal() {
    setIsOpen(true);
  }
 
- // Função que fecha a modal
  function fecharModal() {
    setIsOpen(false);
  }
@@ -88,7 +86,6 @@ const TelaQuestao = () => {
             }
         }
     }
-    //verifcar se a resposta está correta
     const handleVerificar = async (cor, alternativa) => {
         var body = {
             "id": questoes.id_questao,
