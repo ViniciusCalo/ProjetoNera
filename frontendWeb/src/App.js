@@ -13,7 +13,7 @@ import LoginAluno from './pages/LoginAluno';
 import LoginProf from './pages/LoginProf';
 import TeacherClass from './pages/TeacherClass';
 import CreateClass from './pages/CreateClass';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Cadastro from './pages/Cadastro';
 
@@ -24,6 +24,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route>
+            <Route path="/" element={<Navigate to="/cadastro" />} />
             <Route path="perfil" element={<Perfil />} />
             <Route path="perfilProf" element={<PerfilProf />} />
             <Route path="trilha" element={<Trilha />} />
