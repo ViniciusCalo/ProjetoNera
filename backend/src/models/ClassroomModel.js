@@ -1,7 +1,6 @@
-const { sequelize, Sequelize } = require('../../database/db');
+const { sequelize, Sequelize } = require('../database/db');
 
-
-const Classroom = sequelize.define('Classroom', {
+const classroom = sequelize.define('classroom', {
     classroomid: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -24,7 +23,7 @@ const Classroom = sequelize.define('Classroom', {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-            model: 'Teacher', // Ajuste para corresponder ao nome da tabela de usuários
+            model: 'teacher', // Nome da tabela de referência
             key: 'teacherid'
         }
     },
@@ -32,7 +31,7 @@ const Classroom = sequelize.define('Classroom', {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-            model: 'Tracks', // Ajuste para corresponder ao nome da tabela de trilhas
+            model: 'tracks',
             key: 'trackid'
         }
     },
@@ -40,7 +39,7 @@ const Classroom = sequelize.define('Classroom', {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-            model: 'Modules', // Ajuste para corresponder ao nome da tabela de módulos
+            model: 'modules',
             key: 'moduleid'
         }
     },
@@ -53,5 +52,4 @@ const Classroom = sequelize.define('Classroom', {
     timestamps: false
 });
 
-
-module.exports = {Classroom}
+module.exports = classroom; // Exportação direta

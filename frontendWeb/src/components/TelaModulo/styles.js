@@ -13,17 +13,24 @@ export const Header = styled.header`
 
 export const IconHeader = styled.img`
     width: 100px;
+    @media (max-width: 480px) {  
+       width: 80px;
+     }
 `;
 
 export const Title = styled.h1`
     color: #000;
-font-family: Roboto;
-font-size: 64px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-text-transform: capitalize;
-margin-left: 2%;
+    font-family: Roboto;
+    font-size: 64px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: capitalize;
+    margin-left: 2%;
+        @media (max-width: 480px) {  
+       font-size: 48px;
+     }
+
 `;
 
 export const Container = styled.div`
@@ -43,6 +50,11 @@ export const Logo = styled.img`
     width: 178px;
     height: 199px;
     position: absolute;
+     @media (max-width: 480px) {
+       left: 50%;    
+       width: 80px;
+        height: 100px;
+     }
 `;
 
 export const DivConquista = styled.div`
@@ -57,6 +69,9 @@ export const DivConquista = styled.div`
 export const Conquista = styled.img`    
     width: 10%;
     padding-bottom: 20px;
+    @media (max-width: 480px) {  
+       width: 20%;
+     }
 `;
 
 export const textConquista = styled.p`
@@ -68,6 +83,10 @@ export const textConquista = styled.p`
     line-height: normal;
     text-transform: capitalize;
     width: 15%;
+        @media (max-width: 480px) {  
+       width: 40%;
+       font-size: 16px;
+     }
 `;
 
 export const DivModulo = styled.div`
@@ -84,12 +103,18 @@ export const Modulo = styled.img`
     position: absolute;
     width: 10%;
     padding-bottom: 20px;
+    @media (max-width: 480px) {  
+       width: 20%;
+     }
 `;
 
 export const CaminhoModulo = styled.img`
     position: absolute;
     width: 20%;
     padding-bottom: 20px;
+    @media (max-width: 480px) {  
+       width: 40%;
+     }
 `;
 
 export const M1 = styled(Modulo)`

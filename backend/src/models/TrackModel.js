@@ -1,7 +1,6 @@
-const { sequelize, Sequelize } = require('../../database/db');
-const Module = require('./ModuleModel');
+const { sequelize, Sequelize } = require('../database/db');
 
-const Track = sequelize.define('tbtrack', {
+const track = sequelize.define('track', {
     trackid: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -20,7 +19,4 @@ const Track = sequelize.define('tbtrack', {
     tableName: 'tbtrack'
 });
 
-Track.hasMany(Module, { foreignKey: 'trackid' });
-Module.belongsTo(Track, { foreignKey: 'trackid' });
-
-module.exports = Track;
+module.exports = track;

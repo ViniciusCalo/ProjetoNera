@@ -88,7 +88,12 @@ export const CarrouselButton = styled.button`
   background: transparent;
   border: none;
   cursor: pointer;
-  z-index: 1;
+  z-index: 0;
+    &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  
   
 `;
 export const CarrouselButton2 = styled.button`

@@ -1,26 +1,16 @@
-import styled, { createGlobalStyle } from "styled-components";
+import styled from "styled-components";
 import { FaUserAlt } from "react-icons/fa";
 
-// Global Style para garantir que o fundo cubra todo o body
-export const GlobalStyle = createGlobalStyle`
-  body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    background-color: #f0f4ff; /* Fundo azul claro aplicado no body */
-  }
-`;
 
 // Container principal
 export const Container = styled.div`
-  width: 100vw; /* Ocupa toda a largura da viewport */
+  width: 90vw; /* Ocupa toda a largura da viewport */
   min-height: 100vh; /* Ocupa toda a altura da viewport */
   margin: 0 auto; /* Centraliza o conteúdo */
   padding: 20px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f0f4ff; /* Fundo azul claro */
   box-sizing: border-box; /* Garante que o padding seja incluído no cálculo da largura */
 `;
 
@@ -49,6 +39,7 @@ export const Title = styled.h2`
   color: #333;
   text-align: center;
   margin-bottom: 5px;
+  
 `;
 
 export const Line = styled.div`
@@ -64,7 +55,7 @@ export const GridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr); /* 5 colunas fixas */
   gap: 20px;
-  width: 100%;
+  width: 90%;
 
   @media (max-width: 1200px) {
     grid-template-columns: repeat(4, 1fr); /* 4 colunas para telas menores */
@@ -79,7 +70,7 @@ export const GridContainer = styled.div`
   }
 
   @media (max-width: 576px) {
-    grid-template-columns: repeat(1, 1fr); /* 1 coluna para celulares */
+    grid-template-columns: repeat(2, 1fr); /* 1 coluna para celulares */
   }
 `;
 
@@ -96,6 +87,10 @@ export const Card = styled.div`
   padding: 20px;
   text-align: center;
   cursor: pointer;
+
+     @media (max-width: 480px) {
+     
+    }
 `;
 
 export const IconeSala = styled.div`
