@@ -1,12 +1,12 @@
 import React from 'react'
 import MenuLateral from '../components/MenuLateral'
-import TelaQuestao from '../components/TelaQuestao'
+import UploadImage from '../components/UploudImage'
 
 const Questao = () => {
   return (
     <>
     <MenuLateral/>
-    <TelaQuestao  />
+    <UploadImage  />
     </>
   )
 }

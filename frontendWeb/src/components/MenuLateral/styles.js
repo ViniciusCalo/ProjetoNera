@@ -155,16 +155,16 @@ export const Icone2 = styled.img`
     }
 `;
 export const Texto = styled.p`
-    color: #000;
-    font-family: Inter;
+    color: #135794;
     font-size: 20px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: bold;
     line-height: normal;
     text-transform: capitalize;
+    font-family: 'Roboto', sans-serif;
 
     @media (max-width: 480px) {
-        display: none
+        display: none;
     }
 `;
 

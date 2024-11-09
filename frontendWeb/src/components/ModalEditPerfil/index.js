@@ -8,6 +8,7 @@ import iconUser from './img/user.svg';
 //Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { setName, setProfileImageUrl } from '../../store/userSlice';
+import axios from 'axios';
 
 
 Modal.setAppElement('#root');
@@ -15,7 +16,7 @@ Modal.setAppElement('#root');
 const ModalEditPerfil = ({ isOpen, onRequestClose }) => {
   //Redux
   const dispatch = useDispatch();
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [token] = useState(localStorage.getItem('token'));
   const { name, profileImageUrl } = useSelector((state) => state.user);
   const [userName, setUserName] = useState(name);
   const [isEditingName, setIsEditingName] = useState(false);
@@ -35,26 +36,77 @@ const ModalEditPerfil = ({ isOpen, onRequestClose }) => {
       dispatch(setName(e.target.value));
     }
   };
+
+  // Função para atualizar imagem do user do redux utilizando api
+  const updateProfile = async (uriImagem) => {
+    try {
+        const res = await axios.put(`${process.env.REACT_APP_API_URL}/users/uploadpic`, {
+            profilepicture: uriImagem
+        },
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+        console.log(res.data);
+        dispatch(setProfileImageUrl(uriImagem));
+    } catch (err) {
+        console.log(err);
+    }
+}
   
 
-  const changeProfileImage = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const imageDataUrl = reader.result;
-        
-        // Atualiza o estado local
-        setProfileImage(imageDataUrl);
-        
-        // Atualiza o estado do Redux
-        dispatch(setProfileImageUrl(imageDataUrl));
-        
-        console.log(imageDataUrl); // Confirmação no console
-      };
-      reader.readAsDataURL(file);
+  const changeProfileImage = async (e) => {
+    const selectedImage = e.target.files[0];
+    
+    // Chama a função de upload automaticamente ao selecionar o arquivo
+    if (selectedImage) {
+        await uploadImageToAzure(selectedImage);
     }
   };
+
+  const uploadImageToAzure = async (selectedImage) => {
+    if (!selectedImage) return alert("Selecione uma imagem para enviar.");
+
+    // Defina o SAS token e a URL base do Blob Storage
+    const sasToken = process.env.REACT_APP_SAS_TOKEN;
+    const blobBaseUrl = process.env.REACT_APP_AZURE_STORAGE_URL;
+
+    try {
+        // Crie um nome único para o blob
+        const blobName = new Date().getTime() + "-" + name;
+        const signedUrl = `${blobBaseUrl}/${blobName}?${sasToken}`;
+
+        // Convertendo o arquivo de imagem para um Blob binário
+        const formData = new FormData();
+        formData.append("file", selectedImage);
+
+        // Opções para a requisição
+        const options = {
+            headers: {
+                'Content-Type': selectedImage.type,
+                'x-ms-blob-type': 'BlockBlob',
+            },
+        };
+
+        // Fazer upload da imagem com `axios` usando FormData
+        const response = await axios.put(signedUrl, selectedImage, options);
+
+        if (response.status === 201) {
+            console.log("Imagem enviada com sucesso:", signedUrl);
+            setProfileImage(signedUrl);
+            //dispatch(setProfileImageUrl(signedUrl))
+            await updateProfile(signedUrl);
+            console.log("Imagem enviada com sucesso!");
+        } else {
+            console.error("Falha ao enviar a imagem.");
+        }
+    } catch (error) {
+        console.error("Erro ao enviar a imagem:", error);
+        alert("Falha ao enviar a imagem.");
+    }
+};
+
 
   return (
     <Modal
@@ -100,6 +152,7 @@ const ModalEditPerfil = ({ isOpen, onRequestClose }) => {
               position: 'absolute',
               width: '100%',
               height: '100%',
+              borderRadius: '50%',
             }}
           />
 

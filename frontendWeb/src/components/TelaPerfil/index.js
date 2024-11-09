@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import * as C from './styles';
 import { AiTwotoneEdit } from "react-icons/ai";
-import imgPerfil from './img/user.svg';
+import imgPerfil from '../../assets/user.svg';
 import ClassroomCard from '../ClassroomCard';
 import setaEsquerda from './img/setaEsquerda.svg'; // Imagem da seta para a esquerda
 import setaDireita from './img/setaDireita.svg'; // Imagem da seta para a direita
@@ -33,7 +33,7 @@ const componentMapping = {
 const TelaPerfil = () => {
   //Redux
   const dispatch = useDispatch();
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [token] = useState(localStorage.getItem('token'));
   const { name, profileImageUrl } = useSelector((state) => state.user);
 
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -45,7 +45,7 @@ const TelaPerfil = () => {
     const getItems = async () => {
       if (token) { // Verifica se o token está definido
         try {
-          const res = await axios.get(`${process.env.REACT_APP_API_URL}/student/classrooms`, {
+          const res = await axios.get(`${process.env.REACT_APP_API_URL}/student/classroom`, {
             headers: {
               'Authorization': `Bearer ${token}`
             }
@@ -123,11 +123,11 @@ const TelaPerfil = () => {
         <C.Title>Minhas salas</C.Title>
         <C.CarrouselContainer>
         {items.length > 0 && (
-            <C.CarrouselButton onClick={scrollLeft}>
+            <C.CarrouselButton onClick={scrollLeft2}>
               <C.IconSeta src={setaEsquerda} alt="Seta Esquerda" />
             </C.CarrouselButton>
           )}
-          <C.Carrousel ref={carrouselRef}>
+          <C.Carrousel ref={carrouselRef2}>
             {items.length > 0 ? (
               items.map(item => (
                 <ClassroomCard key={item.classroomid} titulo={item.classroomname} trailId={item.trackid} />
@@ -139,7 +139,7 @@ const TelaPerfil = () => {
             )}
           </C.Carrousel>
           {items.length > 0 && (
-            <C.CarrouselButton onClick={scrollRight}>
+            <C.CarrouselButton onClick={scrollRight2}>
               <C.IconSeta src={setaDireita} alt="Seta Direita" />
             </C.CarrouselButton>
           )}
