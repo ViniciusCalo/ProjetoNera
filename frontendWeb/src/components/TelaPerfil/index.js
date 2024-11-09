@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import * as C from './styles';
 import { AiTwotoneEdit } from "react-icons/ai";
-import imgPerfil from './img/user.svg';
+import imgPerfil from '../../assets/user.svg';
 import ClassroomCard from '../ClassroomCard';
 import setaEsquerda from './img/setaEsquerda.svg'; // Imagem da seta para a esquerda
 import setaDireita from './img/setaDireita.svg'; // Imagem da seta para a direita
@@ -45,7 +45,7 @@ const TelaPerfil = () => {
     const getItems = async () => {
       if (token) { // Verifica se o token está definido
         try {
-          const res = await axios.get(`${process.env.REACT_APP_API_URL}/student/classrooms`, {
+          const res = await axios.get(`${process.env.REACT_APP_API_URL}/student/classroom`, {
             headers: {
               'Authorization': `Bearer ${token}`
             }
