@@ -4,19 +4,29 @@ import axios from 'axios';
 import ModalInfoClass from '../ModalInfoClass/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from '../../store/classroomSlice';
+import { useNavigate } from 'react-router-dom';
+
 
 const FormCreateClass = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [classroom, setClassroom] = useState([{}]);
     const [modalVisible, setModalVisible] = useState(false);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [module, selectedModule] = useState('');
     const [trail, selectedTrail] = useState('');
-    const token = useState(localStorage.getItem('token'));
+    const [ token ] = useState(localStorage.getItem('token'));
     const [Trail, setSelectedTrail] = useState('');
     const trails = useSelector((state) => state.trails);
     const [errors, setErrors] = useState({});
+
+
+    const abrirModal = () => setModalVisible(true);
+    const fecharModal = () => {
+        setModalVisible(false);
+        navigate("/teacherClass")
+        }
 
     const clearForm = () => {
         setTitle('');
@@ -163,7 +173,7 @@ const FormCreateClass = () => {
             </C.Container>
             <ModalInfoClass
                 isOpen={modalVisible}
-                setModalVisible={setModalVisible}
+                setModalVisible={fecharModal}
                 classroom={classroom}
                 idTrail={classroom.trackid}
             />

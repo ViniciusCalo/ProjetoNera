@@ -10,7 +10,7 @@ import axios from 'axios';
 const TelaClasses = () => {
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
-  const token = useState(localStorage.getItem('token'));
+  const [ token ] = useState(localStorage.getItem('token'));
   const classroom = useState('')
  
   useEffect(() => {

@@ -4,11 +4,13 @@ import * as C from './styles';
 import classPink from './img/classPink.png';
 import TrailCard from '../TrailCard';
 import fracaoicon from './img/fracao.svg';
+import { useNavigate } from 'react-router-dom';
 //Redux
 import { useSelector } from 'react-redux'
+import { Navigate } from 'react-router-dom';
 
 const ModalRoomDetails = ({ isOpen, onRequestClose, classroom, idtrail }) => {
-
+  const navigate = useNavigate();
   const trail = useSelector((state) => 
     state.trails.find((t) => t.id === idtrail)
 );
@@ -61,7 +63,7 @@ const ModalRoomDetails = ({ isOpen, onRequestClose, classroom, idtrail }) => {
           
         </div>
       </C.ModuleCard>
-      <C.StartButton>Iniciar</C.StartButton>
+      <C.StartButton  onClick={() => navigate("/memoryGame")}>Iniciar</C.StartButton>
     </Modal>
   );
 };
