@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import * as C from './styles';
 import { AiTwotoneEdit } from "react-icons/ai";
-import imgPerfil from './img/user.png';
+import imgPerfil from '../../assets/user.svg';
 import setaEsquerda from './img/setaEsquerda.svg';
 import setaDireita from './img/setaDireita.svg';
 import ModalEditPerfil from '../ModalEditPerfil'; // Importar o modal
@@ -16,7 +16,7 @@ const TelaPerfil = () => {
   //Redux
   const dispatch = useDispatch();
   const [token] = useState(localStorage.getItem('token'));
-  const { name } = useSelector((state) => state.user);
+  const { name, profileImageUrl } = useSelector((state) => state.user);
   const trails = useSelector((state) => state.trails);
 
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -46,7 +46,6 @@ const TelaPerfil = () => {
   }, [dispatch, token]);
 
   const items = useSelector((state) => state.classrooms.items || []);
-  console.log(items)
 
 
   const abrirModal = () => setIsOpen(true);
@@ -70,7 +69,7 @@ const TelaPerfil = () => {
   return (
     <C.Container>
       <C.Infos>
-        <C.imgPerfil src={imgPerfil} alt="Imagem de perfil" />
+        <C.imgPerfil src={profileImageUrl ? profileImageUrl : imgPerfil} alt="Imagem de perfil" />
         <div>
           <C.User>@{name}</C.User>
           <C.Name>{name}</C.Name>
