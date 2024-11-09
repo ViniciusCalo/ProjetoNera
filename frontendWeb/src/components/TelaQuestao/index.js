@@ -91,7 +91,6 @@ const TelaQuestao = () => {
             }
         }
     }
-    //verifcar se a resposta está correta
     const handleVerificar = async (cor, alternativa) => {
         var body = {
             "id": questoes.id_questao,
