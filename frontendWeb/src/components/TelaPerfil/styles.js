@@ -176,37 +176,6 @@ export const textConquistado = styled.p`
   text-align: center;
 `;
 
-export const ContainerE = styled.div`
-  width: 100%;
-  margin: 30px 0;
-`;
-
-export const TitleE = styled.h2`
-  font-family: 'Roboto', sans-serif;
-  font-size: 28px;
-  color: #333;
-  text-align: center;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #f29f05;
-  padding-bottom: 10px;
-`;
-
-export const InfoE = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-`;
-
-export const CardE = styled.div`
-  width: 45%;
-  margin-bottom: 20px;
-  border: 2px solid #f29f05;
-  border-radius: 10px;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-`;
-
 export const DivIcon = styled.div`
   width: 50px;
   height: 50px;

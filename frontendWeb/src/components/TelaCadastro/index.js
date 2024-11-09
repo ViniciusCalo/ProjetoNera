@@ -53,7 +53,10 @@ const TelaCadastro = () => {
   };
 
   const handleClick = async () => {
-    const requiredFields = { nome, email, senha, senhaConfirma, cpf: role === 'teacher' ? cpf : '' };
+    const requiredFields = { nome, email, senha, senhaConfirma };
+    if (role === 'teacher') {
+      requiredFields.cpf = cpf;
+    }
     let hasError = false;
 
     Object.keys(requiredFields).forEach((field) => {
@@ -72,8 +75,8 @@ const TelaCadastro = () => {
         username: nome,
         useremail: email,
         userpassword: senha,
-        role,
-        teachercpf: cpf,
+        role: role,
+        ...(role === 'teacher' && { teachercpf: cpf }),
       });
       alert('Conta criada com sucesso!');
       navigate(role === 'student' ? '/loginAluno' : '/loginProfessor');
@@ -105,106 +108,108 @@ const TelaCadastro = () => {
   };
 
   return (
-    <C.Box>
-      <C.Div>
-        <C.Logo src={Logo} />
-        <C.textEntrar>Tem uma conta?</C.textEntrar>
-        <C.ButtonEntrar href="/loginAluno">Entrar</C.ButtonEntrar>
-      </C.Div>
-      <C.Container>
-        <C.FormLogin autoComplete="off">
-          <C.Tituloform>Crie o seu perfil</C.Tituloform>
-          <C.InputE
-            onChange={(e) => {
-              setNome(e.target.value.slice(0, 150));
-              validateField('nome', e.target.value);
-            }}
-            value={nome}
-            type="text"
-            placeholder="Nome do usuário"
-          />
-          {errors.nome && <C.ErrorText>{errors.nome}</C.ErrorText>}
+    <body>
+      <C.Box>
+        <C.Div>
+          <C.Logo src={Logo} />
+          <C.textEntrar>Tem uma conta?</C.textEntrar>
+          <C.ButtonEntrar href="/loginAluno">Entrar</C.ButtonEntrar>
+        </C.Div>
+        <C.Container>
+          <C.FormLogin autoComplete="off">
+            <C.Tituloform>Crie o seu perfil</C.Tituloform>
+            <C.InputE
+              onChange={(e) => {
+                setNome(e.target.value.slice(0, 150));
+                validateField('nome', e.target.value);
+              }}
+              value={nome}
+              type="text"
+              placeholder="Nome do usuário"
+            />
+            {errors.nome && <C.ErrorText>{errors.nome}</C.ErrorText>}
 
-          <C.InputE
-            onChange={(e) => {
-              setEmail(e.target.value.slice(0, 150));
-              validateField('email', e.target.value);
-            }}
-            value={email}
-            type="text"
-            placeholder="E-mail"
-          />
-          {errors.email && <C.ErrorText>{errors.email}</C.ErrorText>}
+            <C.InputE
+              onChange={(e) => {
+                setEmail(e.target.value.slice(0, 150));
+                validateField('email', e.target.value);
+              }}
+              value={email}
+              type="text"
+              placeholder="E-mail"
+            />
+            {errors.email && <C.ErrorText>{errors.email}</C.ErrorText>}
 
-          {role === 'teacher' && (
-            <>
-              <C.InputE
-                onChange={handleCPFChange}
-                value={cpf}
-                type="text"
-                placeholder="CPF"
-              />
-              {errors.cpf && <C.ErrorText>{errors.cpf}</C.ErrorText>}
-            </>
-          )}
+            {role === 'teacher' && (
+              <>
+                <C.InputE
+                  onChange={handleCPFChange}
+                  value={cpf}
+                  type="text"
+                  placeholder="CPF"
+                />
+                {errors.cpf && <C.ErrorText>{errors.cpf}</C.ErrorText>}
+              </>
+            )}
 
-          <C.DivButton>
-            <C.PasswordContainer>
-              <C.InputS
-                style={{ border: `2px solid ${errors.senha ? 'red' : '#ccc'}` }}
-                value={senha}
-                onChange={(e) => {
-                  setSenha(e.target.value.slice(0, 15));
-                  validateField('senha', e.target.value);
-                }}
-                type={showPassword ? 'text' : 'password'}
-                placeholder="Senha"
-              />
-              <C.ShowPasswordIcon
-                onClick={() => setShowPassword(!showPassword)}
-                showPassword={showPassword}
-              />
-            </C.PasswordContainer>
-            {errors.senha && <C.ErrorText>{errors.senha}</C.ErrorText>}
+            <C.DivButton>
+              <C.PasswordContainer>
+                <C.InputS
+                  style={{ border: `2px solid ${errors.senha ? 'red' : '#ccc'}` }}
+                  value={senha}
+                  onChange={(e) => {
+                    setSenha(e.target.value.slice(0, 15));
+                    validateField('senha', e.target.value);
+                  }}
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="Senha"
+                />
+                <C.ShowPasswordIcon
+                  onClick={() => setShowPassword(!showPassword)}
+                  showPassword={showPassword}
+                />
+              </C.PasswordContainer>
+              {errors.senha && <C.ErrorText>{errors.senha}</C.ErrorText>}
 
-            <C.PasswordContainer>
-              <C.InputS
-                style={{ border: `2px solid ${errors.senhaConfirma ? 'red' : '#ccc'}` }}
-                value={senhaConfirma}
-                onChange={(e) => {
-                  setSenhaConfirma(e.target.value);
-                  validateField('senhaConfirma', e.target.value);
-                }}
-                type={showConfirmPassword ? 'text' : 'password'}
-                placeholder="Confirmar Senha"
-              />
-              <C.ShowPasswordIcon
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                showPassword={showConfirmPassword}
-              />
-            </C.PasswordContainer>
-            {errors.senhaConfirma && <C.ErrorText>{errors.senhaConfirma}</C.ErrorText>}
-          </C.DivButton>
+              <C.PasswordContainer>
+                <C.InputS
+                  style={{ border: `2px solid ${errors.senhaConfirma ? 'red' : '#ccc'}` }}
+                  value={senhaConfirma}
+                  onChange={(e) => {
+                    setSenhaConfirma(e.target.value);
+                    validateField('senhaConfirma', e.target.value);
+                  }}
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  placeholder="Confirmar Senha"
+                />
+                <C.ShowPasswordIcon
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  showPassword={showConfirmPassword}
+                />
+              </C.PasswordContainer>
+              {errors.senhaConfirma && <C.ErrorText>{errors.senhaConfirma}</C.ErrorText>}
+            </C.DivButton>
 
-          <ToggleSwitch width={'80%'} height={'8%'} onClick={toggleProfile} value={role} />
-          <C.Button type="button" onClick={handleClick}>
-            Criar Conta
-          </C.Button>
-          <C.DivLinha>
-            <C.linha1></C.linha1>
-            ou
-            <C.linha2></C.linha2>
-          </C.DivLinha>
-          <C.ButtonG>
-            <C.icon src={google} />
-            Login com Google
-          </C.ButtonG>
-          <C.Text>
-            Ao entrar no N.E.R.A., você concorda com os nossos Termos e Política de Privacidade.
-          </C.Text>
-        </C.FormLogin>
-      </C.Container>
-    </C.Box>
+            <ToggleSwitch width={'80%'} height={'8%'} onClick={toggleProfile} value={role} />
+            <C.Button type="button" onClick={handleClick}>
+              Criar Conta
+            </C.Button>
+            <C.DivLinha>
+              <C.linha1></C.linha1>
+              ou
+              <C.linha2></C.linha2>
+            </C.DivLinha>
+            <C.ButtonG>
+              <C.icon src={google} />
+              Login com Google
+            </C.ButtonG>
+            <C.Text>
+              Ao entrar no N.E.R.A., você concorda com os nossos Termos e Política de Privacidade.
+            </C.Text>
+          </C.FormLogin>
+        </C.Container>
+      </C.Box>
+    </body>
   );
 };
 

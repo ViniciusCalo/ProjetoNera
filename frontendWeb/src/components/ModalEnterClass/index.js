@@ -10,8 +10,7 @@ Modal.setAppElement('#root');
 
 const ModalEnterClass = ({ isOpen, onRequestClose }) => {
   const dispatch = useDispatch();
-  const token = localStorage.getItem('token'); // Correção aqui
-  const [tokenclassr, setTokenClass] = useState('');
+  const [token] = useState(localStorage.getItem('token'));
   const [roomCode, setRoomCode] = useState("");
   const [showRoomDetails, setShowRoomDetails] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -55,7 +54,6 @@ const ModalEnterClass = ({ isOpen, onRequestClose }) => {
 
   // Clear form function
   const clearForm = () => {
-    setTokenClass('');
     setRoomCode('');
   };
 

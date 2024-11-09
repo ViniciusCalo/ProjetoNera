@@ -24,7 +24,7 @@ const TelaModulo = () => {
             <C.textConquista>Modulo Explorador de frações</C.textConquista>
         </C.DivConquista>
         <C.DivModulo>
-            <a href='/questao'><C.M1 src={modulo} alt='Modulo 1'/></a>
+            <a href='/memoryGame'><C.M1 src={modulo} alt='Modulo 1'/></a>
             <C.C1 src={caminho1} alt='Caminho do Modulo 1'/>
             <C.M2 src={modulo} alt='Modulo 2'/>
             <C.C2 src={caminho2} alt='Caminho do Modulo 2'/>

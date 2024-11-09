@@ -13,6 +13,7 @@ import LoginAluno from './pages/LoginAluno';
 import LoginProf from './pages/LoginProf';
 import TeacherClass from './pages/TeacherClass';
 import CreateClass from './pages/CreateClass';
+import MemoryGame from './pages/MemoryGame';
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Cadastro from './pages/Cadastro';
@@ -36,6 +37,7 @@ function App() {
               <Route path="cadastro" element={<Cadastro />} />
               <Route path="teacherClass" element={<TeacherClass />} />
               <Route path='createClass' element={<CreateClass />} />
+              <Route path='memoryGame' element={<MemoryGame/>}/>
             </Route>
           </Routes>
         </BrowserRouter>
