@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import * as C from './styles';
-import cardFront from '../../assets/CardFront.png'
-import reload from '../../assets/reload.png'
-import tip from '../../assets/tip.png'
-import next from '../../assets/next.png'
+import ModalDica from '../ModalDica'; 
+import cardFront from '../../assets/CardFront.png';
+import reload from '../../assets/reload.png';
+import tip from '../../assets/tip.png';
+import next from '../../assets/next.png';
 
 const MemoryGame = () => {
   const [cards, setCards] = useState([]);
@@ -12,8 +13,8 @@ const MemoryGame = () => {
   const [matchedPairs, setMatchedPairs] = useState([]);
   const [lockBoard, setLockBoard] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false); 
 
-  // Função para buscar as cartas
   const fetchCards = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/memorygame/`);
@@ -31,12 +32,10 @@ const MemoryGame = () => {
     }
   };
 
-  // Carrega as cartas ao montar o componente
   useEffect(() => {
     fetchCards();
   }, []);
 
-  // Verifica se as cartas combinam
   useEffect(() => {
     if (secondCard) {
       checkForMatch();
@@ -75,29 +74,29 @@ const MemoryGame = () => {
 
   const isGameWon = matchedPairs.length === cards.length / 2;
 
-  // Função para reiniciar o jogo
   const handleReload = () => {
     setMatchedPairs([]);
     setFirstCard(null);
     setSecondCard(null);
     setLockBoard(false);
-    fetchCards(); // Recarrega e embaralha as cartas
+    fetchCards();
   };
 
-  // Função para mostrar uma dica (exemplo: revelar temporariamente um par de cartas)
   const handleTip = () => {
-    alert("Implementar dica!");
+    setIsModalOpen(true); 
   };
 
-  // Função para avançar para o próximo nível (pode ser customizado)
+  const closeModal = () => {
+    setIsModalOpen(false); 
+  };
+
   const handleNext = () => {
-    alert("Próximo nível não implementado ainda!");
+    alert("Próximo nível não implementado ainda!"); 
   };
 
   if (isLoading) {
     return <p>Carregando o jogo...</p>;
   }
-
 
   return (
     <>
@@ -148,10 +147,10 @@ const MemoryGame = () => {
         </C.GameContainer>
       </C.Game>
 
+      {/* Componente ModalDica */}
+      <ModalDica isOpen={isModalOpen} onRequestClose={closeModal} />
     </>
   );
-
 };
-
 
 export default MemoryGame;
