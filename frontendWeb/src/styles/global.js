@@ -8,7 +8,6 @@ const Global = createGlobalStyle`
     }
     body {
     font-family: 'Roboto', Sans-Serif;
-       background-color: #f6f7ff;
     } 
     `
     

@@ -1,13 +1,13 @@
 // lida com a lógica de acesso a dados específica para o jogo da memória. Ele se comunica com os modelos para realizar operações no banco de dados.
-const { GameImage } = require('../models/CanonicalDataModel/GameImageModel');
-const { GameResult } = require('../models/CanonicalDataModel/GameResultModel');
+const gameImage = require('../models/GameImageModel');
+const gameResult = require('../models/GameResultModel');
 
 const getImagesByGameId = async (gameid) => {
-    return await GameImage.findAll({ where: { gameid } });
+    return await gameImage.findAll({ where: { gameid } });
 };
 
 const createGameResult = async ({ score, timeSpent, resultDate, studentid, gameid }) => {
-    return await GameResult.create({
+    return await gameResult.create({
         score,
         timespent: timeSpent,
         resultdate: resultDate,
@@ -17,7 +17,7 @@ const createGameResult = async ({ score, timeSpent, resultDate, studentid, gamei
 };
 
 const getResultsByStudentId = async (studentid) => {
-    return await GameResult.findAll({ where: { studentid } });
+    return await gameResult.findAll({ where: { studentid } });
 };
 
 module.exports = {

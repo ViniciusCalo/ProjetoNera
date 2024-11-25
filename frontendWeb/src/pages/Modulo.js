@@ -1,12 +1,13 @@
 import React from 'react'
 import MenuLateral from '../components/MenuLateral'
 import TelaModulo from '../components/TelaModulo'
-
+import Global from '../styles/global'
 const Modulo = () => {
   return (
     <>
-    <MenuLateral/>
-    <TelaModulo/>
+      <Global />
+      <MenuLateral />
+      <TelaModulo />
     </>
   )
 }

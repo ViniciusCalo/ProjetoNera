@@ -4,9 +4,9 @@ import TelaLoginProf from '../components/TelaLoginProf'
 
 const LoginProf = () => {
   return (
-    <>
-    <TelaLoginProf/>
+    <>    
     <GlobalStyle/> 
+    <TelaLoginProf/>
     </>
   )
 }

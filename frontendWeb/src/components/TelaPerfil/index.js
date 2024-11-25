@@ -1,13 +1,16 @@
 // src/components/TelaPerfil/index.js
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import * as C from './styles';
 import { AiTwotoneEdit } from "react-icons/ai";
-import imgPerfil from './img/user.svg';
-import icon1 from './img/icon1.svg';
-import icon2 from './img/icon2.svg';
+import imgPerfil from '../../assets/user.svg';
+import ClassroomCard from '../ClassroomCard';
 import setaEsquerda from './img/setaEsquerda.svg'; // Imagem da seta para a esquerda
 import setaDireita from './img/setaDireita.svg'; // Imagem da seta para a direita
 import ModalEditPerfil from '../ModalEditPerfil/index';
+import axios from 'axios';
+//Redux
+import { useDispatch, useSelector } from 'react-redux';
+import { setItems } from '../../store/classroomSlice';
 
 const conquistas = [
   { id: 1, tipo: 'Card1', titulo: 'Explorador de frações' },
@@ -21,12 +24,6 @@ const conquistas = [
   { id: 9, tipo: 'Card1', titulo: 'Explorador de frações' },
 ];
 
-const experiencias = [
-  { id: 1, icon: icon1, titulo: 'Nivel Básico', pontos: '500 pontos' },
-  { id: 2, icon: icon2, titulo: 'Erros Simples', pontos: '-30 pontos' },
-  { id: 3, icon: icon1, titulo: 'Nivel Avançado', pontos: '500 pontos' },
-  { id: 4, icon: icon2, titulo: 'Erros Duplos', pontos: '-30 pontos' },
-];
 
 const componentMapping = {
   Card1: C.Card1,
@@ -34,8 +31,39 @@ const componentMapping = {
 };
 
 const TelaPerfil = () => {
+  //Redux
+  const dispatch = useDispatch();
+  const [token] = useState(localStorage.getItem('token'));
+  const { name, profileImageUrl } = useSelector((state) => state.user);
+
   const [modalIsOpen, setIsOpen] = useState(false);
   const carrouselRef = useRef(null);
+  const carrouselRef2 = useRef(null);
+
+
+  useEffect(() => {
+    const getItems = async () => {
+      if (token) { // Verifica se o token está definido
+        try {
+          const res = await axios.get(`${process.env.REACT_APP_API_URL}/student/classroom`, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          console.log(res.data.classrooms);
+          dispatch(setItems(res.data.classrooms));
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        console.log("Token não encontrado");
+      }
+    };
+
+    getItems();
+  }, [dispatch, token]);
+
+  const items = useSelector((state) => state.classrooms.items || []);
 
   const abrirModal = () => setIsOpen(true);
   const fecharModal = () => setIsOpen(false);
@@ -47,14 +75,21 @@ const TelaPerfil = () => {
   const scrollRight = () => {
     carrouselRef.current.scrollBy({ left: 200, behavior: 'smooth' });
   };
+  const scrollLeft2 = () => {
+    carrouselRef2.current.scrollBy({ left: -200, behavior: 'smooth' });
+  };
+
+  const scrollRight2 = () => {
+    carrouselRef2.current.scrollBy({ left: 200, behavior: 'smooth' });
+  };
 
   return (
     <C.Container>
       <C.Infos>
-        <C.imgPerfil src={imgPerfil} alt="Imagem de perfil" />
+        <C.imgPerfil src={profileImageUrl ? profileImageUrl : imgPerfil} alt="Imagem de perfil" />
         <div>
-          <C.User>@{localStorage.getItem("usuario")}</C.User>
-          <C.Name>{localStorage.getItem("usuario")}</C.Name>
+          <C.User>@{name}</C.User>
+          <C.Name>{name}</C.Name>
         </div>
         <C.ButtonEditar onClick={abrirModal}>
           <AiTwotoneEdit /> Editar Perfil
@@ -84,20 +119,32 @@ const TelaPerfil = () => {
         </C.CarrouselContainer>
       </C.ContainerC>
 
-      <C.ContainerE>
-        <C.TitleE>Experiência</C.TitleE>
-        <C.InfoE>
-          {experiencias.map((exp) => (
-            <C.CardE key={exp.id}>
-              <C.DivIcon><C.icon src={exp.icon} alt="Ícone" /></C.DivIcon>
-              <C.DivText>
-                <C.Text>{exp.titulo}</C.Text>
-                <C.Text2>{exp.pontos}</C.Text2>
-              </C.DivText>
-            </C.CardE>
-          ))}
-        </C.InfoE>
-      </C.ContainerE>
+      <C.ContainerC>
+        <C.Title>Minhas salas</C.Title>
+        <C.CarrouselContainer>
+        {items.length > 0 && (
+            <C.CarrouselButton onClick={scrollLeft2}>
+              <C.IconSeta src={setaEsquerda} alt="Seta Esquerda" />
+            </C.CarrouselButton>
+          )}
+          <C.Carrousel ref={carrouselRef2}>
+            {items.length > 0 ? (
+              items.map(item => (
+                <ClassroomCard key={item.classroomid} titulo={item.classroomname} trailId={item.trackid} />
+              ))
+            ) : (
+              <div className="empty-message">
+                Nenhuma sala disponível. <a href="/createClass">Clique aqui</a> para entrar em um nova sala.
+              </div>
+            )}
+          </C.Carrousel>
+          {items.length > 0 && (
+            <C.CarrouselButton onClick={scrollRight2}>
+              <C.IconSeta src={setaDireita} alt="Seta Direita" />
+            </C.CarrouselButton>
+          )}
+        </C.CarrouselContainer>
+      </C.ContainerC>
 
       <ModalEditPerfil isOpen={modalIsOpen} onRequestClose={fecharModal} />
     </C.Container>

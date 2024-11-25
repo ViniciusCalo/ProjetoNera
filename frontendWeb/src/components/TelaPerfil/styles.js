@@ -52,6 +52,14 @@ export const ButtonEditar = styled.button`
 export const ContainerC = styled.div`
   width: 100%;
   margin: 30px 0;
+      @media (max-width: 1200px) {
+        width: 80%;
+    }
+    @media (max-width: 480px) {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
 `;
 
 export const Title = styled.h2`
@@ -69,18 +77,33 @@ export const CarrouselContainer = styled.div`
   align-items: center;
   width: 100%;
   position: relative;
+       @media (min-width: 480px) {
+ align-items: center;
+    justify-content: center;
+    }
+
 `;
 
 export const CarrouselButton = styled.button`
   background: transparent;
   border: none;
   cursor: pointer;
-  z-index: 1;
+  z-index: 0;
 
   &:disabled {
     cursor: not-allowed;
     opacity: 0.5;
   }
+`;
+
+export const CarrouselButton2 = styled.button`
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 1;
+     @media (min-width: 480px) {
+display: none;
+    }
 `;
 
 export const IconSeta = styled.img`
@@ -102,6 +125,23 @@ export const Carrousel = styled.div`
 
   & > div {
     flex: 0 0 auto;
+  }
+`;
+export const Carrousel2 = styled.div`
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
+  padding: 10px;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  & > div {
+    flex: 0 0 auto;
+
   }
 `;
 
@@ -134,37 +174,6 @@ export const textConquistado = styled.p`
   font-size: 14px;
   color: #888;
   text-align: center;
-`;
-
-export const ContainerE = styled.div`
-  width: 100%;
-  margin: 30px 0;
-`;
-
-export const TitleE = styled.h2`
-  font-family: 'Roboto', sans-serif;
-  font-size: 28px;
-  color: #333;
-  text-align: center;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #f29f05;
-  padding-bottom: 10px;
-`;
-
-export const InfoE = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-`;
-
-export const CardE = styled.div`
-  width: 45%;
-  margin-bottom: 20px;
-  border: 2px solid #f29f05;
-  border-radius: 10px;
-  padding: 10px;
-  display: flex;
-  align-items: center;
 `;
 
 export const DivIcon = styled.div`

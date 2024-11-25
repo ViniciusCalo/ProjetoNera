@@ -1,107 +1,43 @@
 const request = require('supertest');
 const express = require('express');
-const memoryGameRepo = require('../repositories/MemoryGameRepository');
-const memoryGameController = require('../controllers/MemoryGameController');
+const passport = require('passport');
+const vwMemoryGamePairsController = require('../controllers/GamesController/MemoryGameController');
+const VwMemoryGamePairsRepository = require('../repositories/GamesRepository/MemoryGameRepository');
+const app = require('../app')
 
-jest.mock('../repositories/MemoryGameRepository');
+// Mock do `VwMemoryGamePairsRepository`
+jest.mock('../repositories/GamesRepository/MemoryGameRepository');
 
-const app = express();
-app.use(express.json());
-app.use('/memory-game', memoryGameController);
-
-describe('Testando todas as rotas do jogo da memória', () => {
-    describe('GET /memory-game/:gameid/images', () => {
-        test('Deve responder com uma lista de imagens do jogo da memória', async () => {
-            const mockImages = ['image1.png', 'image2.png'];
-            memoryGameRepo.getImagesByGameId.mockResolvedValue(mockImages);
-
-            const response = await request(app).get('/memory-game/1/images');
-
-            expect(response.statusCode).toBe(200);
-            expect(response.body).toEqual(mockImages);
-        });
-
-        test('Deve responder com um erro ao tentar obter imagens', async () => {
-            memoryGameRepo.getImagesByGameId.mockRejectedValue(new Error('Error fetching images'));
-
-            const response = await request(app).get('/memory-game/1/images');
-
-            expect(response.statusCode).toBe(500);
-            expect(response.body).toHaveProperty('message', 'Error fetching images');
-        });
+describe('vwMemoryGamePairsController', () => {
+    beforeEach(() => {
+        // Limpa os mocks antes de cada teste
+        jest.clearAllMocks();
     });
 
-    describe('POST /memory-game/result', () => {
-        test('Deve responder com uma mensagem e um objeto de resultado do jogo criado', async () => {
-            const mockResult = {
-                score: 100,
-                timeSpent: 60,
-                resultDate: '2024-07-29',
-                studentid: 1,
-                gameid: 1
-            };
-            memoryGameRepo.createGameResult.mockResolvedValue(mockResult);
-
-            const response = await request(app)
-                .post('/memory-game/result')
-                .send(mockResult);
-
-            expect(response.statusCode).toBe(201);
-            expect(response.body.message).toBe('Game result created successfully');
-            expect(response.body.result).toEqual(mockResult);
-        });
-
-        test('Deve responder com um erro ao tentar criar resultado do jogo', async () => {
-            memoryGameRepo.createGameResult.mockRejectedValue(new Error('Error creating game result'));
-
-            const response = await request(app)
-                .post('/memory-game/result')
-                .send({
-                    score: 100,
-                    timeSpent: 60,
-                    resultDate: '2024-07-29',
-                    studentid: 1,
-                    gameid: 1
-                });
-
-            expect(response.statusCode).toBe(500);
-            expect(response.body).toHaveProperty('message', 'Error creating game result');
-        });
-    });
-
-    describe('GET /memory-game/student/:studentid/results', () => {
-        test('Deve responder com uma lista de resultados do jogo da memória', async () => {
-            const mockResults = [
-                {
-                    score: 100,
-                    timeSpent: 60,
-                    resultDate: '2024-07-29',
-                    studentid: 1,
-                    gameid: 1
-                },
-                {
-                    score: 150,
-                    timeSpent: 50,
-                    resultDate: '2024-07-30',
-                    studentid: 1,
-                    gameid: 2
-                }
+    describe('GET /memory-game-pairs', () => {
+        it('deve retornar todos os pares de imagens', async () => {
+            const mockPairs = [
+                { id: 1, gamename: 'Memory Game 1', imageUrl: 'image1.png' },
+                { id: 2, gamename: 'Memory Game 2', imageUrl: 'image2.png' }
             ];
-            memoryGameRepo.getResultsByStudentId.mockResolvedValue(mockResults);
 
-            const response = await request(app).get('/memory-game/student/1/results');
+            // Mock da função findAll
+            VwMemoryGamePairsRepository.findAll.mockResolvedValue(mockPairs);
 
-            expect(response.statusCode).toBe(200);
-            expect(response.body).toEqual(mockResults);
+            const response = await request(app).get('/memorygame');
+
+            expect(response.status).toBe(200);
+            expect(response.body).toEqual(mockPairs);
         });
 
-        test('Deve responder com um erro ao tentar obter resultados do jogo', async () => {
-            memoryGameRepo.getResultsByStudentId.mockRejectedValue(new Error('Error fetching game results'));
+        it('deve retornar erro 500 ao falhar ao buscar os pares de imagens', async () => {
+            // Mock para simular um erro ao buscar os pares
+            VwMemoryGamePairsRepository.findAll.mockRejectedValue(new Error('Erro ao buscar pares de imagens'));
 
-            const response = await request(app).get('/memory-game/student/1/results');
+            const response = await request(app).get('/memorygame');
 
-            expect(response.statusCode).toBe(500);
-            expect(response.body).toHaveProperty('message', 'Error fetching game results');
+            expect(response.status).toBe(500);
+            expect(response.body).toEqual({ message: 'Erro ao buscar pares de imagens' });
         });
     });
 });
