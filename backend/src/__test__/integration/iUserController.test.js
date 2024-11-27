@@ -85,5 +85,50 @@ describe('Testando todas as rotas de usuario de foma integrada', () => {
             expect(userOnDatabase.username).toBe(newUser.username);
 
         });
+
+        //Criar teste de erro!!
+    });
+
+    //Test Integrado de login do aluno
+    describe('POST /users/login', () => {
+        test('Deve responder com uma mensagem de login para aluno com sucesso', async () => {
+            const newUser = {
+                useremail: 'integrationTestStudent@gmail.com',
+                userpassword: 'password',
+                role: 'student'
+            };
+
+            const response = await request(app)
+                .post('/users/login')
+                .send(newUser);
+
+            expect(response.statusCode).toEqual(200);
+            //Verifica se a resposta contém o novo professor cadastrado
+            const userOnDatabase = await User.findOne({ where: { useremail: newUser.useremail } });
+            expect(userOnDatabase).toBeTruthy();
+            expect(userOnDatabase.useremail).toBe(newUser.useremail);
+        });
+    });
+
+    //Test Integrado de login do professor
+    describe('POST /users/login', () => {
+        test('Deve responder com uma mensagem de login para professor com sucesso', async () => {
+            const newUser = {
+                useremail: 'testIntegration@gmail.com',
+                userpassword: 'password',
+                role: 'teacher',
+                teachercpf: '123.456.789-01'
+            };
+
+            const response = await request(app)
+                .post('/users/login')
+                .send(newUser);
+
+            expect(response.statusCode).toEqual(200);
+            //Verifica se a resposta contém o novo professor cadastrado
+            const userOnDatabase = await User.findOne({ where: { useremail: newUser.useremail } });
+            expect(userOnDatabase).toBeTruthy();
+            expect(userOnDatabase.useremail).toBe(newUser.useremail);
+        });
     });
 });
