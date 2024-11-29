@@ -74,6 +74,7 @@ const TelaLoginProf = () => {
       return;
     }
 
+    console.log(cpf.replace(/\D/g, ''))
     try {
       const res = await axios.post(`${apiUrl}/users/login`, {
         useremail: email,
