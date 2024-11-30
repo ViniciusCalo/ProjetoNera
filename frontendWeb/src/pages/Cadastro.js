@@ -1,12 +1,11 @@
 import React from 'react'
-import GlobalStyle from '../styles/login'
+import '../styles/accessStyles.css';
 import TelaCadastro from '../components/TelaCadastro'
 
 const Cadastro = () => {
   return (
     <>
     <TelaCadastro/>
-    <GlobalStyle/>
     </>
   )
 }

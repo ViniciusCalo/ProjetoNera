@@ -1,5 +1,5 @@
 import React from 'react'
-import GlobalStyle from '../styles/global'
+import '../styles/studentStyles.css';
 import TelaMemoryGame from '../components/MemoryGame'
 import MenuLateral from '../components/MenuLateral'
 
@@ -8,7 +8,6 @@ const MemoryGame = () => {
     <>
     <MenuLateral/>
     <TelaMemoryGame/>
-    <GlobalStyle/>
     </>
   )
 }

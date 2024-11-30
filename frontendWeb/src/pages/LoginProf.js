@@ -1,11 +1,10 @@
 import React from 'react'
-import GlobalStyle from '../styles/login'
+import '../styles/accessStyles.css';
 import TelaLoginProf from '../components/TelaLoginProf'
 
 const LoginProf = () => {
   return (
     <>    
-    <GlobalStyle/> 
     <TelaLoginProf/>
     </>
   )

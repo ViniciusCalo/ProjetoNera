@@ -1,12 +1,11 @@
 import React from 'react'
 import MenuLateral from '../components/MenuLateral'
 import TelaPerfil from '../components/TelaPerfil'
-import Global from '../styles/global'
+import '../styles/studentStyles.css';
 
 const Perfil = () => {
   return (
     <>
-    <Global/>
     <MenuLateral/>
     <TelaPerfil/>
     </>
