@@ -1,14 +1,14 @@
 import React from 'react'
 import MenuLateral from '../components/MenuLateral'
-import UploadImage from '../components/UploudImage'
+import TelaQuestao2 from '../components/TelaQuestao2'
 
-const Questao = () => {
+const Question2 = () => {
   return (
     <>
     <MenuLateral/>
-    <UploadImage  />
+    <TelaQuestao2  />
     </>
   )
 }
 
-export default Questao
+export default Question2

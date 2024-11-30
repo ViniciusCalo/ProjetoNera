@@ -1,14 +1,16 @@
 import React from 'react'
+import StudentStyles from '../styles/studentStyles'
 import MenuLateral from '../components/MenuLateral'
 import TelaModulo from '../components/TelaModulo'
-import '../styles/studentStyles.css';
-const Modulo = () => {
+
+const Module = () => {
   return (
     <>
+      <StudentStyles />
       <MenuLateral />
       <TelaModulo />
     </>
   )
 }
 
-export default Modulo
+export default Module

@@ -1,13 +1,14 @@
 import React from 'react'
 import MenuLateral from '../components/MenuLateral'
 import TelaTrilha from '../components/TelaTrilha'
-import '../styles/studentStyles.css';
+import StudentStyles from '../styles/studentStyles'
 
 const Trilha = () => {
   return (
     <>
     <MenuLateral/>
     <TelaTrilha/>
+    <StudentStyles/>
     </>
   )
 }
