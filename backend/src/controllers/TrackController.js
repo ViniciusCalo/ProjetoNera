@@ -1,4 +1,4 @@
-const trackRepo = require('../repositories/trackRepository');
+const trackRepo = require('../repositories/TrackRepository');
 const express = require('express');
 const router = express.Router();
 

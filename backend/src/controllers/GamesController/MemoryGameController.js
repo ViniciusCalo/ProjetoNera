@@ -4,19 +4,6 @@ const passport = require('passport');
 const router = express.Router();
 const VwMemoryGamePairsRepository = require('../../repositories/GamesRepository/MemoryGameRepository');
 
-router.get('/asa', async (request, response) => {
-    try {
-        console.log("Usuario ", request.user);
-        const classrooms = await classroomRepo.getAllClassrooms();
-        return response.status(200).json(classrooms);
-    } catch (error) {
-        console.error('Error getting all classrooms:', error);
-        return response.status(500).json({ message: error.message || "Internal server error" });
-    }
-});
-
-
-
 // Método para obter todos os pares de imagens
 router.get('/', async (request, response) => {
     try {
