@@ -1,13 +1,13 @@
 import React from 'react'
 import StudentStyles from '../styles/studentStyles'
-import MenuLateral from '../components/MenuLateral'
+import SideMenuStudent from '../components/SideMenuStudent'
 import TelaPerfil from '../components/TelaPerfil'
 
 const StudentProfile = () => {
   return (
     <>
       <StudentStyles />
-      <MenuLateral />
+      <SideMenuStudent />
       <TelaPerfil />
     </>
   )

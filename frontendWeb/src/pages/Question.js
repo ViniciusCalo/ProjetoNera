@@ -1,11 +1,11 @@
 import React from 'react'
-import MenuLateral from '../components/MenuLateral'
+import SideMenuStudent from '../components/SideMenuStudent'
 import UploadImage from '../components/UploudImage'
 
 const Question = () => {
   return (
     <>
-    <MenuLateral/>
+    <SideMenuStudent/>
     <UploadImage  />
     </>
   )

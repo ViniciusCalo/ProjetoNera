@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { setName, setProfileImageUrl } from '../../store/userSlice';
 import axios from "axios";
 
-const TelaLoginAluno = () => {
+const StudentLoginScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const apiUrl = process.env.REACT_APP_API_URL;
@@ -67,7 +67,7 @@ const TelaLoginAluno = () => {
       createProfile(res.data.username, res.data.profilepic);
       if (res.data.token) {
         storeData(res.data.token);
-        navigate(role === 'teacher' ? '/perfilProf' : '/perfil');
+        navigate(role === 'teacher' ? '/teacherProfile' : '/studentProfile');
       }
       clearForm();
     } catch (err) {
@@ -82,7 +82,7 @@ const TelaLoginAluno = () => {
       <C.Container>
         <C.DivButton>
           <C.ButtonAlu>Estudante</C.ButtonAlu>
-          <C.ButtonProf href='/loginProfessor'>Professor</C.ButtonProf>
+          <C.ButtonProf href='/teacherLogin'>Professor</C.ButtonProf>
         </C.DivButton>
         <C.FormLogin autoComplete="off">
           <C.InputE
@@ -118,7 +118,7 @@ const TelaLoginAluno = () => {
             <C.linha2></C.linha2>
           </C.DivLinha>
           <C.ButtonG><C.icon src={google} />Login com Google</C.ButtonG>
-          <C.ButtonC href='/cadastro'>Criar Conta</C.ButtonC>
+          <C.ButtonC href='/register'>Criar Conta</C.ButtonC>
         </C.FormLogin>
       </C.Container>
     </C.Box>
@@ -126,4 +126,4 @@ const TelaLoginAluno = () => {
   );
 };
 
-export default TelaLoginAluno;
+export default StudentLoginScreen;

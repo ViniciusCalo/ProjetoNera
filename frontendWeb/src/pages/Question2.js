@@ -1,11 +1,11 @@
 import React from 'react'
-import MenuLateral from '../components/MenuLateral'
+import SideMenuStudent from '../components/SideMenuStudent'
 import TelaQuestao2 from '../components/TelaQuestao2'
 
 const Question2 = () => {
   return (
     <>
-    <MenuLateral/>
+    <SideMenuStudent/>
     <TelaQuestao2  />
     </>
   )

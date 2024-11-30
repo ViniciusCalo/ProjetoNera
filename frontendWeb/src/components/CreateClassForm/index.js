@@ -166,7 +166,7 @@ const CreateClassForm = () => {
                     {errors.module && <C.ErrorText>{errors.module}</C.ErrorText>}
 
                     <C.ButtonGroup>
-                        <C.Button cancel>Cancelar</C.Button>
+                        <C.Button cancel onClick={() => navigate('/teacherProfile')}>Cancelar</C.Button>
                         <C.Button onClick={creatClassroom}>Salvar</C.Button>
                     </C.ButtonGroup>
                 </C.Form>

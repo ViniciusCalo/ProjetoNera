@@ -1,12 +1,12 @@
 import React from 'react'
-import MenuLateral from '../components/MenuLateral'
+import SideMenuStudent from '../components/SideMenuStudent'
 import TelaTrilha from '../components/TelaTrilha'
 import StudentStyles from '../styles/studentStyles'
 
 const Trilha = () => {
   return (
     <>
-    <MenuLateral/>
+    <SideMenuStudent/>
     <TelaTrilha/>
     <StudentStyles/>
     </>
