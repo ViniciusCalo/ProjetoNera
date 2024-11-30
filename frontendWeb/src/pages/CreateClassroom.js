@@ -1,14 +1,14 @@
 import React from 'react'
 import TeacherStyles from '../styles/teacherStyles'
 import MenuLateral from '../components/MenuLateralProf'
-import FormCreateClass from '../components/FormCreateClass'
+import CreateClassForm from '../components/CreateClassForm'
 
 const CreateClassroom = () => {
   return (
     <>
       <TeacherStyles />
       <MenuLateral />
-      <FormCreateClass />
+      <CreateClassForm />
     </>
   )
 }

@@ -7,7 +7,7 @@ import { addItem } from '../../store/classroomSlice';
 import { useNavigate } from 'react-router-dom';
 
 
-const FormCreateClass = () => {
+const CreateClassForm = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [classroom, setClassroom] = useState([{}]);
@@ -181,4 +181,4 @@ const FormCreateClass = () => {
     );
 };
 
-export default FormCreateClass;
+export default CreateClassForm;

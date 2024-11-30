@@ -1,13 +1,14 @@
 import React from 'react'
+import TeacherStyles from '../styles/teacherStyles'
 import MenuLateral from '../components/MenuLateralProf'
-import ClassRoom from '../components/ClassRoom'
-import '../styles/teacherStyles.js';
+import Classroom from '../components/Classroom';
 
 const TeacherClass = () => {
   return (
     <>
-    <MenuLateral/>
-    <ClassRoom />
+      <TeacherStyles />
+      <MenuLateral />
+      <Classroom />
     </>
   )
 }

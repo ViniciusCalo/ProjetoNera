@@ -12,7 +12,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setItems } from '../../store/classroomSlice';
 
-const TelaPerfil = () => {
+const TeacherProfileScreen = () => {
   //Redux
   const dispatch = useDispatch();
   const [token] = useState(localStorage.getItem('token'));
@@ -94,7 +94,7 @@ const TelaPerfil = () => {
               ))
             ) : (
               <div className="empty-message">
-                Nenhuma sala disponível. <a href="/createClass">Clique aqui</a> para criar uma nova sala.
+                Nenhuma sala disponível. <a href="/createClassroom">Clique aqui</a> para criar uma nova sala.
               </div>
             )}
           </C.Carrousel>
@@ -129,4 +129,4 @@ const TelaPerfil = () => {
   );
 }
 
-export default TelaPerfil;
+export default TeacherProfileScreen;

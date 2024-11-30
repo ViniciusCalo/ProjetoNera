@@ -85,7 +85,7 @@ const TelaLoginProf = () => {
       createProfile(res.data.username, res.data.profilepic);
       if (res.data.token) {
         storeData(res.data.token);
-        navigate('/perfilProf');
+        navigate('/teacherProfile');
       }
       clearForm();
     } catch (err) {
@@ -99,8 +99,8 @@ const TelaLoginProf = () => {
       <C.Logo src={Logo} />
       <C.Container>
         <C.DivButton>
-          <C.ButtonAlu href='/loginAluno'>Estudante</C.ButtonAlu>
-          <C.ButtonProf href='/loginProfessor'>Professor</C.ButtonProf>
+          <C.ButtonAlu href='/studentLogin'>Estudante</C.ButtonAlu>
+          <C.ButtonProf href='/teacherLogin'>Professor</C.ButtonProf>
         </C.DivButton>
         <C.FormLogin autoComplete="off">
           <C.InputE
@@ -144,7 +144,7 @@ const TelaLoginProf = () => {
             <C.linha2></C.linha2>
           </C.DivLinha>
           <C.ButtonG><C.icon src={google} />Login com Google</C.ButtonG>
-          <C.ButtonC href='/cadastro'>Criar Conta</C.ButtonC>
+          <C.ButtonC href='/register'>Criar Conta</C.ButtonC>
         </C.FormLogin>
       </C.Container>
     </C.Box>
