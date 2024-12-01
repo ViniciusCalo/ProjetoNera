@@ -1,34 +1,25 @@
 const User = require('../../models/UserModel.js');
-const { sequelize } = require('../../database/db.js');
+const { sequelize, Sequelize } = require('../../database/db.js'); // Importando Sequelize para usar `Op`
 const request = require('supertest');
-const bcrypt = require('bcrypt');
 const express = require('express');
+const bcrypt = require('bcrypt');
 const userController = require('../../controllers/UserController');
+const Teacher = require('../../models/TeacherModel.js');
+const Student = require('../../models/StudentModel.js');
 
-//Testes de integração
-describe('Testando todas as rotas de usuario de foma integrada', () => {
+describe('Testando todas as rotas de usuario de forma integrada', () => {
     let app;
-    let newUser;
 
-    //Antes de rodar qualquer teste, é criado um Express para simular o ambiente
     beforeAll(async () => {
-        //Configurando o ambiente de testes (express)
+        // Configurando o ambiente de testes (Express)
         app = express();
-        app.use(express.json()); // Middleware para parsing de JSON
+        app.use(express.json());
         app.use('/users', userController);
-
-        //conecta ao banco e sincroniza os models
+       
     });
 
-    // beforeEach(async () => {
-    //     // Garantir que o usuário não existe no banco
-    //     if (newUser && newUser.useremail) {
-    //         await User.destroy({ where: { useremail: newUser.useremail } });
-    //     }
-    // });
-
-    afterAll(async () => {
-        await sequelize.close();
+    afterAll(async () => {    
+        await sequelize.close();      
     });
 
     describe('POST Teacher /users/register', () => {
@@ -54,9 +45,6 @@ describe('Testando todas as rotas de usuario de foma integrada', () => {
             expect(userOnDatabase).toBeTruthy();
             expect(userOnDatabase.username).toBe(newUser.username);
 
-            // // Opcional: Verifique se a senha foi corretamente criptografada
-            // const isPasswordValid = await bcrypt.compare(newUser.userpassword, newUser.userpassword);
-            // expect(isPasswordValid).toBe(true);
         });
 
         //Criar teste de erro!!
