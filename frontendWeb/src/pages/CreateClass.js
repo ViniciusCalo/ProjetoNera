@@ -1,6 +1,6 @@
 import React from 'react'
 import MenuLateral from '../components/MenuLateralProf'
-import Global from '../styles/global'
+import Global from '../styles/globalteacher'
 import FormCreateClass from '../components/FormCreateClass'
 
 const CreateClass = () => {

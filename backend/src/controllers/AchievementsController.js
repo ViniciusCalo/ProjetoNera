@@ -1,4 +1,4 @@
-const achievementRepo = require('../repositories/AchievementsRepository');
+const achievementRepo = require('../repositories/achievements/AchievementsRepository');
 const express = require('express');
 const router = express.Router();
 

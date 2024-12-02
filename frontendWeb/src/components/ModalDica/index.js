@@ -1,32 +1,28 @@
-import React from 'react'
-// Importa a modal do react-modal
-import Modal from 'react-modal';
+import React from 'react';
+import * as S from './styles'; 
+import tip from './img/tip.png';
+import exemploSvg from './img/exemplo.svg';
+import seta from './img/set.svg'; 
 
-const ModalDica = () => {
-    const [modalIsOpen, setIsOpen] = React.useState(false);
-     // Função que abre a modal
-  function abrirModal() {
-    setIsOpen(true);
-  }
+S.StyledModal.setAppElement('#root');
 
-  // Função que fecha a modal
-  function fecharModal() {
-    setIsOpen(false);
-  }
+const ModalDica = ({ isOpen, onRequestClose }) => {
   return (
-    <div>
-      <button onClick={abrirModal}>Abrir modal</button>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={fecharModal}
-        contentLabel="Modal de exemplo"
-      >
-        <h2>Olá</h2>
-        <button onClick={fecharModal}>Fechar</button>
-        <div>Eu sou uma modal</div>
-      </Modal>
-    </div>
-  )
-}
+    <S.StyledModal isOpen={isOpen} onRequestClose={onRequestClose}>
+      <S.BackButton onClick={onRequestClose}>
+        <S.IconButton src={seta} alt="Voltar" />
+      </S.BackButton>
+      <S.Header>
+        <S.Icon src={tip} alt="Dica" />
+      </S.Header>
+      <S.RoomTitle>Dica</S.RoomTitle>
+      <S.Description>Encontre as combinações.</S.Description>
 
-export default ModalDica
+      <S.ImageContainer>
+        <S.Image src={exemploSvg} alt="Exemplo" />
+      </S.ImageContainer>
+    </S.StyledModal>
+  );
+};
+
+export default ModalDica;

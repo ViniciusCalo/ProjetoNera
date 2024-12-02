@@ -1,12 +1,12 @@
 const teacherRepo = require('../repositories/TeacherRepository');
-const classroomModel = require('../models/CanonicalDataModel/ClassroomModel');
+const classroom = require('../models/ClassroomModel');
 const express = require('express');
 const passport = require('passport');
 
 
 const getAllClassrooms = async () => {
     try {
-        const classrooms = await classroomModel.Classroom.findAll();
+        const classrooms = await classroom.findAll();
         return classrooms;
     } catch (error) {
         console.error('Erro ao tentar trazer as salas: ', error);
@@ -16,7 +16,7 @@ const getAllClassrooms = async () => {
 
 const getClassroomById = async (classroomid) => {
     try{
-        const classrooms = await classroomModel.Classroom.findAll({where: {classroomid}});
+        const classrooms = await classroom.findAll({where: {classroomid}});
         if (!classrooms) {
             throw new Error('Classroom not found');
         }
@@ -29,7 +29,7 @@ const getClassroomById = async (classroomid) => {
 
 const getAllClassroomByTeacherId = async (teacherid) => {
     try {
-        const classrooms = await classroomModel.Classroom.findAll({ where: { teacherid } });
+        const classrooms = await classroom.findAll({ where: { teacherid } });
         return classrooms;
     } catch (error) {
         console.error(`Erro ao tentar trazer as salas do professor ${teacherid}: `, error);
@@ -39,12 +39,12 @@ const getAllClassroomByTeacherId = async (teacherid) => {
 
 const createClassroom = async ({ classroomname, classroomdescription, trackid, moduleid, tokenclass, teacherid }) => {
     try {
-        const classroomExists = await classroomModel.Classroom.findOne({ where: { classroomname } });
+        const classroomExists = await classroom.findOne({ where: { classroomname } });
         if (classroomExists) {
             throw new Error('Classroom already exists');
         }
 
-        const newClassroom = await classroomModel.Classroom.create({
+        const newClassroom = await classroom.create({
             classroomname,
             classroomdescription,
             trackid,
@@ -66,11 +66,11 @@ const editClassroom = async ({ classroomid, classroomname, classroomdescription,
         if (!teacherExists) {
             throw new Error('Teacher does not exist');
         }
-        const classroomExists = await classroomModel.Classroom.findOne({ where: { classroomid } });
+        const classroomExists = await classroom.findOne({ where: { classroomid } });
         if (!classroomExists) {
             throw new Error('Classroom do not exists, unable to edit');
         }
-        const updatedClassroom = await classroomModel.Classroom.update({
+        const updatedClassroom = await classroom.update({
             classroomdescription,
             trackid,
             moduleid,
