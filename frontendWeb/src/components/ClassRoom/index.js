@@ -7,7 +7,7 @@ import { setItems } from '../../store/classroomSlice';
 import axios from 'axios';
 
 
-const TelaClasses = () => {
+const Classroom = () => {
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
   const [ token ] = useState(localStorage.getItem('token'));
@@ -52,7 +52,7 @@ const TelaClasses = () => {
               ))
             ) : (
               <div className="empty-message">
-                Nenhuma sala disponível. <a href="/createClass">Clique aqui</a> para criar uma nova sala.
+                Nenhuma sala disponível. <a href="/createClassroom">Clique aqui</a> para criar uma nova sala.
               </div>
             )}
           </C.GridContainer>
@@ -66,4 +66,4 @@ const TelaClasses = () => {
   );
 };
 
-export default TelaClasses;
+export default Classroom;

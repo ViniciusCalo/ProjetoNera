@@ -76,7 +76,7 @@ const TelaCadastro = () => {
         useremail: email,
         userpassword: senha,
         role: role,
-        ...(role === 'teacher' && { teachercpf: cpf }),
+        ...(role === 'teacher' && { teachercpf: cpf.replace(/\D/g, '') }),
       });
       alert('Conta criada com sucesso!');
       navigate(role === 'student' ? '/loginAluno' : '/loginProfessor');
