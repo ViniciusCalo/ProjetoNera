@@ -37,9 +37,7 @@ const addStudentOnClassroom = async ({ studentid, tokenclass }) => {
         }
         console.log(searchTeacherName);
 
-        const teacherName = await user.findOne({ where: { userid: searchTeacherName.teacherid}});
-        //const teacherName = await user.findOne({ where: { userid: searchTeacherName.userid}});
-        console.log(teacherName)
+        const teacherName = await user.findOne({ where: { userid: searchTeacherName.userid}});
         // Buscar detalhes da sala de aula
         const classroomDetails = {
             classroomid: classroomExist.classroomid,

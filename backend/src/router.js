@@ -9,11 +9,13 @@ const track = require('./controllers/TrackController');
 const moduleController = require('./controllers/ModuleController');
 const homeTeacher = require('./controllers/HomeTeacherController');
 const homeStudent = require('./controllers/HomeStudentController');
+const teacherClassroomScreen = require('./controllers/TeacherClassroomCDMController');
 const studentAchievement = require('./controllers/explorarFracoesController');
 const router = express.Router();
 
 router.use('/homeTeacher', homeTeacher)
 router.use('/homeStudent', homeStudent);
+router.use('/teacherclassrooms', teacherClassroomScreen);
 router.use("/users", user);
 router.use("/classrooms", classroom);
 router.use("/memorygame", MemoryGame)
