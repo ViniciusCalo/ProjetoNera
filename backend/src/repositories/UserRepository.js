@@ -1,6 +1,6 @@
 const user = require('../models/UserModel');
 const classroom = require('../models/ClassroomModel');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const jwtConfig = require('../config/jwtConfig');
 

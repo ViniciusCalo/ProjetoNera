@@ -1,6 +1,6 @@
 const teacher = require('../models/TeacherModel');
 const user = require('../models/UserModel');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const jwtConfig = require('../config/jwtConfig');
 const { captureRejectionSymbol } = require('supertest/lib/test');
