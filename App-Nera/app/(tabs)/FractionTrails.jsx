@@ -9,8 +9,8 @@ import HeaderTeacher from '../../components/teacher/HeaderTeacher';
 
 const FractionTrails = () => {
     const navigation = useNavigation();
-    const handleAccessModulePress = () => {
-        navigation.navigate('FractionScreen');
+    const handleAccessModulePress = (trail) => {
+        navigation.navigate(trail);
     };
 
     return (
@@ -25,7 +25,7 @@ const FractionTrails = () => {
                 </View>
                 <View style={styles.grid}>
                     <View style={[styles.moduleContainer, styles.right]}>
-                        <ButtonModules onPress={handleAccessModulePress} color={colors.rosa} />
+                        <ButtonModules onPress={() => handleAccessModulePress('FractionScreen')} color={colors.rosa} />
                     </View>
                     <Svg height="100" width="100">
                         <Path
@@ -37,7 +37,7 @@ const FractionTrails = () => {
                         />
                     </Svg>
                     <View style={[styles.moduleContainer, styles.left]}>
-                        <ButtonModules color={colors.rosa} />
+                        <ButtonModules onPress={() => handleAccessModulePress('MemoryGame')} color={colors.rosa} />
                     </View>
                     <Svg height="100" width="100">
                         <Path

@@ -1,5 +1,5 @@
 const request = require('supertest');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const express = require('express');
 const UserRepo = require('../repositories/UserRepository');
 const teacherRepo = require('../repositories/TeacherRepository');
