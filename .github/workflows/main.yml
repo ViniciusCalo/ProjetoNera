@@ -8,6 +8,15 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-latest
+    env:
+      DB_NAME: env.DB_NAME 
+      DB_USER: env.DB_USER 
+      DB_PASS: env.DB_PASS 
+      DB_HOST: env.DB_HOST 
+      DB_DIALECT: env.DB_DIALECT 
+      SECRET_KEY: env.SECRET_KEY 
+      PORT: 3333 
+      TOKENUTIL_SECRETKEY: env.TOKENUTIL_SECRETKEY 
     steps:
       # Checkout do repositório
       - name: Checkout code
@@ -33,6 +42,9 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
      
