@@ -7,16 +7,15 @@ import { useDispatch } from 'react-redux';
 import { setName, setProfileImageUrl } from '../../store/userSlice';
 import axios from "axios";
 
-const TelaLoginProf = () => {
+const StudentLoginScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const apiUrl = process.env.REACT_APP_API_URL;
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
-  const [cpf, setCpf] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
-  const role = "teacher";
+  const role = "student";
 
   const createProfile = (username, userpicture) => {
     dispatch(setName(username));
@@ -41,19 +40,9 @@ const TelaLoginProf = () => {
     setError('');
   };
 
-  const handleCPF = (e) => {
-    const inputCpf = e.target.value.replace(/\D/g, '');
-    if (inputCpf.length <= 11) {
-      const formattedCpf = inputCpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
-      setCpf(formattedCpf);
-    }
-    setError('');
-  };
-
   const clearForm = () => {
     setEmail('');
     setSenha('');
-    setCpf('');
   };
 
   const login = async (e) => {
@@ -64,32 +53,25 @@ const TelaLoginProf = () => {
       return;
     }
 
-    if (!cpf || cpf.length < 14) {
-      setError('O campo CPF é obrigatório e deve estar completo');
-      return;
-    }
-
     if (!senha) {
       setError('O campo Senha é obrigatório');
       return;
     }
 
-    console.log(cpf.replace(/\D/g, ''))
     try {
       const res = await axios.post(`${apiUrl}/users/login`, {
         useremail: email,
         userpassword: senha,
         role: role,
-        teachercpf: cpf.replace(/\D/g, '')
       });
       createProfile(res.data.username, res.data.profilepic);
       if (res.data.token) {
         storeData(res.data.token);
-        navigate('/teacherProfile');
+        navigate(role === 'teacher' ? '/teacherProfile' : '/studentProfile');
       }
       clearForm();
     } catch (err) {
-      setError('Usuário, CPF ou senha incorretos');
+      setError('Usuário ou senha incorretos');
     }
   };
 
@@ -99,7 +81,7 @@ const TelaLoginProf = () => {
       <C.Logo src={Logo} />
       <C.Container>
         <C.DivButton>
-          <C.ButtonAlu href='/studentLogin'>Estudante</C.ButtonAlu>
+          <C.ButtonAlu>Estudante</C.ButtonAlu>
           <C.ButtonProf href='/teacherLogin'>Professor</C.ButtonProf>
         </C.DivButton>
         <C.FormLogin autoComplete="off">
@@ -110,14 +92,6 @@ const TelaLoginProf = () => {
             placeholder="E-mail ou nome do usuário"
             value={email}
           />
-          <C.InputE
-            id='cpf'
-            onChange={handleCPF}
-            type="text"
-            placeholder="CPF"
-            value={cpf}
-            maxLength="14"
-          />
           <C.PasswordContainer>
             <C.InputS
               id='senha'
@@ -127,9 +101,9 @@ const TelaLoginProf = () => {
               value={senha}
             />
             <C.ShowPasswordButton onClick={(e) => {
-              e.preventDefault();
-              setShowPassword(!showPassword);
-            }}>
+                e.preventDefault(); 
+                setShowPassword(!showPassword);
+              }}>
               {showPassword ? '🙈' : '👁️'}
             </C.ShowPasswordButton>
           </C.PasswordContainer>
@@ -152,4 +126,4 @@ const TelaLoginProf = () => {
   );
 };
 
-export default TelaLoginProf;
+export default StudentLoginScreen;

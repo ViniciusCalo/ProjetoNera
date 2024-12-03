@@ -1,16 +1,16 @@
 import React from 'react'
 import StudentStyles from '../styles/studentStyles'
-import TelaMemoryGame from '../components/MemoryGame'
 import SideMenuStudent from '../components/SideMenuStudent'
+import TelaPerfil from '../components/TelaPerfil'
 
-const MemoryGame = () => {
+const StudentProfile = () => {
   return (
     <>
       <StudentStyles />
       <SideMenuStudent />
-      <TelaMemoryGame />
+      <TelaPerfil />
     </>
   )
 }
 
-export default MemoryGame
+export default StudentProfile
