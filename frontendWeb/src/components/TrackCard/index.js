@@ -1,7 +1,7 @@
 import React from 'react';
 import * as C from './styles' 
 
-const TrailCard = ({ titulo, image, color }) => {
+const TrackCard = ({ titulo, image, color }) => {
   return (
     <C.Card color={color}>
         <C.img style={{
@@ -20,4 +20,4 @@ const TrailCard = ({ titulo, image, color }) => {
   );
 };
 
-export default TrailCard;
+export default TrackCard;

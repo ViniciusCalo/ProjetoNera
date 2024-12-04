@@ -5,14 +5,14 @@ import seta from './img/set.svg';
 import imgPerfil from './img/user.svg';
 import iconCompartilhar from './img/share.png';
 import iconCopiar from './img/copy.png';
-import TrailCard from '../TrailCard';
+import TrackCard from '../TrackCard';
 //Redux
 import { useSelector } from 'react-redux';
 
 
 Modal.setAppElement('#root');
 
-const ModalInfoClass = ({ idTrail, classroom, isOpen, setModalVisible }) => {
+const ClassInfoModal = ({ idTrail, classroom, isOpen, setModalVisible }) => {
 
   const trail = useSelector((state) =>
     state.trails.find((t) => t.id === idTrail)
@@ -117,7 +117,7 @@ const ModalInfoClass = ({ idTrail, classroom, isOpen, setModalVisible }) => {
           {/* Centralizando o card */}
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             {trail ? (
-              <TrailCard titulo={trail.name} image={trail.image} color={trail.color} />
+              <TrackCard titulo={trail.name} image={trail.image} color={trail.color} />
             ) : (
               <p>Trilha não encontrada.</p>
             )}
@@ -149,4 +149,4 @@ const ModalInfoClass = ({ idTrail, classroom, isOpen, setModalVisible }) => {
   );
 };
 
-export default ModalInfoClass;
+export default ClassInfoModal;

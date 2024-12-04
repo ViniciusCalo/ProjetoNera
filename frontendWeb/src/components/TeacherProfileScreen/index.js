@@ -4,9 +4,9 @@ import { AiTwotoneEdit } from "react-icons/ai";
 import imgPerfil from '../../assets/user.svg';
 import setaEsquerda from './img/setaEsquerda.svg';
 import setaDireita from './img/setaDireita.svg';
-import ModalEditPerfil from '../ModalEditPerfil'; // Importar o modal
+import EditProfileModal from '../EditProfileModal'; // Importar o modal
 import ClassroomCard from '../ClassroomCard';
-import TrailCard from '../TrailCard';
+import TrackCard from '../TrackCard';
 import axios from 'axios';
 //Redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -114,7 +114,7 @@ const TeacherProfileScreen = () => {
           </C.CarrouselButton2>
           <C.Carrousel2 ref={carrouselRef2}>
             {trails.map(item => (
-              <TrailCard key={item.id} titulo={item.name} image={item.image} color={item.color} />
+              <TrackCard key={item.id} titulo={item.name} image={item.image} color={item.color} />
             ))}
           </C.Carrousel2>
           <C.CarrouselButton2 onClick={scrollRight2}>
@@ -124,7 +124,7 @@ const TeacherProfileScreen = () => {
       </C.ContainerC>
 
       {/* Modal para edição de perfil */}
-      <ModalEditPerfil isOpen={modalIsOpen} onRequestClose={fecharModal} />
+      <EditProfileModal isOpen={modalIsOpen} onRequestClose={fecharModal} />
     </C.Container>
   );
 }

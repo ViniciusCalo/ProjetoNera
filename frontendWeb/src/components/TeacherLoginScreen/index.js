@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { setName, setProfileImageUrl } from '../../store/userSlice';
 import axios from "axios";
 
-const TelaLoginProf = () => {
+const TeacherLoginScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const apiUrl = process.env.REACT_APP_API_URL;
@@ -152,4 +152,4 @@ const TelaLoginProf = () => {
   );
 };
 
-export default TelaLoginProf;
+export default TeacherLoginScreen;

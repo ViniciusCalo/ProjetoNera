@@ -13,7 +13,7 @@ import { setName, setProfileImageUrl } from '../../store/userSlice';
 
 
 
-const MenuLateral = () => {
+const SideMenuTeacher = () => {
   const dispatch = useDispatch();
 
   function limparLocal() {
@@ -27,14 +27,14 @@ const MenuLateral = () => {
     <C.Menu >
       <C.Lista>
         <C.Item1><C.Link ><C.Icone src={logo} /></C.Link></C.Item1>
-        <C.Item><C.Link href="/perfilProf"><C.Icone src={home} /><C.Texto>Home</C.Texto></C.Link></C.Item>
-        <C.Item><C.Link href="/createClass"><C.Icone src={createClass} /><C.Texto>Criar</C.Texto></C.Link></C.Item>
+        <C.Item><C.Link href="/teacherProfile"><C.Icone src={home} /><C.Texto>Home</C.Texto></C.Link></C.Item>
+        <C.Item><C.Link href="/createClassroom"><C.Icone src={createClass} /><C.Texto>Criar</C.Texto></C.Link></C.Item>
         <C.Item><C.Link href="/teacherClass"><C.Icone src={salas} /><C.Texto>Salas</C.Texto></C.Link></C.Item>
         <C.Item2><C.Link href="#"><C.Icone2 src={seta} /></C.Link></C.Item2>
-        <C.Item3><C.Link href="/loginAluno" onClick={limparLocal}><C.Icone src={sair} /><C.Texto>Sair</C.Texto></C.Link></C.Item3>
+        <C.Item3><C.Link href="/teacherLogin" onClick={limparLocal}><C.Icone src={sair} /><C.Texto>Sair</C.Texto></C.Link></C.Item3>
       </C.Lista>
     </C.Menu>
   );
 };
 
-export default MenuLateral
+export default SideMenuTeacher

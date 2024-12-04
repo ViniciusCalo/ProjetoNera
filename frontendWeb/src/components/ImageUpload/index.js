@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const UploadImageToAzure = () => {
+const ImageUpload = () => {
     const [image, setImage] = useState(null);
     const [imageUrl, setImageUrl] = useState('');
 
@@ -64,4 +64,4 @@ const UploadImageToAzure = () => {
     );
 };
 
-export default UploadImageToAzure;
+export default ImageUpload;

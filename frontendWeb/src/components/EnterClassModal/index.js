@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import * as C from './styles';
-import ModalRoomDetails from '../ModalRoomDetails';
+import RoomDetailsModal from '../RoomDetailsModal';
 import { useDispatch } from 'react-redux';
 import { addItem } from '../../store/classroomSlice';
 import axios from 'axios';
 
 Modal.setAppElement('#root');
 
-const ModalEnterClass = ({ isOpen, onRequestClose }) => {
+const EnterClassModal = ({ isOpen, onRequestClose }) => {
   const dispatch = useDispatch();
   const [token] = useState(localStorage.getItem('token'));
   const [roomCode, setRoomCode] = useState("");
@@ -97,7 +97,7 @@ const ModalEnterClass = ({ isOpen, onRequestClose }) => {
         <C.Button onClick={joinClass}>Entrar</C.Button>
       </Modal>
 
-      <ModalRoomDetails 
+      <RoomDetailsModal 
         isOpen={showRoomDetails} 
         onRequestClose={closeRoomDetails} 
         classroom={classroom} // Adicionando a prop classroom
@@ -106,4 +106,4 @@ const ModalEnterClass = ({ isOpen, onRequestClose }) => {
   );
 };
 
-export default ModalEnterClass;
+export default EnterClassModal;

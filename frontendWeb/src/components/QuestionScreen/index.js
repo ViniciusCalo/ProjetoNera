@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 const uri = process.env.REACT_APP_API_URL || "http://localhost:3001"; 
 console.log(process.env)
 
-const TelaQuestao = () => {
+const QuestionScreen = () => {
     const nav = useNavigate()
     const [modalIsOpen, setIsOpen] = React.useState(false);
     // Função que abre a modal
@@ -185,4 +185,4 @@ const TelaQuestao = () => {
     )
 }
 
-export default TelaQuestao
+export default QuestionScreen

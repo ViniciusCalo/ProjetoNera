@@ -6,7 +6,8 @@ import imgPerfil from '../../assets/user.svg';
 import ClassroomCard from '../ClassroomCard';
 import setaEsquerda from './img/setaEsquerda.svg'; // Imagem da seta para a esquerda
 import setaDireita from './img/setaDireita.svg'; // Imagem da seta para a direita
-import ModalEditPerfil from '../ModalEditPerfil/index';
+import EditProfileModal from '../EditProfileModal/index';
+import EnterClassModal from '../EnterClassModal/index';
 import axios from 'axios';
 //Redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -30,7 +31,7 @@ const componentMapping = {
   Card: C.Card,
 };
 
-const TelaPerfil = () => {
+const StudentProfileScreen = () => {
   //Redux
   const dispatch = useDispatch();
   const [token] = useState(localStorage.getItem('token'));
@@ -40,6 +41,15 @@ const TelaPerfil = () => {
   const carrouselRef = useRef(null);
   const carrouselRef2 = useRef(null);
 
+  const [showModal, setShowModal] = useState(false);
+
+  function limparLocal() {
+    localStorage.clear();
+  }
+
+  function toggleModal() {
+    setShowModal(!showModal);
+  }
 
   useEffect(() => {
     const getItems = async () => {
@@ -134,7 +144,7 @@ const TelaPerfil = () => {
               ))
             ) : (
               <div className="empty-message">
-                Nenhuma sala disponível. <a href="/createClass">Clique aqui</a> para entrar em um nova sala.
+                Nenhuma sala disponível. <a onClick={toggleModal}>Clique aqui</a> para entrar em um nova sala.
               </div>
             )}
           </C.Carrousel>
@@ -146,9 +156,11 @@ const TelaPerfil = () => {
         </C.CarrouselContainer>
       </C.ContainerC>
 
-      <ModalEditPerfil isOpen={modalIsOpen} onRequestClose={fecharModal} />
+      <EditProfileModal isOpen={modalIsOpen} onRequestClose={fecharModal} />
+      <EnterClassModal isOpen={showModal} onRequestClose={toggleModal} />
     </C.Container>
+    
   );
 };
 
-export default TelaPerfil;
+export default StudentProfileScreen;

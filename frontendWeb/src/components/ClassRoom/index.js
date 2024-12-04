@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as C from './styles';
 import ClassroomCard from '../ClassroomCard';
-import ModalInfoClass from '../ModalInfoClass/index';
+import ModalInfoClass from '../ClassInfoModal/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { setItems } from '../../store/classroomSlice';
 import axios from 'axios';

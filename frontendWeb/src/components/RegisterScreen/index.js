@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ToggleSwitch from '../ToggleSwitch';
 
-const TelaCadastro = () => {
+const RegisterScreen = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
@@ -213,4 +213,4 @@ const TelaCadastro = () => {
   );
 };
 
-export default TelaCadastro;
+export default RegisterScreen;

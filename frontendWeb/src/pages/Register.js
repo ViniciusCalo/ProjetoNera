@@ -1,12 +1,12 @@
 import React from 'react'
 import AccessStyles from '../styles/accessStyles'
-import TelaCadastro from '../components/TelaCadastro'
+import RegisterScreen from '../components/RegisterScreen'
 
 const Register = () => {
   return (
     <>
       <AccessStyles />
-      <TelaCadastro />
+      <RegisterScreen />
     </>
   )
 }

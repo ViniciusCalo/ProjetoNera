@@ -17,7 +17,7 @@ const trilhas = [
   { id: 5, img: expre, title: 'Trilha de Expressão' }
 ];
 
-const TelaTrilha = () => {
+const TrackScreen = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const carouselRef = useRef(null);
 
@@ -48,7 +48,7 @@ const TelaTrilha = () => {
           {trilhas.map((trilha, index) => (
             <C.CarouselItem
               key={trilha.id}
-              href="/modulo"
+              href="/module"
               active={index === activeIndex}
               size={index === activeIndex ? "large" : "normal"}
             >
@@ -65,4 +65,4 @@ const TelaTrilha = () => {
   );
 }
 
-export default TelaTrilha;
+export default TrackScreen;

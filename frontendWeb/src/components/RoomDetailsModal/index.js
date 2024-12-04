@@ -2,14 +2,14 @@ import React from 'react';
 import Modal from 'react-modal';
 import * as C from './styles';
 import classPink from './img/classPink.png';
-import TrailCard from '../TrailCard';
+import TrackCard from '../TrackCard';
 import fracaoicon from './img/fracao.svg';
 import { useNavigate } from 'react-router-dom';
 //Redux
 import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom';
 
-const ModalRoomDetails = ({ isOpen, onRequestClose, classroom, idtrail }) => {
+const RoomDetailsModal = ({ isOpen, onRequestClose, classroom, idtrail }) => {
   const navigate = useNavigate();
   const trail = useSelector((state) => 
     state.trails.find((t) => t.id === idtrail)
@@ -56,9 +56,9 @@ const ModalRoomDetails = ({ isOpen, onRequestClose, classroom, idtrail }) => {
       <C.ModuleCard>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
         {trail ? (
-                <TrailCard key={trail.id} titulo={trail.name} image={trail.image} color={trail.color} />
+                <TrackCard key={trail.id} titulo={trail.name} image={trail.image} color={trail.color} />
             ) : (
-              <TrailCard titulo="Fração" image={fracaoicon} color="#F20574" />
+              <TrackCard titulo="Fração" image={fracaoicon} color="#F20574" />
             )}
           
         </div>
@@ -68,4 +68,4 @@ const ModalRoomDetails = ({ isOpen, onRequestClose, classroom, idtrail }) => {
   );
 };
 
-export default ModalRoomDetails;
+export default RoomDetailsModal;

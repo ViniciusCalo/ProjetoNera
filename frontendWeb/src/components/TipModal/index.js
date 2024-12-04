@@ -6,7 +6,7 @@ import seta from './img/set.svg';
 
 S.StyledModal.setAppElement('#root');
 
-const ModalDica = ({ isOpen, onRequestClose }) => {
+const TipModal = ({ isOpen, onRequestClose }) => {
   return (
     <S.StyledModal isOpen={isOpen} onRequestClose={onRequestClose}>
       <S.BackButton onClick={onRequestClose}>
@@ -25,4 +25,4 @@ const ModalDica = ({ isOpen, onRequestClose }) => {
   );
 };
 
-export default ModalDica;
+export default TipModal;

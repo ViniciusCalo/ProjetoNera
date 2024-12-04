@@ -12,7 +12,7 @@ import Modal from 'react-modal';
 
 const uri = process.env.REACT_APP_API_URL || "http://localhost:3001"; 
 
-const TelaQuestao = () => {
+const QuestionScreen2 = () => {
     const [modalIsOpen, setIsOpen] = React.useState(false);
  function abrirModal() {
    setIsOpen(true);
@@ -177,4 +177,4 @@ const TelaQuestao = () => {
     )
 }
 
-export default TelaQuestao
+export default QuestionScreen2

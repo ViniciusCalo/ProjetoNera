@@ -10,7 +10,7 @@ import caminho3 from './img/caminho3.svg'
 
 
 
-const TelaModulo = () => {
+const ModuleScreen = () => {
   return (
     <>
     <C.Header>
@@ -37,4 +37,4 @@ const TelaModulo = () => {
   )
 }
 
-export default TelaModulo
+export default ModuleScreen

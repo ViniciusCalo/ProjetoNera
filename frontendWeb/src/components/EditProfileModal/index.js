@@ -13,7 +13,7 @@ import axios from 'axios';
 
 Modal.setAppElement('#root');
 
-const ModalEditPerfil = ({ isOpen, onRequestClose }) => {
+const EditProfileModal = ({ isOpen, onRequestClose }) => {
   //Redux
   const dispatch = useDispatch();
   const [token] = useState(localStorage.getItem('token'));
@@ -213,4 +213,4 @@ const ModalEditPerfil = ({ isOpen, onRequestClose }) => {
   );
 };
 
-export default ModalEditPerfil;
+export default EditProfileModal;

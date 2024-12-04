@@ -1,13 +1,13 @@
 import React from 'react'
 import TeacherStyles from '../styles/teacherStyles'
-import MenuLateral from '../components/MenuLateralProf'
+import SideMenuTeacher from '../components/SideMenuTeacher'
 import Classroom from '../components/ClassRoom';
 
 const TeacherClass = () => {
   return (
     <>
       <TeacherStyles />
-      <MenuLateral />
+      <SideMenuTeacher />
       <Classroom />
     </>
   )
