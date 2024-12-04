@@ -1,47 +1,77 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import * as C from './styles';
 import trilha from './img/trilha.svg';
-import fracao from './img/fracao.svg';
-import porct from './img/porcentagem.svg';
-import geo from './img/geometria.svg';
-import expre from './img/expressao.svg';
-import matri from './img/matrizes.svg';
 import dir from './img/dir.svg'; // Ícone da seta direita
 import esq from './img/esq.svg'; // Ícone da seta esquerda
+import { useSelector } from 'react-redux';
 
-const trilhas = [
-  { id: 1, img: fracao, title: 'Trilha de Frações' },
-  { id: 2, img: porct, title: 'Trilha de Porcentagem' },
-  { id: 3, img: geo, title: 'Trilha de Geometria' },
-  { id: 4, img: matri, title: 'Trilha de Matrizes' },
-  { id: 5, img: expre, title: 'Trilha de Expressão' }
-];
 
 const TrackScreen = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const carouselRef = useRef(null);
 
-  const scrollLeft = () => {
-    if (activeIndex > 0) {
-      setActiveIndex(activeIndex - 1);
-      const itemWidth = window.innerWidth <= 480 ? 200 : 200 * 0.8; // Ajusta a largura
-      carouselRef.current.scrollTo({
-        left: (activeIndex - 1) * itemWidth,
-        behavior: "smooth",
-      });
+  const trilhas = useSelector((state) => state.trails);
+
+  const activeColor = trilhas[activeIndex]?.color || "transparent"
+
+  const calculateItemWidth = () => {
+    if (carouselRef.current) {
+      return carouselRef.current.offsetWidth; // Largura real do carrossel
     }
+    return 200; // Valor padrão, caso o ref ainda não esteja definido
   };
   
-  const scrollRight = () => {
-    if (activeIndex < trilhas.length - 1) {
-      setActiveIndex(activeIndex + 1);
-      const itemWidth = window.innerWidth <= 480 ? 200 : 200 * 0.8; // Ajusta a largura
+  useEffect(() => {
+    document.body.style.backgroundColor = `${activeColor}33`; // Adiciona transparência
+    return () => {
+      document.body.style.backgroundColor = ""; // Reseta ao desmontar
+    };
+  }, [activeColor]);
+
+  useEffect(() => {
+    if (carouselRef.current && window.innerWidth <= 480) { // Apenas em telas pequenas
+      const itemWidth = calculateItemWidth(); // Calcula a largura dinamicamente
       carouselRef.current.scrollTo({
-        left: (activeIndex + 1) * itemWidth,
+        left: activeIndex * itemWidth,
         behavior: "smooth",
       });
     }
-  };
+  }, [activeIndex]);
+  
+
+  
+  
+
+const scrollLeft = () => {
+  if (activeIndex > 0) {
+    const itemWidth = calculateItemWidth(); // Largura dinâmica
+    setActiveIndex((prevIndex) => {
+      const newIndex = prevIndex - 1;
+      carouselRef.current.scrollTo({
+        left: newIndex * itemWidth, // Calcula o deslocamento
+        behavior: "smooth",
+      });
+      return newIndex;
+    });
+  }
+};
+
+const scrollRight = () => {
+  if (activeIndex < trilhas.length - 1) {
+    const itemWidth = calculateItemWidth(); // Largura dinâmica
+    setActiveIndex((prevIndex) => {
+      const newIndex = prevIndex + 1;
+      carouselRef.current.scrollTo({
+        left: newIndex * itemWidth, // Calcula o deslocamento
+        behavior: "smooth",
+      });
+      return newIndex;
+    });
+  }
+};
+
+  
+  
   
 
   return (
@@ -51,7 +81,7 @@ const TrackScreen = () => {
         <C.TitleHeader>Trilhas</C.TitleHeader>
       </C.Header>
 
-      <C.Container>
+      <C.Container >
         <C.ArrowButton onClick={scrollLeft}>
           <img src={esq} alt="Seta para esquerda" />
         </C.ArrowButton>
@@ -59,12 +89,13 @@ const TrackScreen = () => {
           {trilhas.map((trilha, index) => (
             <C.CarouselItem
               key={trilha.id}
-              href="/module"
+              href={index === activeIndex ? "/module" : undefined} // Só habilita o link para o item ativo
               active={index === activeIndex}
+              index={index} // Passa o índice atual do item
               size={index === activeIndex ? "large" : "normal"}
             >
-              <C.ImgTrilha src={trilha.img} />
-              <C.TitleTrilha>{trilha.title}</C.TitleTrilha>
+              <C.ImgTrilha src={trilha.image} />
+              <C.TitleTrilha>Trilha de {trilha.name}</C.TitleTrilha>
             </C.CarouselItem>
           ))}
         </C.Carousel>
