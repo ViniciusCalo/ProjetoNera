@@ -13,7 +13,7 @@ describe('Passo a Passo do login do aluno até a entrada do primeiro jogo', () =
 
     //acessando o primeiro jogo no modulo de fração
     cy.get('a[href="/track"]').click()
-    cy.get('a[href="/module"]').contains('Trilha de Frações').click()
+    cy.get('a[href="/module"]').contains('Trilha de Fração').click()
     cy.get('img[alt="Modulo 1"]').click()
   })
 })
