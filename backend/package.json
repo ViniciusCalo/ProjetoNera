@@ -28,8 +28,8 @@
     "pg-hstore": "^2.3.4",
     "pg-promise": "^11.7.8",
     "sequelize": "^6.37.3",
-    "winston": "^3.13.0",
-    "supertest": "^7.0.0"
+    "supertest": "^7.0.0",
+    "winston": "^3.13.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.3.0",
