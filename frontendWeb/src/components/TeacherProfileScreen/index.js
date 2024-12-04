@@ -6,6 +6,7 @@ import setaEsquerda from './img/setaEsquerda.svg';
 import setaDireita from './img/setaDireita.svg';
 import EditProfileModal from '../EditProfileModal'; // Importar o modal
 import ClassroomCard from '../ClassroomCard';
+import RoomActionBanner from '../RoomActionBanner';
 import TrackCard from '../TrackCard';
 import axios from 'axios';
 //Redux
@@ -93,9 +94,10 @@ const TeacherProfileScreen = () => {
                 <ClassroomCard key={item.classroomid} titulo={item.classroomname} trailId={item.trackid} />
               ))
             ) : (
-              <div className="empty-message">
-                Nenhuma sala disponível. <a href="/createClassroom">Clique aqui</a> para criar uma nova sala.
-              </div>
+              <RoomActionBanner
+                role="teacher"
+                openModal={null} // Função passada para abrir o modal
+              />
             )}
           </C.Carrousel>
           {items.length > 0 && (

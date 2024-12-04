@@ -8,6 +8,7 @@ import setaEsquerda from './img/setaEsquerda.svg'; // Imagem da seta para a esqu
 import setaDireita from './img/setaDireita.svg'; // Imagem da seta para a direita
 import EditProfileModal from '../EditProfileModal/index';
 import EnterClassModal from '../EnterClassModal/index';
+import RoomActionBanner from '../RoomActionBanner';
 import axios from 'axios';
 //Redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -42,6 +43,7 @@ const StudentProfileScreen = () => {
   const carrouselRef2 = useRef(null);
 
   const [showModal, setShowModal] = useState(false);
+
 
   function limparLocal() {
     localStorage.clear();
@@ -132,7 +134,7 @@ const StudentProfileScreen = () => {
       <C.ContainerC>
         <C.Title>Minhas salas</C.Title>
         <C.CarrouselContainer>
-        {items.length > 0 && (
+          {items.length > 0 && (
             <C.CarrouselButton onClick={scrollLeft2}>
               <C.IconSeta src={setaEsquerda} alt="Seta Esquerda" />
             </C.CarrouselButton>
@@ -143,9 +145,11 @@ const StudentProfileScreen = () => {
                 <ClassroomCard key={item.classroomid} titulo={item.classroomname} trailId={item.trackid} />
               ))
             ) : (
-              <div className="empty-message">
-                Nenhuma sala disponível. <a onClick={toggleModal}>Clique aqui</a> para entrar em um nova sala.
-              </div>
+              <RoomActionBanner
+                role="student"
+                openModal={toggleModal} // Função passada para abrir o modal
+              />
+
             )}
           </C.Carrousel>
           {items.length > 0 && (
@@ -159,7 +163,7 @@ const StudentProfileScreen = () => {
       <EditProfileModal isOpen={modalIsOpen} onRequestClose={fecharModal} />
       <EnterClassModal isOpen={showModal} onRequestClose={toggleModal} />
     </C.Container>
-    
+
   );
 };
 
