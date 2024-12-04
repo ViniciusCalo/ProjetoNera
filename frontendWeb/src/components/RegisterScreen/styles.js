@@ -2,14 +2,15 @@ import styled from 'styled-components';
 
 export const Box = styled.div`
   margin-top: 5%;
-  width: 80%;
-  height: auto;
+  width: 70%;
+  height: 80vh;
+  flex-shrink: 0;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   background: white;
+  bottom: 0;
   border-radius: 15px;
-  padding: 20px;
 box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
 
 
@@ -17,14 +18,17 @@ box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
     flex-direction: column;
     width: 95%;
     margin-top: 10%;
+      height: 90vh;
   }
 `;
 
 export const Container = styled.div`
+margin-top: 5%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 90%;
+  width: 100%;
+  height: 80vh;
 `;
 
 export const Div = styled.div`
@@ -32,7 +36,7 @@ export const Div = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  width: 50%;
+  width: 100%;
   @media (max-width: 768px) {
     width: 80%;
   }
@@ -60,18 +64,17 @@ export const ButtonEntrar = styled.a`
 
 export const Logo = styled.img`
   margin: 5%;
-  width: 100%;
+  width: 80%;
 `;
 
 export const FormLogin = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 60%;
-  max-width: 400px;
+  width: 70%;
   border-radius: 15px;
   background-color: #F2B705;
-  padding: 40px 20px;
+  padding: 20px 20px;
   @media (max-width: 768px) {
     width: 80%;
   }
@@ -86,7 +89,7 @@ export const Tituloform = styled.h1`
   font-size: 32px;
   font-weight: 700;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   @media (max-width: 480px) {
     font-size: 24px;
   }

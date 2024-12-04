@@ -15,7 +15,7 @@ export const Box = styled.div`
 
   @media (max-width: 480px) {
     margin-top: 10%;
-    width: 80%;
+    width: 90%;
     height: 90vh;
     display: flex;
     flex-direction: column;

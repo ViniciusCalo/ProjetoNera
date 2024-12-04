@@ -20,8 +20,7 @@ html, body {
 
 body {
     font-family: 'Roboto', Sans-Serif;
-    background: linear-gradient(112.9deg, #4ED9D9 0%, #FFFFFF 120%);
-    background-repeat: no-repeat;
+    background: #4ED9D9;
     display: flex;
     justify-content: center;
     align-items: center;

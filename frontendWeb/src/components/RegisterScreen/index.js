@@ -190,7 +190,7 @@ const RegisterScreen = () => {
               {errors.senhaConfirma && <C.ErrorText>{errors.senhaConfirma}</C.ErrorText>}
             </C.DivButton>
 
-            <ToggleSwitch width={'80%'} height={'8%'} onClick={toggleProfile} value={role} />
+            <ToggleSwitch width={'80%'} height={'30px'} onClick={toggleProfile} value={role} />
             <C.Button type="button" onClick={handleClick}>
               Criar Conta
             </C.Button>
