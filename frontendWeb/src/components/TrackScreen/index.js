@@ -24,14 +24,25 @@ const TrackScreen = () => {
   const scrollLeft = () => {
     if (activeIndex > 0) {
       setActiveIndex(activeIndex - 1);
+      const itemWidth = window.innerWidth <= 480 ? 200 : 200 * 0.8; // Ajusta a largura
+      carouselRef.current.scrollTo({
+        left: (activeIndex - 1) * itemWidth,
+        behavior: "smooth",
+      });
     }
   };
-
+  
   const scrollRight = () => {
     if (activeIndex < trilhas.length - 1) {
       setActiveIndex(activeIndex + 1);
+      const itemWidth = window.innerWidth <= 480 ? 200 : 200 * 0.8; // Ajusta a largura
+      carouselRef.current.scrollTo({
+        left: (activeIndex + 1) * itemWidth,
+        behavior: "smooth",
+      });
     }
   };
+  
 
   return (
     <>

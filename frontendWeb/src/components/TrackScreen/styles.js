@@ -6,6 +6,11 @@ export const Container = styled.div`
   justify-content: center;
   width: 100%;
   margin-top: 130px;
+  position: relative;
+
+  @media (max-width: 480px) {
+    margin-top: 100px; /* Ajusta a margem em telas menores */
+  }
 `;
 
 export const Header = styled.header`
@@ -32,6 +37,13 @@ export const Carousel = styled.div`
   width: 80%;
   justify-content: center;
   gap: 30px;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+
+  @media (max-width: 480px) {
+    width: 200px; /* Mostra apenas um item por vez */
+    gap: 0; /* Remove o espaço entre os itens */
+  }
 `;
 
 export const CarouselItem = styled.a`
@@ -42,7 +54,17 @@ export const CarouselItem = styled.a`
   min-width: ${({ size }) => (size === 'large' ? '200px' : '150px')};
   transition: min-width 0.3s ease, opacity 0.3s ease;
   opacity: ${({ active }) => (active ? 1 : 0.5)};
+  scroll-snap-align: center;
+
+  @media (max-width: 768px) {
+    min-width: ${({ size }) => (size === 'large' ? '150px' : '120px')};
+  }
+      @media (max-width: 480px) {
+    width: 100%; /* O item ocupa toda a largura do carrossel */
+    min-width: 100%; /* Garante o tamanho em telas menores */
+  }
 `;
+
 
 export const TitleTrilha = styled.h2`
   color: #888585;
