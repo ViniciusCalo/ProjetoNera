@@ -11,6 +11,7 @@ export const Box = styled.div`
   background: white;
   bottom: 0;
   border-radius: 15px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
 
   @media (max-width: 480px) {
     margin-top: 10%;

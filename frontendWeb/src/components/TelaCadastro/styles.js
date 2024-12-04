@@ -2,8 +2,7 @@ import styled from 'styled-components';
 
 export const Box = styled.div`
   margin-top: 5%;
-  width: 90%;
-  max-width: 1200px;
+  width: 80%;
   height: auto;
   display: flex;
   justify-content: space-around;
@@ -11,6 +10,9 @@ export const Box = styled.div`
   background: white;
   border-radius: 15px;
   padding: 20px;
+box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+
+
   @media (max-width: 768px) {
     flex-direction: column;
     width: 95%;
@@ -22,7 +24,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  width: 90%;
 `;
 
 export const Div = styled.div`

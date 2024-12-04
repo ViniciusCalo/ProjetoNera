@@ -113,7 +113,7 @@ const TelaCadastro = () => {
         <C.Div>
           <C.Logo src={Logo} />
           <C.textEntrar>Tem uma conta?</C.textEntrar>
-          <C.ButtonEntrar href="/loginAluno">Entrar</C.ButtonEntrar>
+          <C.ButtonEntrar href="/studentLogin">Entrar</C.ButtonEntrar>
         </C.Div>
         <C.Container>
           <C.FormLogin autoComplete="off">

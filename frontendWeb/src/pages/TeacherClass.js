@@ -1,7 +1,7 @@
 import React from 'react'
 import TeacherStyles from '../styles/teacherStyles'
 import MenuLateral from '../components/MenuLateralProf'
-import Classroom from '../components/Classroom';
+import Classroom from '../components/ClassRoom';
 
 const TeacherClass = () => {
   return (
