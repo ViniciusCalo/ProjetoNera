@@ -1,16 +1,18 @@
 import React from 'react'
 import StudentStyles from '../styles/studentStyles'
 import SideMenuStudent from '../components/SideMenuStudent'
-import ModuleScreen from '../components/ModuleScreen'
+import TrackScreen from '../components/TrackScreen'
 
-const Module = () => {
+
+const Trilha = () => {
   return (
     <>
       <StudentStyles />
       <SideMenuStudent />
-      <ModuleScreen />
+      <TrackScreen />
+
     </>
   )
 }
 
-export default Module
+export default Trilha

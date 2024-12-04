@@ -1,12 +1,12 @@
 import React from 'react'
 import SideMenuStudent from '../components/SideMenuStudent'
-import TelaQuestao2 from '../components/TelaQuestao2'
+import QuestionScreen2 from '../components/QuestionScreen2'
 
 const Question2 = () => {
   return (
     <>
     <SideMenuStudent/>
-    <TelaQuestao2  />
+    <QuestionScreen2  />
     </>
   )
 }
