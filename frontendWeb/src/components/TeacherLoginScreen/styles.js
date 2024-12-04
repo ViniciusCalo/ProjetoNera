@@ -49,13 +49,12 @@ export const FormLogin = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: -12%;
+  margin-top: -5%;
   width: 70%;
   height: 450px;
   z-index: 0;
   border-radius: 15px;
-  background-color: #f2b705;
-  padding-top: 20px;
+  background-color: #f29f05;
 
   @media (max-width: 480px) {
     width: 80%;
@@ -65,11 +64,12 @@ export const FormLogin = styled.form`
 export const InputE = styled.input`
   width: 80%;
   height: 30px;
-  padding: 2%;
-  margin: 10px 0;
+  padding: 0 15px;
+  margin: 5px 0;
   border-radius: 15px;
   border: none;
-  font-size: 10px;
+  font-size: 14px;
+  box-sizing: border-box;
 `;
 
 export const PasswordContainer = styled.div`
@@ -81,10 +81,12 @@ export const PasswordContainer = styled.div`
 export const InputS = styled.input`
   width: 100%;
   height: 30px;
-  padding: 2%;
+  padding: 0 15px;
+  padding-right: 45px;
   border-radius: 15px;
   border: none;
-  font-size: 10px;
+  font-size: 14px;
+  box-sizing: border-box;
 `;
 
 export const ShowPasswordButton = styled.button`
@@ -95,14 +97,19 @@ export const ShowPasswordButton = styled.button`
   background: none;
   border: none;
   cursor: pointer;
+  font-size: 18px;
+  color: #666;
+  padding: 0;
 `;
 
 export const ErrorMessage = styled.span`
   color: red;
   font-family: 'Roboto', sans-serif;
   font-size: 12px;
-  margin-top: 5px;
-  margin-bottom: 15px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  text-align: center;
+  width: 80%;
 `;
 
 export const Button = styled.button`
@@ -208,7 +215,7 @@ export const DivButton = styled.div`
   z-index: 1;
   display: flex;
   flex-direction: row;
-  background-color: #f2b705;
+  background-color: #f29f05;
   width: 70%;
   border-radius: 30px 30px 0px 30px;
 
@@ -254,5 +261,5 @@ export const ButtonAlu = styled.a`
   bottom: 538px;
   cursor: pointer;
   background-color: #f2b705;
-  border-radius: 30px;
+  border-radius: 30px 30px 30px 0px;
 `;

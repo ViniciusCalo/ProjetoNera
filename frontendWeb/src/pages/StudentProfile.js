@@ -1,14 +1,14 @@
 import React from 'react'
 import StudentStyles from '../styles/studentStyles'
 import SideMenuStudent from '../components/SideMenuStudent'
-import TelaPerfil from '../components/TelaPerfil'
+import StudentProfileScreen from '../components/StudentProfileScreen'
 
 const StudentProfile = () => {
   return (
     <>
       <StudentStyles />
       <SideMenuStudent />
-      <TelaPerfil />
+      <StudentProfileScreen />
     </>
   )
 }

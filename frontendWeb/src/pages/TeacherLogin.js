@@ -1,12 +1,12 @@
 import React from 'react'
 import AccessStyles from '../styles/accessStyles'
-import TelaLoginProf from '../components/TelaLoginProf'
+import TeacherLoginScreen from '../components/TeacherLoginScreen'
 
 const TeacherLogin = () => {
   return (
     <>
       <AccessStyles />
-      <TelaLoginProf />
+      <TeacherLoginScreen />
     </>
   )
 }

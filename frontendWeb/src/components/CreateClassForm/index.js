@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import * as C from './styles';
 import axios from 'axios';
-import ModalInfoClass from '../ModalInfoClass/index';
+import ClassInfoModal from '../ClassInfoModal/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from '../../store/classroomSlice';
 import { useNavigate } from 'react-router-dom';
@@ -171,7 +171,7 @@ const CreateClassForm = () => {
                     </C.ButtonGroup>
                 </C.Form>
             </C.Container>
-            <ModalInfoClass
+            <ClassInfoModal
                 isOpen={modalVisible}
                 setModalVisible={fecharModal}
                 classroom={classroom}

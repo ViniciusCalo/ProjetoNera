@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import * as C from './styles';
 import ClassroomCard from '../ClassroomCard';
-import ModalInfoClass from '../ModalInfoClass/index';
+import ModalInfoClass from '../ClassInfoModal/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { setItems } from '../../store/classroomSlice';
+import RoomActionBanner from '../RoomActionBanner';
 import axios from 'axios';
 
 
@@ -51,9 +52,10 @@ const Classroom = () => {
                 <ClassroomCard key={item.classroomid} titulo={item.classroomname} trailId={item.trackid} />
               ))
             ) : (
-              <div className="empty-message">
-                Nenhuma sala disponível. <a href="/createClassroom">Clique aqui</a> para criar uma nova sala.
-              </div>
+              <RoomActionBanner
+                role="teacher"
+                openModal={null} // Função passada para abrir o modal
+              />
             )}
           </C.GridContainer>
         </C.ContainerC>

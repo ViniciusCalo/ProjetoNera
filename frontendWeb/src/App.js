@@ -5,7 +5,7 @@ import { store, persistor } from './store';
 import Register from './pages/Register';
 import StudentProfile from './pages/StudentProfile'
 import TeacherProfile from './pages/TeacherProfile';
-import Trilha from './pages/Trilha'
+import Track from './pages/Track'
 import Module from './pages/Module'
 import Question from './pages/Question'
 import Question2 from './pages/Question2';
@@ -30,7 +30,7 @@ function App() {
               <Route path="teacherLogin" element={<TeacherLogin />} />
               <Route path="studentProfile" element={<StudentProfile />} />
               <Route path="teacherProfile" element={<TeacherProfile />} />
-              <Route path="trilha" element={<Trilha />} />
+              <Route path="track" element={<Track />} />
               <Route path="module" element={<Module />} />
               <Route path="teacherClass" element={<TeacherClass />} />
               <Route path='createClassroom' element={<CreateClassroom />} />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import * as C from './styles';
-import ModalDica from '../ModalDica'; 
+import TipModal from '../TipModal'; 
 import cardFront from '../../assets/CardFront.png';
 import reload from '../../assets/reload.png';
 import tip from '../../assets/tip.png';
@@ -148,7 +148,7 @@ const MemoryGame = () => {
       </C.Game>
 
       {/* Componente ModalDica */}
-      <ModalDica isOpen={isModalOpen} onRequestClose={closeModal} />
+      <TipModal isOpen={isModalOpen} onRequestClose={closeModal} />
     </>
   );
 };

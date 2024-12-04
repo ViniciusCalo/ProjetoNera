@@ -1,7 +1,7 @@
 describe('Passo a Passo do login do professor até a criação da sala', () => {
     it('Fluxo Professor', () => {
       //Abrindo a tela inicial
-      cy.visit('http://localhost:3000/cadastro')
+      cy.visit('http://localhost:3000/register')
 
       //Entrando na tela de login
       cy.get('a').contains('Entrar').click()
@@ -16,7 +16,7 @@ describe('Passo a Passo do login do professor até a criação da sala', () => {
       cy.get('button').contains('Entrar').click()
 
       //Criando na tela de criar cadastro
-      cy.get('a[href="/createClass"]').contains('Criar').click()
+      cy.get('a[href="/createClassroom"]').contains('Criar').click()
 
       //Preenchendo os dados necessarios para criar uma sala
       cy.get('input[placeholder="Digite o título da Sala"]').type('51005120838')

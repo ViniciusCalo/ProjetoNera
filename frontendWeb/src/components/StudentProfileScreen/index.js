@@ -1,40 +1,69 @@
+// src/components/TelaPerfil/index.js
 import React, { useState, useRef, useEffect } from 'react';
 import * as C from './styles';
 import { AiTwotoneEdit } from "react-icons/ai";
 import imgPerfil from '../../assets/user.svg';
-import setaEsquerda from './img/setaEsquerda.svg';
-import setaDireita from './img/setaDireita.svg';
-import EditProfileModal from '../EditProfileModal'; // Importar o modal
 import ClassroomCard from '../ClassroomCard';
+import setaEsquerda from './img/setaEsquerda.svg'; // Imagem da seta para a esquerda
+import setaDireita from './img/setaDireita.svg'; // Imagem da seta para a direita
+import EditProfileModal from '../EditProfileModal/index';
+import EnterClassModal from '../EnterClassModal/index';
 import RoomActionBanner from '../RoomActionBanner';
-import TrackCard from '../TrackCard';
 import axios from 'axios';
 //Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { setItems } from '../../store/classroomSlice';
 
-const TeacherProfileScreen = () => {
+const conquistas = [
+  { id: 1, tipo: 'Card1', titulo: 'Explorador de frações' },
+  { id: 2, tipo: 'Card', titulo: 'Explorador de frações' },
+  { id: 3, tipo: 'Card1', titulo: 'Explorador de frações' },
+  { id: 4, tipo: 'Card', titulo: 'Explorador de frações' },
+  { id: 5, tipo: 'Card1', titulo: 'Explorador de frações' },
+  { id: 6, tipo: 'Card', titulo: 'Explorador de frações' },
+  { id: 7, tipo: 'Card1', titulo: 'Explorador de frações' },
+  { id: 8, tipo: 'Card', titulo: 'Explorador de frações' },
+  { id: 9, tipo: 'Card1', titulo: 'Explorador de frações' },
+];
+
+
+const componentMapping = {
+  Card1: C.Card1,
+  Card: C.Card,
+};
+
+const StudentProfileScreen = () => {
   //Redux
   const dispatch = useDispatch();
   const [token] = useState(localStorage.getItem('token'));
   const { name, profileImageUrl } = useSelector((state) => state.user);
-  const trails = useSelector((state) => state.trails);
 
   const [modalIsOpen, setIsOpen] = useState(false);
   const carrouselRef = useRef(null);
   const carrouselRef2 = useRef(null);
 
+  const [showModal, setShowModal] = useState(false);
+
+
+  function limparLocal() {
+    localStorage.clear();
+  }
+
+  function toggleModal() {
+    setShowModal(!showModal);
+  }
+
   useEffect(() => {
     const getItems = async () => {
       if (token) { // Verifica se o token está definido
         try {
-          const res = await axios.get(`${process.env.REACT_APP_API_URL}/classrooms/teacher`, {
+          const res = await axios.get(`${process.env.REACT_APP_API_URL}/student/classroom`, {
             headers: {
               'Authorization': `Bearer ${token}`
             }
           });
-          console.log(res.data);
-          dispatch(setItems(res.data));
+          console.log(res.data.classrooms);
+          dispatch(setItems(res.data.classrooms));
         } catch (error) {
           console.log(error);
         }
@@ -47,7 +76,6 @@ const TeacherProfileScreen = () => {
   }, [dispatch, token]);
 
   const items = useSelector((state) => state.classrooms.items || []);
-
 
   const abrirModal = () => setIsOpen(true);
   const fecharModal = () => setIsOpen(false);
@@ -81,54 +109,62 @@ const TeacherProfileScreen = () => {
       </C.Infos>
 
       <C.ContainerC>
-        <C.Title>Salas de Aula</C.Title>
+        <C.Title>Conquistas</C.Title>
+        <C.CarrouselContainer>
+          <C.CarrouselButton onClick={scrollLeft}>
+            <C.IconSeta src={setaEsquerda} alt="Seta Esquerda" />
+          </C.CarrouselButton>
+          <C.Carrousel ref={carrouselRef}>
+            {conquistas.map((conquista) => {
+              const Componente = componentMapping[conquista.tipo];
+              return (
+                <C.DivConquista key={conquista.id}>
+                  <Componente />
+                  <C.textConquistado>{conquista.titulo}</C.textConquistado>
+                </C.DivConquista>
+              );
+            })}
+          </C.Carrousel>
+          <C.CarrouselButton onClick={scrollRight}>
+            <C.IconSeta src={setaDireita} alt="Seta Direita" />
+          </C.CarrouselButton>
+        </C.CarrouselContainer>
+      </C.ContainerC>
+
+      <C.ContainerC>
+        <C.Title>Minhas salas</C.Title>
         <C.CarrouselContainer>
           {items.length > 0 && (
-            <C.CarrouselButton onClick={scrollLeft}>
+            <C.CarrouselButton onClick={scrollLeft2}>
               <C.IconSeta src={setaEsquerda} alt="Seta Esquerda" />
             </C.CarrouselButton>
           )}
-          <C.Carrousel ref={carrouselRef}>
+          <C.Carrousel ref={carrouselRef2}>
             {items.length > 0 ? (
               items.map(item => (
                 <ClassroomCard key={item.classroomid} titulo={item.classroomname} trailId={item.trackid} />
               ))
             ) : (
               <RoomActionBanner
-                role="teacher"
-                openModal={null} // Função passada para abrir o modal
+                role="student"
+                openModal={toggleModal} // Função passada para abrir o modal
               />
+
             )}
           </C.Carrousel>
           {items.length > 0 && (
-            <C.CarrouselButton onClick={scrollRight}>
+            <C.CarrouselButton onClick={scrollRight2}>
               <C.IconSeta src={setaDireita} alt="Seta Direita" />
             </C.CarrouselButton>
           )}
         </C.CarrouselContainer>
       </C.ContainerC>
 
-      <C.ContainerC>
-        <C.Title>Trilhas</C.Title>
-        <C.CarrouselContainer>
-          <C.CarrouselButton2 onClick={scrollLeft2}>
-            <C.IconSeta src={setaEsquerda} alt="Seta Esquerda" />
-          </C.CarrouselButton2>
-          <C.Carrousel2 ref={carrouselRef2}>
-            {trails.map(item => (
-              <TrackCard key={item.id} titulo={item.name} image={item.image} color={item.color} />
-            ))}
-          </C.Carrousel2>
-          <C.CarrouselButton2 onClick={scrollRight2}>
-            <C.IconSeta src={setaDireita} alt="Seta Direita" />
-          </C.CarrouselButton2>
-        </C.CarrouselContainer>
-      </C.ContainerC>
-
-      {/* Modal para edição de perfil */}
       <EditProfileModal isOpen={modalIsOpen} onRequestClose={fecharModal} />
+      <EnterClassModal isOpen={showModal} onRequestClose={toggleModal} />
     </C.Container>
-  );
-}
 
-export default TeacherProfileScreen;
+  );
+};
+
+export default StudentProfileScreen;
