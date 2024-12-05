@@ -35,8 +35,7 @@ const componentMapping = {
 const StudentProfileScreen = () => {
   //Redux
   const dispatch = useDispatch();
-  const [token] = useState(localStorage.getItem('token'));
-  const { name, profileImageUrl } = useSelector((state) => state.user);
+  const { name, profileImageUrl, token } = useSelector((state) => state.user);
 
   const [modalIsOpen, setIsOpen] = useState(false);
   const carrouselRef = useRef(null);
@@ -44,9 +43,6 @@ const StudentProfileScreen = () => {
 
   const [showModal, setShowModal] = useState(false);
 
-  function limparLocal() {
-    localStorage.clear();
-  }
 
   function toggleModal() {
     setShowModal(!showModal);
