@@ -44,7 +44,6 @@ const StudentProfileScreen = () => {
 
   const [showModal, setShowModal] = useState(false);
 
-
   function limparLocal() {
     localStorage.clear();
   }

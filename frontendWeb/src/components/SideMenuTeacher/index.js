@@ -6,21 +6,23 @@ import createClass from './img/Vector_CreateClass.svg'
 import salas from './img/Vector_ClassRoom.svg'
 import sair from './img/Vector_Logout.svg'
 import seta from './img/seta.svg'
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setItems } from '../../store/classroomSlice';
-import { setName, setProfileImageUrl } from '../../store/userSlice';
+import { logout } from '../../store/userSlice';
 
 
 
 
 const SideMenuTeacher = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  function limparLocal() {
+  function logoutsite() {
     localStorage.clear();
+    dispatch(logout());
     dispatch(setItems([]));
-    dispatch(setName(""))
-    dispatch(setProfileImageUrl(""))
+    navigate('/teacherLogin')
   }
 
   return (
@@ -31,7 +33,7 @@ const SideMenuTeacher = () => {
         <C.Item><C.Link href="/createClassroom"><C.Icone src={createClass} /><C.Texto>Criar</C.Texto></C.Link></C.Item>
         <C.Item><C.Link href="/teacherClass"><C.Icone src={salas} /><C.Texto>Salas</C.Texto></C.Link></C.Item>
         <C.Item2><C.Link href="#"><C.Icone2 src={seta} /></C.Link></C.Item2>
-        <C.Item3><C.Link href="/teacherLogin" onClick={limparLocal}><C.Icone src={sair} /><C.Texto>Sair</C.Texto></C.Link></C.Item3>
+        <C.Item3><C.Link onClick={logoutsite}><C.Icone src={sair} /><C.Texto>Sair</C.Texto></C.Link></C.Item3>
       </C.Lista>
     </C.Menu>
   );
