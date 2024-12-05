@@ -14,6 +14,7 @@ import TeacherLogin from './pages/TeacherLogin';
 import TeacherClass from './pages/TeacherClass';
 import CreateClassroom from './pages/CreateClassroom';
 import MemoryGame from './pages/MemoryGame';
+import QuizGame from './pages/QuizGame';
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 
@@ -35,6 +36,7 @@ function App() {
               <Route path="teacherClass" element={<TeacherClass />} />
               <Route path='createClassroom' element={<CreateClassroom />} />
               <Route path='memoryGame' element={<MemoryGame/>}/>
+              <Route path='quizGame' element={<QuizGame/>}/>
               <Route path="question" element={<Question />} />
               <Route path="question2" element={<Question2 />} />
             </Route>
