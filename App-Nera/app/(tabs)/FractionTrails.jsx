@@ -25,7 +25,7 @@ const FractionTrails = () => {
                 </View>
                 <View style={styles.grid}>
                     <View style={[styles.moduleContainer, styles.right]}>
-                        <ButtonModules onPress={() => handleAccessModulePress('FractionScreen')} color={colors.rosa} />
+                        <ButtonModules onPress={() => handleAccessModulePress('QuizGame')} color={colors.rosa} />
                     </View>
                     <Svg height="100" width="100">
                         <Path
