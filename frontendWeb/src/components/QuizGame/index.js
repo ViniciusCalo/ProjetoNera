@@ -19,7 +19,7 @@ function QuizGame() {
   // Busca as perguntas da API
   const fetchQuestions = async () => {
     try {
-      const response = await axios.get("http://localhost:3333/quizgame/"); // Substitua pela URL real da API
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/quizgame/`); // Substitua pela URL real da API
       setQuestions(response.data);
     } catch (error) {
       console.error("Erro ao carregar os dados da API:", error);
