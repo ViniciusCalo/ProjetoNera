@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import TipModal from '../TipModal'; 
+import * as C from './styles';
+import TipModal from '../TipModal';
+import iconreload from '../../assets/reload.png';
+import tip from '../../assets/tip.png';
+import next from '../../assets/next.png';
 
 function QuizGame() {
   const [questions, setQuestions] = useState([]); // Armazena as perguntas
@@ -9,19 +13,20 @@ function QuizGame() {
   const [selectedAnswer, setSelectedAnswer] = useState(null); // Resposta selecionada
   const [feedback, setFeedback] = useState(""); // Feedback textual
   const [isGameOver, setIsGameOver] = useState(false); // Indica se o jogo terminou
-  const [isModalOpen, setIsModalOpen] = useState(false); 
-  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   // Busca as perguntas da API
+  const fetchQuestions = async () => {
+    try {
+      const response = await axios.get("http://localhost:3333/quizgame/"); // Substitua pela URL real da API
+      setQuestions(response.data);
+    } catch (error) {
+      console.error("Erro ao carregar os dados da API:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
-        const response = await axios.get("http://localhost:3333/quizgame/"); // Substitua pela URL real da API
-        setQuestions(response.data);
-      } catch (error) {
-        console.error("Erro ao carregar os dados da API:", error);
-      }
-    };
     fetchQuestions();
   }, []);
 
@@ -56,19 +61,25 @@ function QuizGame() {
   // Renderização do final do jogo
   if (isGameOver) {
     return (
-      <div>
-        <h2>Jogo Finalizado!</h2>
-        <p>Sua pontuação: {score}/{questions.length}</p>
-      </div>
+      <C.Game>
+        <C.GameOverContainer>
+          <C.FunIllustration src="/path/to/congrats.png" alt="Parabéns!" />
+          <C.GameOverTitle>Jogo Finalizado!</C.GameOverTitle>
+          <C.ScoreText>
+            Sua pontuação: <strong>{score}</strong> de {questions.length}
+          </C.ScoreText>
+        </C.GameOverContainer>
+      </C.Game>
     );
   }
 
+
   const handleTip = () => {
-    setIsModalOpen(true); 
+    setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false); 
+    setIsModalOpen(false);
   };
 
   const current = questions[currentQuestion];
@@ -76,42 +87,55 @@ function QuizGame() {
 
   // Renderização da pergunta atual
   return (
-    <div>
-      <h1>{current.gamename}</h1>
-      <h2>{current.question}</h2>
-      <img src={current.img} alt="Questão relacionada" style={{ maxWidth: "300px" }} />
-      <div>
-        {options.map((option, index) => (
-          <button
-            key={index}
-            onClick={() => handleAnswer(option)}
-            style={{
-              margin: "10px",
-              padding: "10px",
-              backgroundColor:
-                selectedAnswer === option
-                  ? option === current.is_correct
-                    ? "green" // Resposta correta
-                    : "red" // Resposta errada
-                  : "white",
-              color: "black",
-              border: "1px solid #ccc",
-              pointerEvents: selectedAnswer ? "none" : "auto", // Desativa os botões após responder
-            }}
-          >
-            {option}
-          </button>
-        ))}
-      </div>
-      {feedback && <p>{feedback}</p>}
-        <button onClick={handleNextQuestion} disabled={!selectedAnswer} style={{ marginTop: "20px", padding: "10px" }}>
-          Próxima Pergunta
-        </button>
-        <button onClick={handleTip} style={{ marginTop: "20px", padding: "10px" }}>
-          Dica
-        </button>
-        <TipModal isOpen={isModalOpen} onRequestClose={closeModal} />
-    </div>
+    <>
+      <C.Header>
+        <C.Titulo>MODULO I - Frações</C.Titulo>
+      </C.Header>
+      <C.Game>
+        <C.GameContainer>
+          <C.Title>{current.gamename}</C.Title>
+          <C.GameBoard>
+            <C.Enunciado>{current.question}</C.Enunciado>
+            <C.OptionImage src={current.img} alt="Questão relacionada" />
+            <C.Options>
+              {options.map((option, index) => (
+                <C.OptionButton
+                  key={index}
+                  isSelected={selectedAnswer === option}
+                  isCorrect={option === current.is_correct}
+                  onClick={() => handleAnswer(option)}
+                  disabled={!!selectedAnswer} // Desativa os botões após responder
+                >
+                  {option}
+                </C.OptionButton>
+              ))}
+            </C.Options>
+
+            <C.FeedbackBanner
+              isCorrect={feedback === 'Correto!'}
+              visible={!!feedback}
+            >
+              {feedback}
+            </C.FeedbackBanner>
+
+          </C.GameBoard>
+          <C.ContainerMenu>
+            <C.BtnTip onClick={handleTip}>
+              <C.IconTip src={tip} alt='Dica' />
+              <span>Dica</span>
+            </C.BtnTip>
+
+            <C.BtnNext disabled={!selectedAnswer} onClick={handleNextQuestion}>
+              <C.iconButton src={next} alt='Próximo' />
+              <span>Próximo</span>
+            </C.BtnNext>
+          </C.ContainerMenu>
+        </C.GameContainer>
+      </C.Game>
+
+      {/* Componente ModalDica */}
+      <TipModal isOpen={isModalOpen} onRequestClose={closeModal} />
+    </>
   );
 }
 
