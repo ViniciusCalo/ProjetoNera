@@ -6,7 +6,7 @@ import trilha from './img/Vector_Trilha.svg';
 import join from './img/Vector_join.svg';
 import sair from './img/Vector_Logout.svg';
 import seta from './img/seta.svg';
-import ModalEnterClass from '../ModalEnterClass/index';
+import EnterClassModal from '../EnterClassModal/index';
 
 const SideMenuStudent = () => {
   const [showModal, setShowModal] = useState(false);
@@ -25,14 +25,14 @@ const SideMenuStudent = () => {
         <C.Lista>
           <C.Item1><C.Link><C.Icone src={logo} /></C.Link></C.Item1>
           <C.Item><C.Link href="/studentProfile"><C.Icone src={user} /><C.Texto>Perfil</C.Texto></C.Link></C.Item>
-          <C.Item><C.Link href="/trilha"><C.Icone src={trilha} /><C.Texto>Trilhas</C.Texto></C.Link></C.Item>
+          <C.Item><C.Link href="/track"><C.Icone src={trilha} /><C.Texto>Trilhas</C.Texto></C.Link></C.Item>
           <C.Item><C.Link onClick={toggleModal}><C.Icone src={join} /><C.Texto>Entrar</C.Texto></C.Link></C.Item>
           <C.Item2><C.Link href="#"><C.Icone2 src={seta} /></C.Link></C.Item2>
           <C.Item3><C.Link href="/studentLogin" onClick={limparLocal}><C.Icone src={sair} /><C.Texto>Sair</C.Texto></C.Link></C.Item3>
         </C.Lista>
       </C.Menu>
 
-      <ModalEnterClass isOpen={showModal} onRequestClose={toggleModal} />
+      <EnterClassModal isOpen={showModal} onRequestClose={toggleModal} />
     </>
   );
 };

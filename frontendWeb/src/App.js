@@ -5,7 +5,7 @@ import { store, persistor } from './store';
 import Register from './pages/Register';
 import StudentProfile from './pages/StudentProfile'
 import TeacherProfile from './pages/TeacherProfile';
-import Trilha from './pages/Trilha'
+import Track from './pages/Track'
 import Module from './pages/Module'
 import Question from './pages/Question'
 import Question2 from './pages/Question2';
@@ -14,6 +14,7 @@ import TeacherLogin from './pages/TeacherLogin';
 import TeacherClass from './pages/TeacherClass';
 import CreateClassroom from './pages/CreateClassroom';
 import MemoryGame from './pages/MemoryGame';
+import QuizGame from './pages/QuizGame';
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 
@@ -30,11 +31,12 @@ function App() {
               <Route path="teacherLogin" element={<TeacherLogin />} />
               <Route path="studentProfile" element={<StudentProfile />} />
               <Route path="teacherProfile" element={<TeacherProfile />} />
-              <Route path="trilha" element={<Trilha />} />
+              <Route path="track" element={<Track />} />
               <Route path="module" element={<Module />} />
               <Route path="teacherClass" element={<TeacherClass />} />
               <Route path='createClassroom' element={<CreateClassroom />} />
               <Route path='memoryGame' element={<MemoryGame/>}/>
+              <Route path='quizGame' element={<QuizGame/>}/>
               <Route path="question" element={<Question />} />
               <Route path="question2" element={<Question2 />} />
             </Route>

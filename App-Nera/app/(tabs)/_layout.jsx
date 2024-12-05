@@ -24,7 +24,8 @@ export default function TabLayout() {
         <Tabs.Screen name="StudentClassroom" />
         <Tabs.Screen name="StudentProfile" />
         <Tabs.Screen name="FractionTrails" />
-        <Tabs.Screen name="FractionScreen" />
+        <Tabs.Screen name="QuizGame" />
+        <Tabs.Screen name="MemoryGame" />
       </Tabs>
     </Provider>
   );
