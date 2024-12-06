@@ -1,5 +1,5 @@
 const User = require('../../models/UserModel.js');
-const { sequelize, Sequelize } = require('../../database/db.js'); // Importando Sequelize para usar `Op`
+const { sequelize, Sequelize } = require('../../database/db.js'); 
 const request = require('supertest');
 const express = require('express');
 const bcrypt = require('bcryptjs');
@@ -18,8 +18,18 @@ describe('Testando todas as rotas de usuario de forma integrada', () => {
        
     });
 
-    afterAll(async () => {    
-        await sequelize.close();      
+    afterAll(async () => {
+
+        //pega o id o user teacher
+        const iTeacherUser = await User.findOne({ where: { useremail: 'testIntegration@gmail.com' } });
+        await Teacher.destroy({ where: { userid: iTeacherUser.userid } });
+
+        //pega o id o user student
+        const iStudentUser = await User.findOne({ where: { useremail: 'integrationTestStudent@gmail.com' } });
+        await Student.destroy({ where: { userid: iStudentUser.userid } });
+
+        await User.destroy({ where: { useremail: ['testIntegration@gmail.com', 'integrationTestStudent@gmail.com'] } });
+        await sequelize.close();     
     });
 
     describe('POST Teacher /users/register', () => {
