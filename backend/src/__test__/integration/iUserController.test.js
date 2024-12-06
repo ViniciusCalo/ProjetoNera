@@ -19,7 +19,6 @@ describe('Testando todas as rotas de usuario de forma integrada', () => {
     });
 
     afterAll(async () => {
-
         //pega o id o user teacher
         const iTeacherUser = await User.findOne({ where: { useremail: 'testIntegration@gmail.com' } });
         await Teacher.destroy({ where: { userid: iTeacherUser.userid } });
