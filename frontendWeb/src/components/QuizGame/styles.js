@@ -62,7 +62,7 @@ export const Title = styled.h1`
 `;
 
 export const Enunciado = styled.h2`
-  font-family: 'Roboto';
+  font-family: Roboto;
   font-style: normal;
   text-aling: center;
   font-weight: 400;

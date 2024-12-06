@@ -2,6 +2,8 @@ import React from 'react';
 import { Provider } from "react-redux"
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './store';
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
 import Register from './pages/Register';
 import StudentProfile from './pages/StudentProfile'
 import TeacherProfile from './pages/TeacherProfile';
@@ -15,7 +17,9 @@ import TeacherClass from './pages/TeacherClass';
 import CreateClassroom from './pages/CreateClassroom';
 import MemoryGame from './pages/MemoryGame';
 import QuizGame from './pages/QuizGame';
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
+import ProtectedRoute from './components/ProtectedRoute';
+
 
 
 function App() {
@@ -25,20 +29,94 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route>
+              {/* Rota pública */}
               <Route path="/" element={<Navigate to="/register" />} />
               <Route path="register" element={<Register />} />
               <Route path="studentLogin" element={<StudentLogin />} />
               <Route path="teacherLogin" element={<TeacherLogin />} />
-              <Route path="studentProfile" element={<StudentProfile />} />
-              <Route path="teacherProfile" element={<TeacherProfile />} />
-              <Route path="track" element={<Track />} />
-              <Route path="module" element={<Module />} />
-              <Route path="teacherClass" element={<TeacherClass />} />
-              <Route path='createClassroom' element={<CreateClassroom />} />
-              <Route path='memoryGame' element={<MemoryGame/>}/>
-              <Route path='quizGame' element={<QuizGame/>}/>
-              <Route path="question" element={<Question />} />
-              <Route path="question2" element={<Question2 />} />
+
+              {/* Rotas protegidas */}
+
+              <Route
+              path="studentProfile"
+              element={
+                <ProtectedRoute allowedRoles={['student']}>
+                  <StudentProfile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="teacherProfile"
+              element={
+                <ProtectedRoute allowedRoles={['teacher']}>
+                  <TeacherProfile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="track"
+              element={
+                <ProtectedRoute allowedRoles={['student']}>
+                  <Track />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="module"
+              element={
+                <ProtectedRoute allowedRoles={['student']}>
+                  <Module />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="teacherClass"
+              element={
+                <ProtectedRoute allowedRoles={['teacher']}>
+                  <TeacherClass />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="createClassroom"
+              element={
+                <ProtectedRoute allowedRoles={['teacher']}>
+                  <CreateClassroom />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="memoryGame"
+              element={
+                <ProtectedRoute allowedRoles={['student']}>
+                  <MemoryGame />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="quizGame"
+              element={
+                <ProtectedRoute allowedRoles={['student']}>
+                  <QuizGame />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="question"
+              element={
+                <ProtectedRoute allowedRoles={['student']}>
+                  <Question />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="question2"
+              element={
+                <ProtectedRoute allowedRoles={['student']}>
+                  <Question2 />
+                </ProtectedRoute>
+              }
+            />
             </Route>
           </Routes>
         </BrowserRouter>
