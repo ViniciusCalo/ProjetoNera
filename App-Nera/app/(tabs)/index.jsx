@@ -5,7 +5,7 @@ import Switch from '../../components/SwitchProfile';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import endpoint from '../../config/endpoint'
-/* import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin'; */
+import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import { useNavigation } from '@react-navigation/native';
 import { Link } from 'expo-router';
 
@@ -36,14 +36,9 @@ export default function HomeScreen({ navigationA }) {
 
 
   const navigation = useNavigation();
-  /*   GoogleSignin.configure({
+  GoogleSignin.configure({
       androidClientId: '925583381049-703pdr2vo5nqsqk5gied874grf94t3jq.apps.googleusercontent.com',
-    }); */
-
-  /* const [request, response, promptAsync] = Google.useAuthRequest({
-    androidClientId: "925583381049-703pdr2vo5nqsqk5gied874grf94t3jq.apps.googleusercontent.com",
-    webClientId: "925583381049-fgqie9ocvvaojvpvg0acvkisgnl9erst.apps.googleusercontent.com"
-  }) */
+    }); 
 
 
   const [isViewVisible, setIsViewVisible] = useState(true);
@@ -70,9 +65,9 @@ export default function HomeScreen({ navigationA }) {
   const [googleUserInfo, setGoogleUserInfo] = useState(null);
 
 
-  /*   const handleSocialLogin = async (userEmail, userName) => {
+     const handleSocialLogin = async (userEmail, userName) => {
       try {
-        await axios.post(`http://${endpoint}:3333/users/register`, {
+        await axios.post(`${process.env.EXPO_PUBLIC_API_NERA_URL}/users/register`, {
           username: userName,
           useremail: userEmail,
           role: role
@@ -82,9 +77,9 @@ export default function HomeScreen({ navigationA }) {
       } catch (err) {
         console.log(err);
       }
-    }; */
+    }; 
 
-  /*   const promptAsync = async () => {
+     const promptAsync = async () => {
       try {
         await GoogleSignin.hasPlayServices();
         const userInfo = await GoogleSignin.signIn();
@@ -100,7 +95,7 @@ export default function HomeScreen({ navigationA }) {
           alert('Erro desconhecido: ', error);
         }
       }
-    }; */
+    }; 
 
   const toggleRole = () => {
     setRole(prevRole => (prevRole === 'teacher' ? 'student' : 'teacher'));
