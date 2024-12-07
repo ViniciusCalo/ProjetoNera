@@ -4,13 +4,9 @@ on:
   push:
     branches:
       - 'main'
-    paths:
-      - 'backend/**'
-      - 'frontendWeb/**'
 
 jobs:
   tests:
-    if: contains(github.event.commits.*.modified, 'backend/')
     runs-on: ubuntu-latest
     env:
       DB_NAME: ${{ vars.DB_NAME }}
