@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as C from './styles';
-import TipModal from '../TipModal'; 
+import TipModal from '../TipModal';
 import cardFront from '../../assets/CardFront.png';
 import reload from '../../assets/reload.png';
 import tip from '../../assets/tip.png';
 import next from '../../assets/next.png';
+import fogos from '../../assets/fogos.png'
 
 const MemoryGame = () => {
+  const navigate = useNavigate();
   const [cards, setCards] = useState([]);
   const [firstCard, setFirstCard] = useState(null);
   const [secondCard, setSecondCard] = useState(null);
   const [matchedPairs, setMatchedPairs] = useState([]);
   const [lockBoard, setLockBoard] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false); 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isGameOver, setIsGameOver] = useState(false); // Indica se o jogo terminou
 
   const fetchCards = async () => {
     try {
@@ -41,6 +45,12 @@ const MemoryGame = () => {
       checkForMatch();
     }
   }, [secondCard]);
+
+  useEffect(() => {
+    if (matchedPairs.length === cards.length / 2 && cards.length > 0) {
+      setIsGameOver(true); // Define o estado do jogo como finalizado
+    }
+  }, [matchedPairs, cards]);
 
   const resetTurn = () => {
     setFirstCard(null);
@@ -72,31 +82,53 @@ const MemoryGame = () => {
     }
   };
 
-  const isGameWon = matchedPairs.length === cards.length / 2;
 
   const handleReload = () => {
     setMatchedPairs([]);
     setFirstCard(null);
     setSecondCard(null);
     setLockBoard(false);
+    setIsGameOver(false); // Reinicia o estado de fim de jogo
     fetchCards();
   };
 
   const handleTip = () => {
-    setIsModalOpen(true); 
+    setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false); 
+    setIsModalOpen(false);
+  };
+  const handleBackToModules = () => {
+    navigate('/module'); // Navega para a tela de módulos
   };
 
-  const handleNext = () => {
-    alert("Próximo nível não implementado ainda!"); 
-  };
+
+  // Renderização do final do jogo
+  if (isGameOver) {
+    return (
+      <C.Game>
+        <C.GameOverContainer>
+          <C.FunIllustration src={fogos} alt="Parabéns!" />
+          <C.GameOverTitle>Jogo da Memória Finalizado!</C.GameOverTitle>
+          <C.ScoreText>
+            Você encontrou <strong>{matchedPairs.length}</strong> pares de {cards.length / 2}.
+          </C.ScoreText>
+          <C.RestartButton onClick={handleBackToModules}>Voltar para módulo</C.RestartButton>
+        </C.GameOverContainer>
+      </C.Game>
+    );
+  }
 
   if (isLoading) {
-    return <p>Carregando o jogo...</p>;
+    return (
+      <C.LoadingContainer>
+        <C.Spinner /> {/* Animação de carregamento */}
+        <C.LoadingText>Carregando o jogo...</C.LoadingText>
+      </C.LoadingContainer>
+    );
   }
+
 
   return (
     <>
@@ -106,27 +138,23 @@ const MemoryGame = () => {
       <C.Game>
         <C.GameContainer>
           <C.Title>Jogo da Memória de Frações</C.Title>
-          {isGameWon ? (
-            <C.Message>Parabéns! Você encontrou todos os pares!</C.Message>
-          ) : (
-            <C.GameBoard>
-              {cards.map((card) => {
-                const isFlipped = card === firstCard || card === secondCard || matchedPairs.includes(card.idmatch);
-                return (
-                  <C.Card
-                    key={card.uniqueId}
-                    className={isFlipped ? 'flipped' : ''}
-                    onClick={() => handleCardClick(card)}
-                  >
-                    <C.CardImage
-                      src={isFlipped ? card.imageUrl : cardFront}
-                      alt="Card"
-                    />
-                  </C.Card>
-                );
-              })}
-            </C.GameBoard>
-          )}
+          <C.GameBoard>
+            {cards.map((card) => {
+              const isFlipped = card === firstCard || card === secondCard || matchedPairs.includes(card.idmatch);
+              return (
+                <C.Card
+                  key={card.uniqueId}
+                  className={isFlipped ? 'flipped' : ''}
+                  onClick={() => handleCardClick(card)}
+                >
+                  <C.CardImage
+                    src={isFlipped ? card.imageUrl : cardFront}
+                    alt="Card"
+                  />
+                </C.Card>
+              );
+            })}
+          </C.GameBoard>
 
           <C.ContainerMenu>
             <C.BtnReload onClick={handleReload}>
@@ -138,17 +166,12 @@ const MemoryGame = () => {
               <C.IconTip src={tip} alt='Dica' />
               <span>Dica</span>
             </C.BtnTip>
-
-            <C.BtnNext onClick={handleNext} disabled={null}>
-              <C.iconButton src={next} alt='Próximo' />
-              <span>Próximo</span>
-            </C.BtnNext>
           </C.ContainerMenu>
         </C.GameContainer>
       </C.Game>
 
       {/* Componente ModalDica */}
-      <TipModal isOpen={isModalOpen} onRequestClose={closeModal} />
+      <TipModal isOpen={isModalOpen} gameType={"memorygame"} onRequestClose={closeModal} />
     </>
   );
 };

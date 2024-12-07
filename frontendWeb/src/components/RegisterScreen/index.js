@@ -5,6 +5,8 @@ import google from './img/google.svg';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ToggleSwitch from '../ToggleSwitch';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const RegisterScreen = () => {
   const navigate = useNavigate();
@@ -78,8 +80,11 @@ const RegisterScreen = () => {
         role: role,
         ...(role === 'teacher' && { teachercpf: cpf.replace(/\D/g, '') }),
       });
-      alert('Conta criada com sucesso!');
-      navigate(role === 'student' ? '/loginAluno' : '/loginProfessor');
+      toast.success("Cadastro realizado com sucesso", {
+        position: "top-center",
+        autoClose: 2000,
+      });
+      navigate(role === 'student' ? '/studentLogin' : '/teacherLogin');
       clearForm();
     } catch (err) {
       console.log(err);

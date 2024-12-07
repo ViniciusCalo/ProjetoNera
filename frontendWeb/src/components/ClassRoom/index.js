@@ -1,70 +1,64 @@
 import React, { useState, useEffect } from 'react';
 import * as C from './styles';
 import ClassroomCard from '../ClassroomCard';
-import ModalInfoClass from '../ClassInfoModal/index';
-import { useDispatch, useSelector } from 'react-redux';
-import { setItems } from '../../store/classroomSlice';
+import ClassInfoModal from '../ClassInfoModal';
+import { useSelector } from 'react-redux';
 import RoomActionBanner from '../RoomActionBanner';
-import axios from 'axios';
-
 
 const Classroom = () => {
-  const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
-  const [ token ] = useState(localStorage.getItem('token'));
-  const classroom = useState('')
- 
-  useEffect(() => {
-    const getItems = async () => {
-      if (token) { // Verifica se o token está definido
-        try {
-          const res = await axios.get(`${process.env.REACT_APP_API_URL}/classrooms/teacher`, {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          });
-          console.log(res.data);
-          dispatch(setItems(res.data));
-        } catch (error) {
-          console.log(error);
-        }
-      } else {
-        console.log("Token não encontrado");
-      }
-    };
+  const [selectedClassroom, setSelectedClassroom] = useState(null);
 
-    getItems();
-  }, [dispatch, token]);
-
+  // Consumindo o Redux
   const items = useSelector((state) => state.classrooms.items || []);
 
+  const handleCardClick = (classroom) => {
+    setSelectedClassroom(classroom); // Define a sala selecionada
+    setModalVisible(true); // Abre o modal
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+    setSelectedClassroom(null); // Limpa a sala selecionada ao fechar o modal
+  };
 
   return (
-      <C.Container>
-        <C.ContainerC>
-          <C.TitleContainer>
-            <C.Title>Minhas Salas de Aula</C.Title>
-            <C.Line />
-          </C.TitleContainer>
-          <C.GridContainer>
-            {items.length > 0 ? (
-              items.map(item => (
-                <ClassroomCard key={item.classroomid} titulo={item.classroomname} trailId={item.trackid} />
-              ))
-            ) : (
-              <RoomActionBanner
+    <C.Container>
+      <C.ContainerC>
+        <C.TitleContainer>
+          <C.Title>Minhas Salas de Aula</C.Title>
+          <C.Line />
+        </C.TitleContainer>
+        <C.GridContainer>
+          {items.length > 0 ? (
+            items.map((item) => (
+              <ClassroomCard
+                key={item.classroomid}
                 role="teacher"
-                openModal={null} // Função passada para abrir o modal
+                titulo={item.classroomname}
+                classroom={item}
+                trailId={item.trackid}
+                studentCount={item.studentCount} // Passa o studentCount diretamente
+                onCardClick={() => handleCardClick(item)} // Passa a função de clique
               />
-            )}
-          </C.GridContainer>
-        </C.ContainerC>
-        <ModalInfoClass
+            ))
+          ) : (
+            <RoomActionBanner role="teacher" openModal={null} />
+          )}
+        </C.GridContainer>
+      </C.ContainerC>
+
+      {/* Modal de informações */}
+      {selectedClassroom && (
+        <ClassInfoModal
           isOpen={modalVisible}
-          setModalVisible={setModalVisible}
-          classroom={classroom}
+          setModalVisible={() => setModalVisible(false)}
+          classroom={selectedClassroom}
+          idTrail={selectedClassroom.trackid}
+          onRequestClose={closeModal}
         />
-      </C.Container>
+      )}
+    </C.Container>
   );
 };
 
