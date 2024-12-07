@@ -1,6 +1,6 @@
-const teacherModel = require('../models/CanonicalDataModel/TeacherModel');
-const userModel = require('../models/CanonicalDataModel/UserModel');
-const bcrypt = require('bcrypt');
+const teacher = require('../models/TeacherModel');
+const user = require('../models/UserModel');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const jwtConfig = require('../config/jwtConfig');
 const { captureRejectionSymbol } = require('supertest/lib/test');
@@ -8,11 +8,11 @@ const { captureRejectionSymbol } = require('supertest/lib/test');
 const registerUserAsATeacherViaGoogle = async ({ userid }) => {
     try {
         // verificando se professor ja existe, pelo id de usuario dele
-        const teacherExists = await teacherModel.Teacher.findOne({ where: { userid } });
+        const teacherExists = await teacher.findOne({ where: { userid } });
         if (teacherExists) {
             throw new Error('Teacher already exists');
         }
-        const newTeacher = await teacherModel.Teacher.create(
+        const newTeacher = await teacher.create(
             { userid }
         );
         return newTeacher;
@@ -27,11 +27,11 @@ const registerUserAsATeacher = async ({ userid, teachercpf }) => {
         const hashedCpf = await bcrypt.hash(teachercpf, 10);
 
         // verificando se professor ja existe, pelo id de usuario dele
-        const teacherExists = await teacherModel.Teacher.findOne({ where: { userid } });
+        const teacherExists = await teacher.findOne({ where: { userid } });
         if (teacherExists) {
             throw new Error('Teacher already exists');
         }
-        const newTeacher = await teacherModel.Teacher.create(
+        const newTeacher = await teacher.create(
             {
                 userid,
                 teachercpf: hashedCpf
@@ -46,26 +46,26 @@ const registerUserAsATeacher = async ({ userid, teachercpf }) => {
 const loginTeacherGoogle = async ({ useremail, userid }) => {
     try {
         // Verificando se os user inputs estão corretos
-        const user = await userModel.User.findOne({ where: { useremail, role: 'teacher' } });
+        const users = await user.findOne({ where: { useremail, role: 'teacher' } });
 
-        if (!user) {
+        if (!users) {
             throw new Error('Invalid email or role');
         }
 
         // Verificando se o user é professor
-        const teacher = await teacherModel.Teacher.findOne({ where: { userid: user.userid } });
+        const isTeacher = await teacher.findOne({ where: { userid: users.userid } });
 
-        if (!teacher) {
+        if (!isTeacher) {
             throw new Error('User is not a teacher');
         }
 
         // Gerando o token novo caso ele seja professor
-        const token = jwt.sign({ teacherid: teacher.teacherid, userid: teacher.userid, role: user.role }, jwtConfig.secret, {
+        const token = jwt.sign({ teacherid: isTeacher.teacherid, userid: isTeacher.userid, role: users.role }, jwtConfig.secret, {
             expiresIn: jwtConfig.expiresIn,
         });
 
-        const name = user.username;
-        const profilePic = user.profilePicture;
+        const name = users.username;
+        const profilePic = users.profilePicture;
 
         return { token, name, profilePic };
     } catch (error) {
@@ -77,21 +77,21 @@ const loginTeacherGoogle = async ({ useremail, userid }) => {
 const loginTeacher = async ({ useremail, teachercpf }) => {
     try {
         // Verificando se os user inputs estão corretos
-        const user = await userModel.User.findOne({ where: { useremail, role: 'teacher' } });
+        const users = await user.findOne({ where: { useremail, role: 'teacher' } });
 
-        if (!user) {
+        if (!users) {
             throw new Error('Invalid email or role');
         }
 
         // Verificando se o user é professor
-        const teacher = await teacherModel.Teacher.findOne({ where: { userid: user.userid } });
+        const isTeacher = await teacher.findOne({ where: { userid: users.userid } });
 
-        if (!teacher) {
+        if (!isTeacher) {
             throw new Error('User is not a teacher');
         }
 
         // Checando o CPF do usuário
-        const isCpfValid = await bcrypt.compare(teachercpf, teacher.teachercpf);
+        const isCpfValid = await bcrypt.compare(teachercpf, isTeacher.teachercpf);
 
         if (!isCpfValid) {
             throw new Error('Invalid CPF');
@@ -101,12 +101,12 @@ const loginTeacher = async ({ useremail, teachercpf }) => {
         }
 
         // Gerando o token novo caso ele seja professor
-        const token = jwt.sign({ teacherid: teacher.teacherid, userid: teacher.userid, role: user.role }, jwtConfig.secret, {
+        const token = jwt.sign({ teacherid: isTeacher.teacherid, userid: isTeacher.userid, role: users.role }, jwtConfig.secret, {
             expiresIn: jwtConfig.expiresIn,
         });
 
-        const name = user.username;
-        const profilePic = user.profilePicture;
+        const name = users.username;
+        const profilePic = users.profilePicture;
 
         return { token, name, profilePic };
     } catch (error) {
@@ -117,8 +117,8 @@ const loginTeacher = async ({ useremail, teachercpf }) => {
 
 const getTeacherById = async (request) => {
     try {
-        const teacher = await teacherModel.Teacher.findOne({ where: { userid: request.user } });
-        return teacher;
+        const isTeacher = await teacher.findOne({ where: { userid: request.user } });
+        return isTeacher;
     } catch (error) {
         console.error('Error fetching teacher:', error);
         throw error;

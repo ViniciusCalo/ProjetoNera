@@ -1,36 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as C from './styles';
-import ClassroomCard from './ClassroomCard';
-import ModalInfoClass from '../ModalInfoClass/index';
+import ClassroomCard from '../ClassroomCard';
+import ModalInfoClass from '../ClassInfoModal/index';
+import { useDispatch, useSelector } from 'react-redux';
+import { setItems } from '../../store/classroomSlice';
+import RoomActionBanner from '../RoomActionBanner';
+import axios from 'axios';
 
 
-const aulas = [
-  { id: 1, title: '6° Ano A', alunos: 40 },
-  { id: 2, title: '7° Ano A', alunos: 40 },
-  { id: 3, title: '6° Ano A', alunos: 40 },
-  { id: 4, title: '7° Ano A', alunos: 40 },
-  { id: 5, title: '6° Ano A', alunos: 40 },
-  { id: 6, title: '7° Ano A', alunos: 40 },
-  { id: 7, title: '6° Ano A', alunos: 40 },
-  { id: 8, title: '7° Ano A', alunos: 40 },
-  { id: 9, title: '6° Ano A', alunos: 40 },
-  { id: 10, title: '7° Ano A', alunos: 40 },
-];
+const Classroom = () => {
+  const dispatch = useDispatch();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [ token ] = useState(localStorage.getItem('token'));
+  const classroom = useState('')
+ 
+  useEffect(() => {
+    const getItems = async () => {
+      if (token) { // Verifica se o token está definido
+        try {
+          const res = await axios.get(`${process.env.REACT_APP_API_URL}/classrooms/teacher`, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          console.log(res.data);
+          dispatch(setItems(res.data));
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        console.log("Token não encontrado");
+      }
+    };
 
-const TelaClasses = () => {
-  const [selectedClass, setSelectedClass] = useState(null);
+    getItems();
+  }, [dispatch, token]);
 
-  const openModal = (aula) => {
-    setSelectedClass(aula);
-  };
+  const items = useSelector((state) => state.classrooms.items || []);
 
-  const closeModal = () => {
-    setSelectedClass(null);
-  };
 
   return (
-    <>
-      <C.GlobalStyle /> {/* Garante que o fundo azul cubra todo o body */}
       <C.Container>
         <C.ContainerC>
           <C.TitleContainer>
@@ -38,25 +47,25 @@ const TelaClasses = () => {
             <C.Line />
           </C.TitleContainer>
           <C.GridContainer>
-            {aulas.map((aula) => (
-              <ClassroomCard
-                key={aula.id}
-                titulo={aula.title}
-                alunos={aula.alunos}
-                onClick={() => openModal(aula)}
+            {items.length > 0 ? (
+              items.map(item => (
+                <ClassroomCard key={item.classroomid} titulo={item.classroomname} trailId={item.trackid} />
+              ))
+            ) : (
+              <RoomActionBanner
+                role="teacher"
+                openModal={null} // Função passada para abrir o modal
               />
-            ))}
+            )}
           </C.GridContainer>
         </C.ContainerC>
         <ModalInfoClass
-          isOpen={!!selectedClass}
-          onRequestClose={closeModal}
-          title={selectedClass?.title}
-          alunos={selectedClass?.alunos}
+          isOpen={modalVisible}
+          setModalVisible={setModalVisible}
+          classroom={classroom}
         />
       </C.Container>
-    </>
   );
 };
 
-export default TelaClasses;
+export default Classroom;

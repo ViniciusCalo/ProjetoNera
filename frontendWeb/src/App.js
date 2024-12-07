@@ -1,43 +1,128 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { GoogleOAuthProvider } from '@react-oauth/google';
+import { Provider } from "react-redux"
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './store';
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-import Perfil from './pages/Perfil';
-import PerfilProf from './pages/PerfilProf';
-import Trilha from './pages/Trilha';
-import Modulo from './pages/Modulo';
-import Questao from './pages/Questao';
-import Questao2 from './pages/Questao2';
-import LoginAluno from './pages/LoginAluno';
-import LoginProf from './pages/LoginProf';
+import Register from './pages/Register';
+import StudentProfile from './pages/StudentProfile'
+import TeacherProfile from './pages/TeacherProfile';
+import Track from './pages/Track'
+import Module from './pages/Module'
+import Question from './pages/Question'
+import Question2 from './pages/Question2';
+import StudentLogin from './pages/StudentLogin';
+import TeacherLogin from './pages/TeacherLogin';
 import TeacherClass from './pages/TeacherClass';
-import CreateClass from './pages/CreateClass';
-import Cadastro from './pages/Cadastro';
+import CreateClassroom from './pages/CreateClassroom';
+import MemoryGame from './pages/MemoryGame';
+import QuizGame from './pages/QuizGame';
 
-// Substitua pelo seu Client ID da API Google
-const GOOGLE_CLIENT_ID = "925583381049-fgqie9ocvvaojvpvg0acvkisgnl9erst.apps.googleusercontent.com";
+import ProtectedRoute from './components/ProtectedRoute';
+
+
 
 function App() {
   return (
-    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<LoginAluno />} /> {/* Página inicial */}
-          <Route path="perfil" element={<Perfil />} /> 
-          <Route path="perfilProf" element={<PerfilProf />} />   
-          <Route path="trilha" element={<Trilha />} />
-          <Route path="modulo" element={<Modulo />} />
-          <Route path="questao" element={<Questao />} />
-          <Route path="questao2" element={<Questao2 />} />
-          <Route path="loginAluno" element={<LoginAluno />} />
-          <Route path="loginProfessor" element={<LoginProf />} />
-          <Route path="cadastro" element={<Cadastro />} />
-          <Route path="teacherClass" element={<TeacherClass />} />
-          <Route path="createClass" element={<CreateClass />} />
-        </Routes>
-      </BrowserRouter>
-    </GoogleOAuthProvider>
-  );
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+          <Routes>
+            <Route>
+              {/* Rota pública */}
+              <Route path="/" element={<Navigate to="/register" />} />
+              <Route path="register" element={<Register />} />
+              <Route path="studentLogin" element={<StudentLogin />} />
+              <Route path="teacherLogin" element={<TeacherLogin />} />
+
+              {/* Rotas protegidas */}
+
+              <Route
+              path="studentProfile"
+              element={
+                <ProtectedRoute allowedRoles={['student']}>
+                  <StudentProfile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="teacherProfile"
+              element={
+                <ProtectedRoute allowedRoles={['teacher']}>
+                  <TeacherProfile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="track"
+              element={
+                <ProtectedRoute allowedRoles={['student']}>
+                  <Track />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="module"
+              element={
+                <ProtectedRoute allowedRoles={['student']}>
+                  <Module />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="teacherClass"
+              element={
+                <ProtectedRoute allowedRoles={['teacher']}>
+                  <TeacherClass />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="createClassroom"
+              element={
+                <ProtectedRoute allowedRoles={['teacher']}>
+                  <CreateClassroom />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="memoryGame"
+              element={
+                <ProtectedRoute allowedRoles={['student']}>
+                  <MemoryGame />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="quizGame"
+              element={
+                <ProtectedRoute allowedRoles={['student']}>
+                  <QuizGame />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="question"
+              element={
+                <ProtectedRoute allowedRoles={['student']}>
+                  <Question />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="question2"
+              element={
+                <ProtectedRoute allowedRoles={['student']}>
+                  <Question2 />
+                </ProtectedRoute>
+              }
+            />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </PersistGate>
+    </Provider>
+  )
 }
 
 export default App;
