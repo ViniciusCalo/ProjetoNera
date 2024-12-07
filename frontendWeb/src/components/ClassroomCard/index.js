@@ -50,7 +50,7 @@ const ClassroomCard = ({ titulo, trailId, role, classroom }) => {
         {role === 'teacher' ? (
           <C.Info>
             <C.UserIcon />
-            <C.TextoInfo>40 Alunos</C.TextoInfo>
+            <C.TextoInfo>{classroom.studentCount || 0} Alunos</C.TextoInfo>
           </C.Info>
         ) : (
           <>

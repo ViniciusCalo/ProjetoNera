@@ -2,37 +2,15 @@ import React, { useState, useEffect } from 'react';
 import * as C from './styles';
 import ClassroomCard from '../ClassroomCard';
 import ClassInfoModal from '../ClassInfoModal';
-import { useDispatch, useSelector } from 'react-redux';
-import { setItems } from '../../store/classroomSlice';
+import { useSelector } from 'react-redux';
 import RoomActionBanner from '../RoomActionBanner';
-import axios from 'axios';
 
 const Classroom = () => {
-  const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedClassroom, setSelectedClassroom] = useState(null);
-  const token = localStorage.getItem('token');
+
+  // Consumindo o Redux
   const items = useSelector((state) => state.classrooms.items || []);
-
-  useEffect(() => {
-    const getItems = async () => {
-      if (token) {
-        try {
-          const res = await axios.get(
-            `${process.env.REACT_APP_API_URL}/classrooms/teacher`,
-            { headers: { Authorization: `Bearer ${token}` } }
-          );
-          dispatch(setItems(res.data));
-        } catch (error) {
-          console.error(error);
-        }
-      } else {
-        console.log("Token não encontrado");
-      }
-    };
-
-    getItems();
-  }, [dispatch, token]);
 
   const handleCardClick = (classroom) => {
     setSelectedClassroom(classroom); // Define a sala selecionada
@@ -60,6 +38,7 @@ const Classroom = () => {
                 titulo={item.classroomname}
                 classroom={item}
                 trailId={item.trackid}
+                studentCount={item.studentCount} // Passa o studentCount diretamente
                 onCardClick={() => handleCardClick(item)} // Passa a função de clique
               />
             ))
@@ -79,7 +58,6 @@ const Classroom = () => {
           onRequestClose={closeModal}
         />
       )}
-
     </C.Container>
   );
 };

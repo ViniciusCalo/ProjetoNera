@@ -3,6 +3,7 @@ import { Provider } from "react-redux"
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './store';
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
 
 import Register from './pages/Register';
 import StudentProfile from './pages/StudentProfile'
@@ -119,8 +120,10 @@ function App() {
             />
             </Route>
           </Routes>
+
         </BrowserRouter>
       </PersistGate>
+      <ToastContainer />
     </Provider>
   )
 }

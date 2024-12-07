@@ -5,6 +5,9 @@ import seta from './img/set.svg';
 import iconCopiar from './img/copy.png';
 import iconCompartilhar from './img/share.png';
 import TrackCard from '../TrackCard';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 // Redux
 import { useSelector } from 'react-redux';
 
@@ -17,7 +20,9 @@ const ClassInfoModal = ({ idTrail, classroom, isOpen, setModalVisible }) => {
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(classroom.tokenclass);
-    alert("Código copiado!");
+    toast.success("Código copiado para a área de transferência!", {
+      position: "top-center",
+    });
   };
 
   const shareCode = () => {
@@ -132,7 +137,7 @@ const ClassInfoModal = ({ idTrail, classroom, isOpen, setModalVisible }) => {
         <div style={{ width: '100%', textAlign: 'center', marginTop: '20px' }}>
           <C.SectionTitle>Alunos</C.SectionTitle>
           <p style={{ fontSize: '16px', color: '#007bff', fontWeight: 'bold' }}>
-            {classroom.totalStudents} alunos nesta sala
+            {classroom.studentCount || 0} alunos nesta sala
           </p>
         </div>
       </div>

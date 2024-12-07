@@ -263,3 +263,4 @@ export const ButtonAlu = styled.a`
   background-color: #f2b705;
   border-radius: 30px 30px 30px 0px;
 `;
+

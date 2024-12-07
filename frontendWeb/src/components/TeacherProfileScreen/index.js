@@ -26,25 +26,45 @@ const TeacherProfileScreen = () => {
 
   useEffect(() => {
     const getItems = async () => {
-      if (token) { // Verifica se o token está definido
-        try {
-          const res = await axios.get(`${process.env.REACT_APP_API_URL}/classrooms/teacher`, {
-            headers: {
-              'Authorization': `Bearer ${token}`
+        if (token) { 
+            try {
+                // Chamada para buscar detalhes das salas
+                const res = await axios.get(`${process.env.REACT_APP_API_URL}/classrooms/teacher`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                const classrooms = res.data;
+
+                // Segunda chamada para buscar o count dos alunos
+                const countRes = await axios.get(`${process.env.REACT_APP_API_URL}/teacherclassrooms/`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                // Mapeia os dados para incluir o studentCount
+                const mergedData = classrooms.map(classroom => {
+                    const countData = countRes.data.find(item => item.classroomname === classroom.classroomname);
+                    return {
+                        ...classroom,
+                        studentCount: countData ? parseInt(countData.studentCount, 10) : 0, // Adiciona studentCount
+                    };
+                });
+
+                dispatch(setItems(mergedData)); // Atualiza o Redux com os dados mesclados
+            } catch (error) {
+                console.error(error);
             }
-          });
-          console.log(res.data);
-          dispatch(setItems(res.data));
-        } catch (error) {
-          console.log(error);
+        } else {
+            console.log("Token não encontrado");
         }
-      } else {
-        console.log("Token não encontrado");
-      }
     };
 
     getItems();
-  }, [dispatch, token]);
+}, [dispatch, token]);
+
 
   const items = useSelector((state) => state.classrooms.items || []);
 

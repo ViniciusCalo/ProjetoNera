@@ -9,10 +9,13 @@ const classroomSlice = createSlice({
     initialState,
     reducers: {
         setItems(state, action) {
-            state.items = action.payload;
+            state.items = action.payload.map(item => ({
+                ...item,
+                studentCount: item.studentCount || 0, // Garantia que `studentCount` sempre existe
+            }));
         },
         addItem(state, action) {
-            state.items.push(action.payload);
+            state.items.push({ ...action.payload, studentCount: action.payload.studentCount || 0 });
         },
         removeItem(state, action) {
             state.items = state.items.filter(item => item.id !== action.payload);
@@ -21,10 +24,9 @@ const classroomSlice = createSlice({
             const { id, data } = action.payload;
             const index = state.items.findIndex(item => item.id === id);
             if (index !== -1) {
-                state.items[index] = data;
+                state.items[index] = { ...data, studentCount: data.studentCount || 0 };
             }
-        }
-        ,
+        },
     },
 });
 
