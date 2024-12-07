@@ -13,26 +13,26 @@ import caminho3 from './img/caminho3.svg'
 const ModuleScreen = () => {
   return (
     <>
-    <C.Header>
+      <C.Header>
         <C.IconHeader src={fracao} alt="Sair" />
         <C.Title>Fraçāo</C.Title>
-    </C.Header>
-    <C.Container>
+      </C.Header>
+      <C.Container>
         <C.Logo src={logo} alt="Sair" />
         <C.DivConquista>
-            <C.Conquista src={lupa} alt="Sair" />
-            <C.textConquista>Modulo Explorador de frações</C.textConquista>
+          <C.Conquista src={lupa} alt="Sair" />
+          <C.textConquista>Modulo Explorador de frações</C.textConquista>
         </C.DivConquista>
         <C.DivModulo>
-            <a href='/memoryGame'><C.M1 src={modulo} alt='Modulo 1'/></a>
-            <C.C1 src={caminho1} alt='Caminho do Modulo 1'/>
-            <C.M2 src={modulo} alt='Modulo 2'/>
-            <C.C2 src={caminho2} alt='Caminho do Modulo 2'/>
-            <C.M3 src={modulo} alt='Modulo 3'/>
-            <C.C3 src={caminho3} alt='Caminho do Modulo 3'/>
-            <C.M4 src={modulo} alt='Modulo 3'/>
+          <a href='/memoryGame'><C.M1 src={modulo} alt='Modulo 1' /></a>
+          <C.C1 src={caminho1} alt='Caminho do Modulo 1' />
+          <a href='/quizGame'> <C.M2 src={modulo} alt='Modulo 2' /></a>
+          <C.C2 src={caminho2} alt='Caminho do Modulo 2' />
+          <C.M3 src={modulo} alt='Modulo 3' />
+          <C.C3 src={caminho3} alt='Caminho do Modulo 3' />
+          <C.M4 src={modulo} alt='Modulo 3' />
         </C.DivModulo>
-    </C.Container>
+      </C.Container>
     </>
   )
 }
