@@ -343,3 +343,13 @@ export const Spinner = styled.div`
     }
   }
 `;
+
+export const RestartButton = styled(Botao)`
+  background: #ffaa33; /* Cor laranja */
+  color: white;
+  font-weight: bold;
+
+  &:hover {
+    background: #ff8800; /* Cor laranja mais escura no hover */
+  }
+`;

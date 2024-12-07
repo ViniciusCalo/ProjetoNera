@@ -207,6 +207,42 @@ export const LampIcon = styled.img`
 `;
 
 
+export const GameOverContainer = styled.div`
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #fff8e5; /* Fundo claro */
+  border: 2px solid #ffaa33; /* Contorno laranja */
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 600px;
+`;
+
+export const GameOverTitle = styled.h2`
+  font-family: 'Roboto', sans-serif;
+  color: #135794; /* Azul escuro */
+  font-size: 24px;
+  margin-bottom: 10px;
+`;
+
+export const ScoreText = styled.p`
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  font-size: 18px;
+  margin-bottom: 20px;
+`;
+
+
+export const FunIllustration = styled.img`
+  width: 200px;
+  margin-bottom: 20px;
+`;
+
+
 export const LoadingContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -240,3 +276,14 @@ export const Spinner = styled.div`
     }
   }
 `;
+
+export const RestartButton = styled(Botao)`
+  background: #ffaa33; /* Cor laranja */
+  color: white;
+  font-weight: bold;
+
+  &:hover {
+    background: #ff8800; /* Cor laranja mais escura no hover */
+  }
+`;
+

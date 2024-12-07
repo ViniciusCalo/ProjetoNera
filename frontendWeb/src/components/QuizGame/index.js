@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import * as C from './styles';
 import TipModal from '../TipModal';
 import iconreload from '../../assets/reload.png';
 import tip from '../../assets/tip.png';
 import next from '../../assets/next.png';
+import fogos from '../../assets/fogos.png'
 
 function QuizGame() {
+  const navigate = useNavigate();
   const [questions, setQuestions] = useState([]); // Armazena as perguntas
   const [currentQuestion, setCurrentQuestion] = useState(0); // Índice da pergunta atual
   const [score, setScore] = useState(0); // Pontuação
@@ -62,22 +65,35 @@ function QuizGame() {
       </C.LoadingContainer>
     );
   }
+  const handleBackToModules = () => {
+    navigate('/module'); // Navega para a tela de módulos
+  };
 
   // Renderização do final do jogo
   if (isGameOver) {
     return (
       <C.Game>
         <C.GameOverContainer>
-          <C.FunIllustration src="/path/to/congrats.png" alt="Parabéns!" />
+          <C.FunIllustration src={fogos} alt="Parabéns!" />
           <C.GameOverTitle>Jogo Finalizado!</C.GameOverTitle>
           <C.ScoreText>
             Sua pontuação: <strong>{score}</strong> de {questions.length}
           </C.ScoreText>
+          <C.RestartButton onClick={handleBackToModules}>Voltar para módulo</C.RestartButton>
         </C.GameOverContainer>
       </C.Game>
     );
   }
 
+  const handleReload = () => {
+    setScore(0); // Reinicia a pontuação
+    setCurrentQuestion(0); // Volta para a primeira pergunta
+    setSelectedAnswer(null); // Limpa a resposta selecionada
+    setFeedback(""); // Remove o feedback
+    setIsGameOver(false); // Reseta o estado de fim de jogo
+    fetchQuestions(); // Recarrega as perguntas
+  };
+  
 
   const handleTip = () => {
     setIsModalOpen(true);
@@ -86,6 +102,8 @@ function QuizGame() {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+
 
   const current = questions[currentQuestion];
   const options = [current.option_1, current.option_2, current.option_3, current.option_4];
