@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setName, setProfileImageUrl, setRole, setToken } from '../../store/userSlice';
 import axios from "axios";
+import { useGoogleLogin } from '@react-oauth/google';
 
 const TeacherLoginScreen = () => {
   const dispatch = useDispatch();
@@ -17,12 +18,14 @@ const TeacherLoginScreen = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const role = "teacher";
+  const [userInfo, setUserInfo] = useState(null);
+
 
   const createProfile = (username, userpicture, token, role) => {
     dispatch(setName(username));
     dispatch(setProfileImageUrl(userpicture));
     dispatch(setToken(token));
-    dispatch(setRole(role)); 
+    dispatch(setRole(role));
   };
 
   const storeData = async (value) => {
@@ -95,61 +98,87 @@ const TeacherLoginScreen = () => {
     }
   };
 
+  const loginSocial = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        const userResponse = await axios.get(
+          'https://www.googleapis.com/oauth2/v3/userinfo',
+          {
+            headers: {
+              Authorization: `Bearer ${tokenResponse.access_token}`,
+            },
+          }
+        );
+  
+        const { email, name, picture } = userResponse.data;
+  
+        // Salvar dados no Redux ou LocalStorage
+        createProfile(name, picture, tokenResponse.access_token, role);
+        storeData(tokenResponse.access_token);
+  
+        // Redirecionar após login
+        navigate('/teacherProfile');
+      } catch (error) {
+        console.error("Erro ao buscar dados do usuário:", error);
+      }
+    },
+  });  
+
   return (
     <body>
-    <C.Box>
-      <C.Logo src={Logo} />
-      <C.Container>
-        <C.DivButton>
-          <C.ButtonAlu href='/studentLogin'>Estudante</C.ButtonAlu>
-          <C.ButtonProf href='/teacherLogin'>Professor</C.ButtonProf>
-        </C.DivButton>
-        <C.FormLogin autoComplete="off">
-          <C.InputE
-            id='email'
-            onChange={handleEmail}
-            type="text"
-            placeholder="E-mail ou nome do usuário"
-            value={email}
-          />
-          <C.InputE
-            id='cpf'
-            onChange={handleCPF}
-            type="text"
-            placeholder="CPF"
-            value={cpf}
-            maxLength="14"
-          />
-          <C.PasswordContainer>
-            <C.InputS
-              id='senha'
-              onChange={handleSenha}
-              type={showPassword ? "text" : "password"}
-              placeholder="Senha"
-              value={senha}
+      <C.Box>
+        <C.Logo src={Logo} />
+        <C.Container>
+          <C.DivButton>
+            <C.ButtonAlu href='/studentLogin'>Estudante</C.ButtonAlu>
+            <C.ButtonProf href='/teacherLogin'>Professor</C.ButtonProf>
+          </C.DivButton>
+          <C.FormLogin autoComplete="off">
+            <C.InputE
+              id='email'
+              onChange={handleEmail}
+              type="text"
+              placeholder="E-mail ou nome do usuário"
+              value={email}
             />
-            <C.ShowPasswordButton onClick={(e) => {
-              e.preventDefault();
-              setShowPassword(!showPassword);
-            }}>
-              {showPassword ? '🙈' : '👁️'}
-            </C.ShowPasswordButton>
-          </C.PasswordContainer>
-          {error && <C.ErrorMessage>{error}</C.ErrorMessage>}
-          <C.div>
-            <C.Link>Esqueci minha senha?</C.Link>
-          </C.div>
-          <C.Button type='button' onClick={login}>Entrar</C.Button>
-          <C.DivLinha>
-            <C.linha1></C.linha1>
-            ou
-            <C.linha2></C.linha2>
-          </C.DivLinha>
-          <C.ButtonG><C.icon src={google} />Login com Google</C.ButtonG>
-          <C.ButtonC href='/register'>Criar Conta</C.ButtonC>
-        </C.FormLogin>
-      </C.Container>
-    </C.Box>
+            <C.InputE
+              id='cpf'
+              onChange={handleCPF}
+              type="text"
+              placeholder="CPF"
+              value={cpf}
+              maxLength="14"
+            />
+            <C.PasswordContainer>
+              <C.InputS
+                id='senha'
+                onChange={handleSenha}
+                type={showPassword ? "text" : "password"}
+                placeholder="Senha"
+                value={senha}
+              />
+              <C.ShowPasswordButton onClick={(e) => {
+                e.preventDefault();
+                setShowPassword(!showPassword);
+              }}>
+                {showPassword ? '🙈' : '👁️'}
+              </C.ShowPasswordButton>
+            </C.PasswordContainer>
+            {error && <C.ErrorMessage>{error}</C.ErrorMessage>}
+            <C.div>
+              <C.Link>Esqueci minha senha?</C.Link>
+            </C.div>
+            <C.Button type='button' onClick={login}>Entrar</C.Button>
+            <C.DivLinha>
+              <C.linha1></C.linha1>
+              ou
+              <C.linha2></C.linha2>
+            </C.DivLinha>
+            <C.ButtonG onClick={() => loginSocial()}><C.icon src={google}/>Login com Google</C.ButtonG>
+            <C.ButtonC href='/register'>Criar Conta</C.ButtonC>
+          </C.FormLogin>
+        </C.Container>
+      </C.Box>
     </body>
   );
 };

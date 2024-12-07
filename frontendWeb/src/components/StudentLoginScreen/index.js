@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setName, setProfileImageUrl, setRole, setToken } from '../../store/userSlice';
 import axios from "axios";
+import { useGoogleLogin } from '@react-oauth/google';
 
 const StudentLoginScreen = () => {
   const dispatch = useDispatch();
@@ -77,6 +78,30 @@ const StudentLoginScreen = () => {
     }
   };
 
+  const loginSocial = useGoogleLogin(
+    {
+    
+    onSuccess: async (tokenResponse) => {
+      console.log("Token Google:", tokenResponse);  // Log para ver o token
+      try {
+        const userResponse = await axios.get(
+          'https://www.googleapis.com/oauth2/v3/userinfo',
+          {
+            headers: {
+              Authorization: `Bearer ${tokenResponse.access_token}`,
+            },
+          }
+        );
+        console.log("User Info:", userResponse.data);  // Log para ver os dados do usuário
+  
+        const { email, name, picture } = userResponse.data;
+      } catch (error) {
+        console.error("Erro ao buscar dados do usuário:", error);
+      }
+    },
+  });
+  
+
   return (
     <body>
     <C.Box>
@@ -119,7 +144,7 @@ const StudentLoginScreen = () => {
             ou
             <C.linha2></C.linha2>
           </C.DivLinha>
-          <C.ButtonG><C.icon src={google} />Login com Google</C.ButtonG>
+          <C.ButtonG onClick={() => loginSocial()}><C.icon src={google}/>Login com Google</C.ButtonG>
           <C.ButtonC href='/register'>Criar Conta</C.ButtonC>
         </C.FormLogin>
       </C.Container>
