@@ -22,6 +22,7 @@ const EditProfileModal = ({ isOpen, onRequestClose }) => {
   const [isEditingName, setIsEditingName] = useState(false);
   const [profileImage, setProfileImage] = useState(profileImageUrl);
 
+  const isSmallScreen = window.matchMedia("(max-width: 768px)").matches;
   const handleNameChange = (e) => {
     setUserName(e.target.value);
   };
@@ -122,8 +123,8 @@ const EditProfileModal = ({ isOpen, onRequestClose }) => {
         },
         content: {
           borderRadius: '20px',
-          width: '50%',
-          maxWidth: '600px',
+           width: isSmallScreen ? '90%' : '50%', // Ajusta a largura para telas menores
+          maxWidth: isSmallScreen ? '90%' : '600px',
           height: 'auto',
           maxHeight: '90%',
           padding: '0',

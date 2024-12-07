@@ -6,6 +6,8 @@ import SideMenuStudent from '../components/SideMenuStudent'
 const MemoryGame = () => {
   return (
     <>
+      <StudentStyles/>
+      <SideMenuStudent/>
       <TelaQuizGame />
     </>
   )

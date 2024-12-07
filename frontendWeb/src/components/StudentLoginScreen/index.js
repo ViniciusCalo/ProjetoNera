@@ -4,7 +4,7 @@ import Logo from './img/logo.png';
 import google from './img/google.svg';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setName, setProfileImageUrl } from '../../store/userSlice';
+import { setName, setProfileImageUrl, setRole, setToken } from '../../store/userSlice';
 import axios from "axios";
 
 const StudentLoginScreen = () => {
@@ -17,9 +17,11 @@ const StudentLoginScreen = () => {
   const [error, setError] = useState('');
   const role = "student";
 
-  const createProfile = (username, userpicture) => {
+  const createProfile = (username, userpicture, token, role) => {
     dispatch(setName(username));
     dispatch(setProfileImageUrl(userpicture));
+    dispatch(setToken(token));
+    dispatch(setRole(role)); 
   };
 
   const storeData = async (value) => {
@@ -64,10 +66,10 @@ const StudentLoginScreen = () => {
         userpassword: senha,
         role: role,
       });
-      createProfile(res.data.username, res.data.profilepic);
+      createProfile(res.data.username, res.data.profilepic, res.data.token, role);
       if (res.data.token) {
         storeData(res.data.token);
-        navigate(role === 'teacher' ? '/teacherProfile' : '/studentProfile');
+        navigate('/studentProfile');
       }
       clearForm();
     } catch (err) {

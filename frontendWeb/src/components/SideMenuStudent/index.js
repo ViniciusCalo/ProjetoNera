@@ -6,13 +6,22 @@ import trilha from './img/Vector_Trilha.svg';
 import join from './img/Vector_join.svg';
 import sair from './img/Vector_Logout.svg';
 import seta from './img/seta.svg';
+import { useNavigate } from 'react-router-dom';
 import EnterClassModal from '../EnterClassModal/index';
+import { setItems } from '../../store/classroomSlice';
+import { logout } from '../../store/userSlice';
+import { useDispatch } from 'react-redux';
 
 const SideMenuStudent = () => {
   const [showModal, setShowModal] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  function limparLocal() {
+  function logoutsite() {
     localStorage.clear();
+    dispatch(logout());
+    dispatch(setItems([]));
+    navigate('/studentLogin')
   }
 
   function toggleModal() {
@@ -28,7 +37,7 @@ const SideMenuStudent = () => {
           <C.Item><C.Link href="/track"><C.Icone src={trilha} /><C.Texto>Trilhas</C.Texto></C.Link></C.Item>
           <C.Item><C.Link onClick={toggleModal}><C.Icone src={join} /><C.Texto>Entrar</C.Texto></C.Link></C.Item>
           <C.Item2><C.Link href="#"><C.Icone2 src={seta} /></C.Link></C.Item2>
-          <C.Item3><C.Link href="/studentLogin" onClick={limparLocal}><C.Icone src={sair} /><C.Texto>Sair</C.Texto></C.Link></C.Item3>
+          <C.Item3><C.Link onClick={logoutsite}><C.Icone src={sair} /><C.Texto>Sair</C.Texto></C.Link></C.Item3>
         </C.Lista>
       </C.Menu>
 
