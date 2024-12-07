@@ -91,7 +91,7 @@ const TeacherProfileScreen = () => {
           <C.Carrousel ref={carrouselRef}>
             {items.length > 0 ? (
               items.map(item => (
-                <ClassroomCard key={item.classroomid} titulo={item.classroomname} trailId={item.trackid} />
+                <ClassroomCard key={item.classroomid} role={"teacher"} titulo={item.classroomname} classroom={item} trailId={item.trackid} />
               ))
             ) : (
               <RoomActionBanner
