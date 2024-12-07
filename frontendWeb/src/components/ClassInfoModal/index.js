@@ -8,7 +8,7 @@ import TrackCard from '../TrackCard';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// Redux
+// Reduxx
 import { useSelector } from 'react-redux';
 
 Modal.setAppElement('#root');
