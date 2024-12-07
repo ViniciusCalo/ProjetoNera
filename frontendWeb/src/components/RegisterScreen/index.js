@@ -78,7 +78,6 @@ const RegisterScreen = () => {
         role: role,
         ...(role === 'teacher' && { teachercpf: cpf.replace(/\D/g, '') }),
       });
-      alert('Conta criada com sucesso!');
       navigate(role === 'student' ? '/studentLogin' : '/teacherLogin');
       clearForm();
     } catch (err) {
