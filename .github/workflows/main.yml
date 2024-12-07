@@ -4,9 +4,13 @@ on:
   push:
     branches:
       - 'main'
+    paths:
+      - 'backend/**'
+      - 'frontendWeb/**'
 
 jobs:
   tests:
+    if: contains(github.event.commits.*.modified, 'backend/')
     runs-on: ubuntu-latest
     env:
       DB_NAME: ${{ vars.DB_NAME }}
@@ -60,6 +64,7 @@ jobs:
 
       # Build e Push Backend
       - name: Build and push
+        if: contains(github.event.commits.*.modified, 'backend/')
         uses: docker/build-push-action@v5
         with:
           push: true
@@ -69,6 +74,7 @@ jobs:
 
       # Build e Push Frontend
       - name: Build and push frontend image
+        if: contains(github.event.commits.*.modified, 'frontendWeb/')
         uses: docker/build-push-action@v5
         with:
           push: true

@@ -1,20 +1,35 @@
-# Use uma imagem base do Node.js para executar o servidor
-FROM node:20-alpine
+# Etapa 1: Build da aplicação
+FROM node:20-alpine AS builder
 
-# Crie o diretório de trabalho no contêiner
+# Defina o diretório de trabalho dentro do contêiner
 WORKDIR /app
 
-# Copie o arquivo package.json e package-lock.json para instalar as dependências
+# Copie os arquivos package.json e package-lock.json para instalar as dependências
 COPY package*.json ./
 
-# Instale o pacote "serve" e outras dependências do projeto
-RUN npm install -g serve && npm install
+# Instale as dependências
+RUN npm install
 
-# Copie os arquivos de build para o diretório de trabalho
-COPY build ./build
+# Copie o restante do código-fonte da aplicação para o contêiner
+COPY . .
 
-# Exponha a porta 3000 (ou a porta que o serve usará)
+# Execute o build da aplicação
+RUN npm run build
+
+# Etapa 2: Servir a aplicação
+FROM node:20-alpine
+
+# Instale o pacote global serve para servir arquivos estáticos
+RUN npm install -g serve
+
+# Defina o diretório de trabalho
+WORKDIR /app
+
+# Copie os arquivos de build da etapa anterior
+COPY --from=builder /app/build ./build
+
+# Exponha a porta 3000
 EXPOSE 3000
 
-# Comando para rodar o servidor com o pacote "serve"
+# Comando para rodar o servidor com serve
 CMD ["serve", "-s", "build", "-l", "3000"]
