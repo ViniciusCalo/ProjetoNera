@@ -2,6 +2,7 @@
   "name": "app-nera-front",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://nera-api-ewb2ghd3emcreega.eastus2-01.azurewebsites.net",
   "dependencies": {
     "@azure/storage-blob": "^12.25.0",
     "@reduxjs/toolkit": "^2.3.0",
