@@ -57,6 +57,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           
+
+      # Build e Push Backend
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
@@ -64,4 +66,13 @@ jobs:
           context: ./backend
           tags: |
             thaisperlho/nera-api:latest
+
+      # Build e Push Frontend
+      - name: Build and push frontend image
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          context: ./frontendWeb
+          tags: |
+            thaisperlho/nera-app:latest
         
