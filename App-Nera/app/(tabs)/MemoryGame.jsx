@@ -162,7 +162,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    padding: 20,
   },
   title: {
     fontSize: 24,
@@ -182,7 +181,7 @@ const styles = StyleSheet.create({
   },
   card: {
     width: 100,
-    height: 140,
+    height: 120,
     margin: 5,
     justifyContent: 'center',
     alignItems: 'center',

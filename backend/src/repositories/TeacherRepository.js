@@ -48,6 +48,7 @@ const loginTeacherGoogle = async ({ useremail, userid }) => {
         // Verificando se os user inputs estão corretos
         const users = await user.findOne({ where: { useremail, role: 'teacher' } });
 
+        console.log(users)
         if (!users) {
             throw new Error('Invalid email or role');
         }
@@ -55,9 +56,7 @@ const loginTeacherGoogle = async ({ useremail, userid }) => {
         // Verificando se o user é professor
         const isTeacher = await teacher.findOne({ where: { userid: users.userid } });
 
-        if (!isTeacher) {
-            throw new Error('User is not a teacher');
-        }
+    console.log(isTeacher)
 
         // Gerando o token novo caso ele seja professor
         const token = jwt.sign({ teacherid: isTeacher.teacherid, userid: isTeacher.userid, role: users.role }, jwtConfig.secret, {

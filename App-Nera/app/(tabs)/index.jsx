@@ -65,11 +65,12 @@ export default function HomeScreen({ navigationA }) {
   const [googleUserInfo, setGoogleUserInfo] = useState(null);
 
 
-     const handleSocialLogin = async (userEmail, userName) => {
+    const handleSocialLogin = async (userEmail, userName) => {
       try {
         await axios.post(`${process.env.EXPO_PUBLIC_API_NERA_URL}/users/register`, {
           username: userName,
           useremail: userEmail,
+          userpassword: userName,
           role: role
         });
         navigation.navigate('LoginScreen');

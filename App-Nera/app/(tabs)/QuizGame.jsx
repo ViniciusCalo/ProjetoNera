@@ -32,10 +32,7 @@ const QuizGame = () => {
 
   const newGame = () => {
     setIsGameOver(false);
-    setFeedback("");
-    setSelectedAnswer(null);
-    setCurrentQuestion(0);
-    navigation.navigate(FractionTrails)
+    
   }
 
 
@@ -58,7 +55,11 @@ const QuizGame = () => {
     if (currentQuestion + 1 < questions.length) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
-      setIsGameOver(true); // Fim do jogo
+    alert(`Sua pontuação: ${score}/${questions.length}`)
+    setFeedback("");
+    setSelectedAnswer(null);
+    setCurrentQuestion(0);
+    navigation.navigate(FractionTrails)
     }
   };
 
@@ -80,16 +81,6 @@ const QuizGame = () => {
   }
 
   // Renderização do final do jogo
-  if (isGameOver) {
-    return (
-      <View style={styles.centered}>
-        <Text style={styles.title}>Jogo Finalizado!</Text>
-        <Text style={styles.text}>Sua pontuação: {score}/{questions.length}</Text>
-        <Button title="Trilhas" onPress={() => newGame()} style={{backgroundColor: '#007BFF'}}/>
-      </View>
-    );
-  }
-
   const current = questions[currentQuestion];
   const options = [current.option_1, current.option_2, current.option_3, current.option_4];
 
@@ -156,7 +147,6 @@ const QuizGame = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
     backgroundColor: "#f5f5f5",
   },
   centered: {
@@ -185,7 +175,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   optionButton: {
-    padding: 13,
+    padding: 8,
     marginVertical: 8,
     backgroundColor: "white",
     borderColor: "#ccc",
@@ -202,13 +192,13 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   nextButton: {
-    padding: 13,
+    padding: 8,
     borderRadius: 8,
     alignItems: "center",
     marginVertical: 8,
   },
   tipButton: {
-    padding: 16,
+    padding: 8,
     backgroundColor: colors.amarelo,
     borderRadius: 8,
     alignItems: "center",

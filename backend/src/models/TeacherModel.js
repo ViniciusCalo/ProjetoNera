@@ -16,7 +16,6 @@ const teacher = sequelize.define('teacher', {
     },
     teachercpf: {
         type: Sequelize.STRING,
-        allowNull: false,
         unique: true
     }
 }, {

@@ -8,16 +8,17 @@ const router = express.Router();
 
 router.post('/googleRegister', async (request, response) => {
     try{
-        const { username, useremail, role } = request.body;
+        const { username, useremail, role, userpassword} = request.body;
         let profilepicture = null; 
 
         // Cria usuário
-        const newUser = await userRepo.createUser({ username, useremail, role, profilepicture });
+        const newUser = await userRepo.createUser({ username, useremail, role,userpassword, profilepicture });
 
         // Se a role do user for igual a teacher, então registra como teacher na tbteacher
         if (role === 'teacher') {
+            console.log(newUser.userid)
             const newTeacher = await teacherController.googleRegisterUserAsATeacher({
-                userid: newUser.userid,
+                userid: newUser.userid
             });
             return response.status(201).json({ message: "Teacher created successfully", newUser, newTeacher });
         } 

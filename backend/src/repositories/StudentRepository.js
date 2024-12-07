@@ -85,7 +85,7 @@ const loginStudentGoogle = async ({ useremail, userid }) => {
         }
 
         // Verificando se o user é aluno
-        const userIsStudent = await student.findOne({ where: { userid: user.userid } });
+        const userIsStudent = await student.findOne({ where: { userid: rightUser.userid } });
 
         if (!userIsStudent) {
             throw new Error('User is not a student');
