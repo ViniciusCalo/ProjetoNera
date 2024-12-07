@@ -24,12 +24,13 @@
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^3.1.0",
+    "serve": "^14.2.4",
     "styled-components": "^5.3.11",
     "uuid": "^11.0.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "env-cmd -f .env react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --watchAll=false",
     "eject": "react-scripts eject"
