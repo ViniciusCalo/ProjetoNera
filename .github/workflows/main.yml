@@ -64,7 +64,6 @@ jobs:
 
       # Build e Push Backend
       - name: Build and push
-        if: contains(github.event.commits.*.modified, 'backend/')
         uses: docker/build-push-action@v5
         with:
           push: true
@@ -74,7 +73,6 @@ jobs:
 
       # Build e Push Frontend
       - name: Build and push frontend image
-        if: contains(github.event.commits.*.modified, 'frontendWeb/')
         uses: docker/build-push-action@v5
         with:
           push: true
