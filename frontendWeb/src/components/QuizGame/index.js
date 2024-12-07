@@ -139,7 +139,7 @@ function QuizGame() {
       </C.Game>
 
       {/* Componente ModalDica */}
-      <TipModal isOpen={isModalOpen} onRequestClose={closeModal} />
+      <TipModal isOpen={isModalOpen}  gameType={"quizgame"} onRequestClose={closeModal} />
     </>
   );
 }

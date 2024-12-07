@@ -154,7 +154,7 @@ const MemoryGame = () => {
       </C.Game>
 
       {/* Componente ModalDica */}
-      <TipModal isOpen={isModalOpen} onRequestClose={closeModal} />
+      <TipModal isOpen={isModalOpen} gameType={"memorygame"} onRequestClose={closeModal} />
     </>
   );
 };
