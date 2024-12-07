@@ -205,3 +205,85 @@ export const LampIcon = styled.img`
   width: 30px;
   height: 30px;
 `;
+
+
+export const GameOverContainer = styled.div`
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #fff8e5; /* Fundo claro */
+  border: 2px solid #ffaa33; /* Contorno laranja */
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 600px;
+`;
+
+export const GameOverTitle = styled.h2`
+  font-family: 'Roboto', sans-serif;
+  color: #135794; /* Azul escuro */
+  font-size: 24px;
+  margin-bottom: 10px;
+`;
+
+export const ScoreText = styled.p`
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  font-size: 18px;
+  margin-bottom: 20px;
+`;
+
+
+export const FunIllustration = styled.img`
+  width: 200px;
+  margin-bottom: 20px;
+`;
+
+
+export const LoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Ocupa toda a altura da tela */
+  background-color: #f5f5f5; /* Fundo claro */
+`;
+
+export const LoadingText = styled.h2`
+  font-family: 'Roboto', sans-serif;
+  color: #135794; /* Azul escuro */
+  font-size: 20px;
+  margin-top: 20px;
+`;
+
+export const Spinner = styled.div`
+  border: 8px solid #f3f3f3; /* Cor do fundo */
+  border-top: 8px solid #135794; /* Cor do destaque */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
+export const RestartButton = styled(Botao)`
+  background: #ffaa33; /* Cor laranja */
+  color: white;
+  font-weight: bold;
+
+  &:hover {
+    background: #ff8800; /* Cor laranja mais escura no hover */
+  }
+`;
+

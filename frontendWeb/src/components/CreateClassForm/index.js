@@ -16,7 +16,7 @@ const CreateClassForm = () => {
     const [description, setDescription] = useState('');
     const [module, selectedModule] = useState('');
     const [trail, selectedTrail] = useState('');
-    const [ token ] = useState(localStorage.getItem('token'));
+    const [token] = useState(localStorage.getItem('token'));
     const [Trail, setSelectedTrail] = useState('');
     const trails = useSelector((state) => state.trails);
     const [errors, setErrors] = useState({});
@@ -26,7 +26,7 @@ const CreateClassForm = () => {
     const fecharModal = () => {
         setModalVisible(false);
         navigate("/teacherClass")
-        }
+    }
 
     const clearForm = () => {
         setTitle('');
@@ -156,7 +156,7 @@ const CreateClassForm = () => {
                         )}
                     </C.TrackContainer>
                     {errors.trail && <C.ErrorText>{errors.trail}</C.ErrorText>}
-                    
+
                     <C.Label2>Módulo</C.Label2>
                     <C.Select id="module" value={module} onChange={handleModuleChange}>
                         <option value="">Selecione o Módulo</option>
@@ -173,10 +173,14 @@ const CreateClassForm = () => {
             </C.Container>
             <ClassInfoModal
                 isOpen={modalVisible}
-                setModalVisible={fecharModal}
                 classroom={classroom}
                 idTrail={classroom.trackid}
+                setModalVisible={() => setModalVisible(false)} // Função para fechar o modal
+                onRequestClose={fecharModal} // Alinha o comportamento de fechamento
             />
+
+
+
         </>
     );
 };
