@@ -55,7 +55,12 @@ function QuizGame() {
 
   // Renderização inicial: carregando perguntas
   if (!questions.length) {
-    return <p>Carregando perguntas...</p>;
+    return (
+      <C.LoadingContainer>
+        <C.Spinner /> {/* Animação de carregamento */}
+        <C.LoadingText>Carregando o perguntas...</C.LoadingText>
+      </C.LoadingContainer>
+    );
   }
 
   // Renderização do final do jogo

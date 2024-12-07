@@ -95,8 +95,14 @@ const MemoryGame = () => {
   };
 
   if (isLoading) {
-    return <p>Carregando o jogo...</p>;
+    return (
+      <C.LoadingContainer>
+        <C.Spinner /> {/* Animação de carregamento */}
+        <C.LoadingText>Carregando o jogo...</C.LoadingText>
+      </C.LoadingContainer>
+    );
   }
+  
 
   return (
     <>

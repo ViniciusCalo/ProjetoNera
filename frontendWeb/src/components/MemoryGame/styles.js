@@ -205,3 +205,38 @@ export const LampIcon = styled.img`
   width: 30px;
   height: 30px;
 `;
+
+
+export const LoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Ocupa toda a altura da tela */
+  background-color: #f5f5f5; /* Fundo claro */
+`;
+
+export const LoadingText = styled.h2`
+  font-family: 'Roboto', sans-serif;
+  color: #135794; /* Azul escuro */
+  font-size: 20px;
+  margin-top: 20px;
+`;
+
+export const Spinner = styled.div`
+  border: 8px solid #f3f3f3; /* Cor do fundo */
+  border-top: 8px solid #135794; /* Cor do destaque */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`;
